@@ -186,7 +186,7 @@ input[type=checkbox]{accent-color:var(--accent)}
 .tl-body{position:relative}
 .cols{position:absolute;inset:0;pointer-events:none;z-index:0}
 .col{position:absolute;top:0;bottom:0;border-left:1px solid var(--line)}
-.col.wk{border-left-color:var(--line-2)}
+.col.wkstart{border-left-color:var(--line-2)}
 .col.nw{background:var(--nonwork)}
 .col.hol{background:repeating-linear-gradient(135deg,var(--hatch) 0 4px,transparent 4px 8px)}
 .col.dlv{background:var(--go-dim);box-shadow:inset 2px 0 0 color-mix(in srgb,var(--go) 70%,transparent),inset -2px 0 0 color-mix(in srgb,var(--go) 70%,transparent)}
@@ -378,8 +378,33 @@ body.side-off .side,body.side-off .splitter{display:none}
 .pal-top{padding:10px 10px 0}
 .pal-top select{width:100%;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
 .main .pal-body{padding:10px}
-.pill.custom{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink-3);border:0}
-.pill.custom::before{content:"+";font-weight:700;color:var(--ink-2)}
+.pill.custom{font-weight:600}
+.pill.custom::before{content:"+";font-weight:700;color:var(--bar-ink)}
+/* the colour theme box above the pills; click the colours to make your own */
+.pal-top{display:flex;flex-direction:column;gap:8px}
+.pal-top .themepick{display:flex;gap:6px;align-items:center}
+.pal-top .ramp{flex:none;width:64px;height:26px;padding:0;border:1px solid var(--line-2);border-radius:4px;cursor:pointer;overflow:hidden;display:flex;background:none}
+.pal-top .ramp:hover{border-color:var(--ink-2)}
+.pal-top .themepick select{flex:1;min-width:0}
+.owned{width:300px;padding:6px 8px 10px}
+.ownrow{display:flex;gap:8px;align-items:center;padding:4px 2px}
+.ownc{position:relative;display:inline-flex}
+.ownc input{width:44px;height:32px;padding:0;border:1px solid var(--line-2);border-radius:4px;background:none;cursor:pointer}
+.ownc .x{position:absolute;top:-8px;right:-8px;width:18px;height:18px;font-size:12px;background:var(--surface);border-radius:50%;box-shadow:0 0 0 1px var(--line-2)}
+.cmenu .ownadd{width:44px;height:32px;border:1px dashed var(--ink-3);border-radius:4px;justify-content:center;font-size:16px;color:var(--ink-2);padding:0}
+.ownramp{display:flex;height:18px;border-radius:3px;overflow:hidden;margin:6px 2px}
+.ownramp i{flex:1}
+.ownsat{display:flex;align-items:center;gap:8px;padding:2px;font-size:11px;color:var(--ink-2)}
+.ownsat input{flex:1;width:auto}
+.ownfoot{display:flex;gap:6px;margin-top:8px}
+.cmenu .ownfoot button{flex:1;justify-content:center;border:1px solid var(--line-2)}
+.cmenu .ownfoot button.on::after{content:none}
+.cmenu .ownfoot button.on{background:#2f6fde;color:#fff;border-color:transparent}
+/* Timeline / Calendar sits under the deliverables, on the right */
+.viewrow{display:flex;justify-content:flex-end;margin:-6px 0 -6px}
+/* buttons that were dark text on dark grey: a clear blue with white text */
+.btn.pri{background:#2f6fde;color:#fff;border-color:transparent}
+.btn.pri:hover{filter:brightness(1.1)}
 .pill.wip{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:3px;background:color-mix(in srgb,var(--c) 40%,var(--surface));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--c) 80%,var(--ink))}
 .pill.holp{background:repeating-linear-gradient(135deg,var(--hatch) 0 2px,transparent 2px 7px),var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2)}
 .pill .cdel{flex:none;width:18px;height:18px;border:0;border-radius:50%;background:transparent;color:var(--bar-ink);opacity:0;cursor:pointer;font-size:13px;line-height:1;padding:0}
@@ -420,7 +445,7 @@ body.side-off .side,body.side-off .splitter{display:none}
 svg.links{left:var(--labw)}
 .cols{inset:0 0 0 var(--labw)}
 .col{border-left:1px solid var(--line)}
-.col.wk{border-left-color:var(--line-2)}
+.col.wkstart{border-left-color:var(--line-2)}
 .col.nw{background:var(--nonwork)}
 .col.hol{background:repeating-linear-gradient(135deg,var(--hatch) 0 2px,transparent 2px 9px),var(--nonwork)}
 .trow,.lane,.droprow{display:flex}
@@ -430,8 +455,27 @@ svg.links{left:var(--labw)}
 .trow.sel .rlab{font-weight:700}
 .lane .rlab,.droprow .rlab{color:var(--ink-2);cursor:default;letter-spacing:.2em}
 .rlab input{width:100%;font:inherit;letter-spacing:inherit;text-transform:uppercase;border:1px solid var(--ink-3);border-radius:3px;background:var(--surface);padding:1px 4px}
-.lane{cursor:copy;border-bottom:1px solid var(--line-2)}
+/* a shared link: read-only, no editing tools */
+.vo-note{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);padding:0 6px}
+body.viewonly .pal,body.viewonly .splitter,body.viewonly .side,body.viewonly #newBtn,body.viewonly #pick,body.viewonly #undoBtn,body.viewonly #redoBtn,body.viewonly #drive,body.viewonly #dataBtn,body.viewonly #moreMenu,body.viewonly #sideBtn,body.viewonly #shareBtn,body.viewonly .droprow{display:none!important}
+body.viewonly .bar,body.viewonly .mk,body.viewonly .cbar,body.viewonly .cev,body.viewonly .lane{cursor:default}
+/* the WIP row: a band of its own, a little apart from the schedule rows under it */
+.lane{cursor:copy;background:color-mix(in srgb,var(--panel) 70%,transparent);border-top:1px solid var(--line-2);border-bottom:2px solid var(--line-2);position:relative;z-index:1}
+.lane .mk.rv{margin:0;transform:none;justify-content:center;height:22px;background:color-mix(in srgb,var(--c) 55%,var(--surface))}
+.lane .mk.dl{margin:0;height:22px;color:#fff}
+.lanesep{position:absolute;left:0;right:0;height:1px;background:var(--line-2);pointer-events:none}
+.lanetag{position:sticky;left:4px;position:absolute;font-family:var(--mono);font-size:8.5px;letter-spacing:.18em;color:var(--ink-3);pointer-events:none;z-index:0}
+/* dark colours get white text */
+.bar.dark,.cbar.dark{color:#fff}
+.bar.dark .dbadge,.cbar.dark .dbadge{color:#fff;background:rgba(255,255,255,.18)}
+.mk.rv.dark,.cev.rv.dark{color:#fff}
+.chip.dl,.cev.dl,.mk.dl{color:#fff}
+.wipday{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--c) 30%,transparent);box-shadow:inset 0 -2px 0 color-mix(in srgb,var(--c) 85%,var(--ink));pointer-events:none}
 .trow{border-bottom:1px solid var(--line)}
+/* skipped weekends and holidays inside a block: heavy grey with a hint of the block's colour */
+.bar .skip{position:absolute;top:0;bottom:0;background:color-mix(in srgb,#9a978f 78%,var(--c));cursor:pointer;z-index:0}
+.bar .skip:hover{background:color-mix(in srgb,#9a978f 60%,var(--c))}
+.bar>.h,.bar>.lbl,.bar>.dbadge,.bar>.cpick,.bar>.subico,.bar>.inl{position:relative;z-index:1}
 .droprow{height:46px}
 .droprow .hintx{position:sticky;left:calc(var(--labw) + 8px);align-self:center;font-size:12px;color:var(--ink-3);pointer-events:none}
 /* calendar view */
@@ -440,17 +484,17 @@ svg.links{left:var(--labw)}
 .wkt:first-child{margin-top:4px}
 .wkt b{color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.18em;margin-right:10px}
 /* each week is one boxed block */
-.cal .wk{border:1.5px solid #4a4740;border-radius:0;background:var(--surface);position:relative;overflow:hidden}
+.cal .wk{border:1px solid var(--line-2);border-radius:0;background:var(--surface);position:relative;overflow:hidden}   /* only a hairline round the week, no bold dark lines */
 .cal .cbg{border-left:0;background:var(--surface)}
 .cal .cbg.wknd,.cal .cbg.nw{background:var(--nonwork)}
 .cal .cbg.hol{background:repeating-linear-gradient(135deg,var(--hatch) 0 2px,transparent 2px 9px),var(--nonwork)}
 .cal .cbg.today{box-shadow:inset 0 0 0 1.5px var(--ink-3)}
-.cal .dh{background:#4a4740;padding:6px 3px;display:flex;flex-direction:column;align-items:stretch;gap:3px;min-width:0}
+.cal .dh{background:var(--surface);padding:4px 2px;display:flex;flex-direction:column;align-items:stretch;gap:3px;min-width:0}
 /* day names: solid 25% grey, bold black text, no outline; Saturday and Sunday solid 50% grey with white text */
 .cal .dh span{display:block;background:#bfbfbf;color:#000;border-radius:0;padding:4px 6px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
 .cal .dh.wkend span{background:#808080;color:#fff}
 .cal .dh.off:not(.wkend) span{background:#a9a9a9}
-.cal .dh em{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#e8e5de;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal .dh em{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cal .dr{padding:2px 0;display:flex;gap:0;min-height:0;align-items:stretch;flex-wrap:nowrap}
 .cev{flex:0 0 50%;min-width:0;display:flex;align-items:center;justify-content:center;padding:0 4px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:grab;touch-action:none;border-radius:0;height:auto}
 .cev.rv{background:color-mix(in srgb,var(--c) 45%,var(--surface));color:var(--ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 80%,var(--ink))}
@@ -521,15 +565,12 @@ svg.links{left:var(--labw)}
   <select class="in" id="pick" aria-label="Open schedule" style="max-width:240px"></select>
   <button class="btn pri" id="newBtn">New schedule</button>
   <div class="grow"></div>
-  <div class="seg" aria-label="View">
-    <button id="vTimeline" class="on" title="Block the project out">Timeline</button>
-    <button id="vCalendar" title="The version to share with clients">Calendar</button>
-  </div>
-  <label class="themepick" title="Colour theme"><span class="ramp" id="ramp"></span><select class="in" id="themeSel" aria-label="Colour theme"></select></label>
   <button class="btn ghost" id="undoBtn" title="Undo (Ctrl+Z)">Undo</button>
   <button class="btn ghost" id="redoBtn" title="Redo (Ctrl+Shift+Z)">Redo</button>
   <button class="btn ghost" id="drive" title="Every schedule is kept in a Schedules folder in your Google Drive">Connect Google Drive</button>
-  <button class="btn" id="pdfBtn" title="Print the calendar — choose Save as PDF in the print window to make a PDF to send">Print / PDF</button>
+  <button class="btn" id="shareBtn" title="Make a link to send: whoever opens it sees this schedule, read-only">Share</button>
+  <button class="btn" id="pdfBtn" title="Print on A4 landscape — choose Save as PDF in the print window to make a PDF to send">Print / PDF</button>
+  <span class="vo-note" id="voNote" hidden>Shared schedule · view only</span>
   <button class="btn" id="dataBtn">Export / import</button>
   <button class="btn ghost" id="moreMenu" title="Weekends, public holidays, duplicate or delete this schedule" aria-label="More">⋯</button>
   <button class="btn" id="sideBtn" title="Open the side panel: the assistant, and the crew overview">Panel</button>
@@ -537,13 +578,20 @@ svg.links{left:var(--labw)}
 
 <div class="main">
   <aside class="pal" id="pal" aria-label="Pills: drag onto the schedule">
-    <div class="pal-top"><select class="in" id="palCat" aria-label="Which pills"></select></div>
+    <div class="pal-top">
+      <div class="themepick" title="Colour theme"><button class="ramp" id="ramp" title="Make your own colours: pick 2 to 4 and set the saturation" aria-label="Make your own colour theme"></button><select class="in" id="themeSel" aria-label="Colour theme"></select></div>
+      <select class="in" id="palCat" aria-label="Which pills"></select>
+    </div>
     <div class="pal-body" id="palBody"></div>
   </aside>
   <div class="mcol">
   <div class="doc" id="doc">
     <div class="projhead" id="projhead"></div>
     <div class="deliv" id="deliv"></div>
+    <div class="viewrow"><div class="seg" aria-label="View">
+      <button id="vTimeline" class="on" title="Block the project out">Timeline</button>
+      <button id="vCalendar" title="The version to share with clients">Calendar</button>
+    </div></div>
     <div class="boardcol">
       <div class="boardwrap">
         <div class="board" id="board"></div>
@@ -681,6 +729,7 @@ const THEMES = {
   forest: { label: "Forest", a: ["#6fbf8a", "#9ccc7c", "#cddc7e", "#e8c77a"] },
   candy: { label: "Candy", a: ["#ff9ab8", "#cdb0ff", "#98cfff", "#a6f0d6"] },
   slate: { label: "Slate", a: ["#9fb0c4", "#c9cfd6", "#b8b0a6"] },
+  own: { label: "Your own colours", a: ["#5a8dee", "#f2c35e"] },   // the colours come from S.own (see ownColors)
 };
 function themeColors(k) {
   const t = THEMES[k] || THEMES.studio;
@@ -694,12 +743,45 @@ function themeColors(k) {
   }
   return t.c = out;
 }
+let DARK = [];
+const darkCls = c => DARK[c | 0] ? "dark" : "";
 const EXTRA_COLORS = ["#c45c5c", "#c8803f", "#b59a2e", "#7f9c3a", "#3f9a6a", "#2f9a95", "#3b7fc0", "#5a62c4", "#8559c0", "#b05a9c", "#f2d0d0", "#f6dcc4", "#f3e7b8", "#dbe7c0", "#c9e8d6", "#c4e6e4", "#c8def2", "#d6d8f4", "#e2d4f4", "#d9d6cf"];
+/* Your own theme (Christian 2026-11-13): pick 2 to 4 colours and the ten theme colours are filled in between them, going round
+   the colour wheel the short way so blue → yellow passes through green, not grey. Saturation (S.sat, 0 to 2) turns every theme's
+   colours up or down. */
+const hexRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+const rgbHex = c => "#" + c.map(v => Math.round(Math.max(0, Math.min(1, v)) * 255).toString(16).padStart(2, "0")).join("");
+function rgbHsl([r, g, b]) {
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+  if (!d) return [0, 0, l];
+  const s = d / (1 - Math.abs(2 * l - 1)); let h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return [(h * 60 + 360) % 360, s, l];
+}
+function hslRgb([h, s, l]) {
+  const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c / 2;
+  const [r, g, b] = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x] : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x];
+  return [r + m, g + m, b + m];
+}
+function ownColors(anchors) {
+  const A = (anchors && anchors.length >= 2 ? anchors : ["#5a8dee", "#f2c35e"]).map(h => rgbHsl(hexRgb(h)));
+  const out = [];
+  for (let i = 0; i < 10; i++) {
+    const p = i / 9 * (A.length - 1), j = Math.min(A.length - 2, Math.floor(p)), f = p - j, a = A[j], b = A[j + 1];
+    let dh = b[0] - a[0]; if (dh > 180) dh -= 360; if (dh < -180) dh += 360;
+    out.push(rgbHex(hslRgb([(a[0] + dh * f + 360) % 360, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f])));
+  }
+  return out;
+}
+const saturate = (hex, k) => { if (k === 1) return hex; const [h, s, l] = rgbHsl(hexRgb(hex)); return rgbHex(hslRgb([h, Math.max(0, Math.min(1, s * k)), l])); };
 function applyTheme() {
-  const cs = themeColors(S.theme);
+  const k = S.sat == null ? 1 : +S.sat;
+  const cs = (S.theme === "own" ? ownColors(S.own) : themeColors(S.theme)).map(c => saturate(c, k));
   cs.forEach((c, i) => document.documentElement.style.setProperty("--c" + i, c));
   // ten more on top of the theme's ten, the same in every theme: deeper shades and greys for the colour picker on each block
   EXTRA_COLORS.forEach((c, i) => document.documentElement.style.setProperty("--c" + (10 + i), c));
+  // which colours are dark enough to need white text on them
+  const lum = h => { const [r, g, b] = hexRgb(h).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * r + .7152 * g + .0722 * b; };
+  DARK = [...cs, ...EXTRA_COLORS].map(c => lum(c) < .2);
   $("ramp").innerHTML = cs.map(c => `<i style="background:${c}"></i>`).join("");
 }
 
@@ -734,7 +816,7 @@ const labw = () => { const v = parseFloat(getComputedStyle(document.documentElem
 let PAL_CAT = "stages";
 try { PAL_CAT = localStorage.getItem("kontroll-schedule-builder-v1:palcat") || "stages"; } catch (e) {}
 let UNDO = [], REDO = [], R = new Map(), GEO = null, DAYW = 36;
-const ROWH = 34, LANEH = 34;
+const ROWH = 34, LANEGAP = 10; let LANEH = 44;   // LANEH = the WIP row's height plus the gap under it; set by timelineHTML
 const CHATS = {};
 
 /* =========================================================
@@ -939,6 +1021,7 @@ function exampleSchedule() {
    ========================================================= */
 const LAST = {}; // id → the schedule as last saved, to tell a real change from switching schedules
 function save() {
+  if (VIEW_ONLY) return;   // a shared link never writes over anything
   if (!S) return;
   STORE.list[S.id] = S; STORE.current = S.id;
   { const { updatedAt, driveId, ...body } = S, j = JSON.stringify(body); if (LAST[S.id] !== undefined && LAST[S.id] !== j) { S.updatedAt = Date.now(); queueDrive(S.id); } LAST[S.id] = j; }
@@ -974,6 +1057,7 @@ function migrate(s) {
   s.tasks.forEach(t => { if (t.parent && (!ids.has(t.parent) || t.parent === t.id)) t.parent = null; });
 }
 function change(fn) {
+  if (VIEW_ONLY) return;
   UNDO.push(JSON.stringify(S)); if (UNDO.length > 150) UNDO.shift(); REDO = [];
   fn(); save(); render();
 }
@@ -1013,7 +1097,7 @@ function headHTML(ro) {
       <div class="fact"><span class="fl">Duration</span><span class="fv">${num("hd-weeks", "weeks", wk)} week${wk === 1 ? "" : "s"}</span><span class="fv sm">${num("hd-days", "days", dd)} day${dd === 1 ? "" : "s"}</span><span class="fs">to ${esc(fmtL(end))}</span></div>
     </div>`;
 }
-function renderHead() { $("projhead").innerHTML = headHTML(false); }
+function renderHead() { $("projhead").innerHTML = headHTML(VIEW_ONLY); }
 /* Deliverables: name and due date, three to a column; four to six start a second column beside it; past six the two columns get longer. */
 function delivHTML(ro) {
   const outs = S.outputs, n = outs.length, rows = n <= 3 ? Math.max(1, n) : n <= 6 ? 3 : Math.ceil(n / 2);
@@ -1026,7 +1110,7 @@ function delivHTML(ro) {
   }).join("");
   return `<div class="dl-h">DELIVERABLES</div><div class="dl-grid" style="grid-template-rows:repeat(${rows},auto)">${items || `<span class="muted" style="font-size:12px;padding-top:6px">None yet.</span>`}</div>${ro ? "" : `<button class="dl-add" id="hdAddOut">+ ADD</button>`}`;
 }
-function renderDeliv() { $("deliv").innerHTML = delivHTML(false); }
+function renderDeliv() { $("deliv").innerHTML = delivHTML(VIEW_ONLY); }
 // "2× Print stills" ↔ {count, name}: the deliverable is typed as one line
 function parseOutLabel(v) { const m = String(v).trim().match(/^(\d+)\s*[×x]\s*(.+)$/i); return m ? { count: Math.max(1, +m[1]), name: m[2].trim() } : { count: 1, name: String(v).trim() }; }
 /* Opens the browser's date picker for a hidden date input, then calls back with the date. */
@@ -1071,7 +1155,7 @@ function renderTray() {
       || `<p class="hint">Anything you name yourself lands here, saved with this schedule: crew names, odd stages.</p>`,
   };
   const g = cats.find(x => x.key === PAL_CAT);
-  $("palBody").innerHTML = box(`data-pre="custom"`, "custom", null, "Custom block", "name it") + `<div class="palsep"></div>`
+  $("palBody").innerHTML = box(`data-pre="custom"`, "custom", 7, "Custom", "name it") + `<div class="palsep"></div>`
     + (g.items ? g.items.map(n => box(`data-pre="crew" data-name="${esc(n)}"`, "", presetColor(n), n)).join("") : body[g.key]());
 }
 function renderTrayOld() {
@@ -1131,7 +1215,7 @@ function renderBoard() {
   const b = $("board"), sl = b.scrollLeft, st = b.scrollTop;
   b.classList.toggle("tlmode", VIEW === "timeline");
   $("zbar").hidden = VIEW !== "timeline";
-  b.innerHTML = VIEW === "timeline" ? timelineHTML() : calendarHTML();
+  b.innerHTML = VIEW === "timeline" ? timelineHTML(VIEW_ONLY) : calendarHTML();
   b.scrollLeft = sl; b.scrollTop = st;
   if (typeof hsSoon === "function") hsSoon();
   if (VIEW === "timeline" && !D) syncZoom();
@@ -1167,7 +1251,8 @@ function barInner(t, w, editable) {
   const big = w >= 96, mid = w >= 46;
   return `<span class="h" data-edge="start"></span>${t.sub ? `<button class="subico" data-sub="${t.id}" title="${t.open ? "Close" : "Open"} the schedule inside ${esc(t.name)}" aria-label="${t.open ? "Close" : "Open"} the embedded schedule">▦</button>` : ""}${big ? `<span class="lbl">${esc(t.name)}</span>` : `<span class="lbl"></span>`}${editable && w >= 30 ? `<button class="cpick" data-colpick="${t.id}" title="Change this block's colour" aria-label="Change the colour of ${esc(t.name)}"></button>` : ""}${mid ? `<button class="dbadge" data-days="${t.id}" title="Click to type a length">${t.days}d</button>` : ""}<span class="h" data-edge="end"></span>${editable ? `<span class="knob" data-knob="${t.id}" title="Drag onto another task to make it follow this one"></span>` : ""}`;
 }
-function timelineHTML(ro) {
+// part (printing): {from, to} = which rows, lane:false = without the deliverables / WIP band (later pages repeat only the weeks)
+function timelineHTML(ro, part = {}) {
   const days = dayRange(), G = GEO = geom(days), today = ro ? "" : todayIso(), pe = projEnd(), dlv = delivDates(), LW = labw();
   let wk = "", dc = "", cols = "", hols = "";
   for (let i = 0; i < days.length; i += 7) {   // a grey box per week: WEEK n, its Monday under it
@@ -1180,31 +1265,43 @@ function timelineHTML(ro) {
     const cls = [work ? "" : "nw", hol ? "hol" : "", dlv.has(d) ? "dlv" : "", d === today ? "today" : ""].join(" ");
     const tip = `${fmt(d)}${hol ? ": " + (S.holidays.find(h => h.date === d).name || "Holiday") : work ? "" : " (not worked)"}. Double-click to ${isWeekend(d) && S.skipWeekends && !hol ? (work ? "stop working it" : "work this day") : (hol ? "remove the holiday" : "mark as a holiday")}.`;
     dc += `<div class="dc ${cls}" data-date="${d}" title="${esc(tip)}" style="left:${G.xs[i]}px;width:${G.ws[i]}px">${G.ws[i] >= 10 ? WD[dow(d)][0] : ""}</div>`;
-    cols += `<div class="col ${cls} ${dow(d) === 1 ? "wk" : ""} ${d === pe ? "pend" : ""}" style="left:${G.xs[i]}px;width:${G.ws[i]}px"></div>`;
+    cols += `<div class="col ${cls} ${dow(d) === 1 ? "wkstart" : ""} ${d === pe ? "pend" : ""}" style="left:${G.xs[i]}px;width:${G.ws[i]}px"></div>`;
     if (hol) hols += `<div class="holtag" style="left:${G.xs[i] + G.ws[i] / 2}px">${esc((S.holidays.find(h => h.date === d).name || "Holiday").length > 14 && G.ws[i] < 60 ? "Holiday" : (S.holidays.find(h => h.date === d).name || "Holiday"))}</div>`;
   });
-  // review + delivery lane
-  const stack = {}; let marks = hols;
-  S.reviews.slice().sort((a, b) => a.date < b.date ? -1 : 1).forEach(r => {
+  /* The WIP row (Christian 2026-11-13): set a little apart from the schedule; WIPs on the same day stack one under another and the row
+     grows to fit; each WIP starts on its own day, and that day is tinted in its colour so it's clear which day it is. */
+  // two rows in one band: deliverables on top, WIPs under them (as many WIP rows as the busiest day needs)
+  const stack = {}, IH = 22, IG = 3, DR = 30; let marks = hols, tints = "";
+  const itemsOn = {}; S.reviews.forEach(r => (itemsOn[r.date] = itemsOn[r.date] || []).push(r));
+  const laneRows = Math.max(1, ...Object.values(itemsOn).map(a => a.length)), laneH = DR + 8 + laneRows * (IH + IG);
+  LANEH = laneH + LANEGAP;
+  marks += `<div class="lanesep" style="top:${DR}px"></div><span class="lanetag" style="top:${DR + 4}px">WIPS</span><span class="lanetag" style="top:4px">DELIVERABLES</span>`;
+  const slot = date => { const k = stack[date] = (stack[date] || 0) + 1; return DR + 5 + (k - 1) * (IH + IG); };
+  S.reviews.slice().sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : a.id < b.id ? -1 : 1).forEach(r => {
     const x = xOf(r.date); if (x == null) return;
-    const k = stack[r.date] = (stack[r.date] || 0) + 1;
-    marks += `<div class="mk rv ${SEL && SEL.id === r.id ? "sel" : ""}" data-rid="${r.id}" title="${esc(r.type + " · " + fmt(r.date) + (r.note ? " · " + r.note : ""))}" style="left:${x + G.ws[G.idx[r.date]] / 2}px;margin-top:${-10 + (k - 1) * 6}px;--c:var(--c${r.color ?? 6})">${esc(rvText(r.type))}</div>`;
+    const w = G.ws[G.idx[r.date]];
+    if (!stack[r.date]) tints += `<div class="wipday" style="left:${x}px;width:${w}px;top:${DR}px;--c:var(--c${r.color ?? 6})"></div>`;
+    marks += `<div class="mk rv ${SEL && SEL.id === r.id ? "sel" : ""}" data-rid="${r.id}" title="${esc(r.type + " · " + fmt(r.date) + (r.note ? " · " + r.note : "") + " · click to change the type")}" style="left:${x + 1}px;top:${slot(r.date)}px;min-width:${Math.max(0, w - 2)}px;--c:var(--c${r.color ?? 6})">${esc(rvText(r.type))}</div>`;
   });
   S.deliveries.forEach(d => {
     const x = xOf(d.date); if (x == null) return;
-    const n = stack[d.date] || 0;
-    marks += `<div class="mk dl ${SEL && SEL.id === d.id ? "sel" : ""}" data-did="${d.id}" title="${esc("Delivery " + fmt(d.date) + ": " + deliveryLabel(d) + ". Drag to move it.")}" style="left:${x + G.ws[G.idx[d.date]] / 2 + n * 8 + 8}px">▶ ${esc(deliveryLabel(d))}</div>`;
+    marks += `<div class="mk dl ${SEL && SEL.id === d.id ? "sel" : ""}" data-did="${d.id}" title="${esc("Delivery " + fmt(d.date) + ": " + deliveryLabel(d) + ". Drag to move it.")}" style="left:${x + 1}px;top:4px">▶ ${esc(deliveryLabel(d))}</div>`;
   });
+  marks = tints + marks;
   // tasks
-  const rows = [], links = [], VIS = visTasks(), vi = new Map(VIS.map((x, i) => [x.t.id, i]));
+  const withLane = part.lane !== false, laneOff = withLane ? LANEH : 0;
+  const rows = [], links = [], VIS = visTasks().slice(part.from || 0, part.to == null ? undefined : part.to), vi = new Map(VIS.map((x, i) => [x.t.id, i]));
   VIS.forEach(({ t, depth }, i) => {
     const v = R.get(t.id), x1 = xOf(v.start), x2 = xEnd(v.end), w = (x2 ?? 0) - (x1 ?? 0);
     const nk = t.sub ? kidsOf(t).length : 0;
     const tog = t.sub ? `<button class="subtog" ${ro ? "" : `data-sub="${t.id}"`} title="${t.open ? "Close" : "Open"} the schedule inside ${esc(t.name)} (${nk} row${nk === 1 ? "" : "s"})" aria-expanded="${!!t.open}">${t.open ? "▾" : "▸"}</button>` : "";
-    const sel = SEL && SEL.kind === "task" && SEL.id === t.id;
+    const sel = isPicked(t.id);
     let inner = "";
     if (x1 != null) {
-      inner = `<div class="bar ${sel ? "sel" : ""}" data-tid="${t.id}" title="${esc(`${t.name} · ${fmt(v.start)} to ${fmt(v.end)} · ${t.days} working day${t.days === 1 ? "" : "s"}`)}" style="left:${x1}px;width:${w}px;--c:var(--c${t.color})">${barInner(t, w, true)}</div>`;
+      // skipped days inside the block (weekends, holidays) fade to grey with a hint of its colour; click one to work it
+      let skips = "";
+      for (let d = v.start; d <= v.end; d = addDays(d, 1)) if (!isWork(d) && GEO.idx[d] != null) skips += `<span class="skip" ${ro ? "" : `data-skipday="${d}"`} title="${esc(fmt(d) + (isHoliday(d) ? " · holiday" : " · skipped") + " · click to work it")}" style="left:${xOf(d) - x1}px;width:${G.ws[G.idx[d]]}px"></span>`;
+      inner = `<div class="bar ${sel ? "sel" : ""} ${darkCls(t.color)}" data-tid="${t.id}" title="${esc(`${t.name} · ${fmt(v.start)} to ${fmt(v.end)} · ${t.days} working day${t.days === 1 ? "" : "s"}`)}" style="left:${x1}px;width:${w}px;--c:var(--c${t.color})">${skips}${barInner(t, w, true)}</div>`;
       if (w < 96) inner += `<div class="outlbl" style="left:${x2 + 16}px">${esc(t.name)}${w < 46 ? ` <span class="mono">${t.days}d</span>` : ""}</div>`;
     }
     rows.push(`<div class="trow ${sel ? "sel" : ""} ${depth ? "sub" : ""} ${t.sub && t.open ? "subopen" : ""}" data-row="${i}" data-tid-row="${t.id}"><div class="rlab" style="padding-left:${2 + depth * 14}px" ${ro ? "" : `data-lab="${t.id}" title="Click to pick a name from the list · double-click to type one"`}>${tog}<span>${esc(t.name)}</span></div><div class="track" style="width:${G.total}px">${inner}</div></div>`);
@@ -1213,7 +1310,7 @@ function timelineHTML(ro) {
       if (pi >= 0) {
         const pv = R.get(t.after), xe = xEnd(pv.end), xs = xOf(v.start);
         if (xe != null && xs != null) {
-          const y1 = LANEH + ROWH * pi + ROWH / 2, y2 = LANEH + ROWH * i + ROWH / 2;
+          const y1 = laneOff + ROWH * pi + ROWH / 2, y2 = laneOff + ROWH * i + ROWH / 2;
           const mx = Math.max(xe + 10, Math.min(xs - 10, xe + 10));
           const d = xs - 12 >= xe + 10 ? `M${xe} ${y1} H${xs - 12} V${y2} H${xs - 6}` : `M${xe} ${y1} H${xe + 10} V${(y1 + y2) / 2} H${xs - 12} V${y2} H${xs - 6}`;
           links.push(`<g data-link="${t.id}"><path class="hit" data-lh="${t.id}" d="${d}"/><path class="ln" d="${d}"/><circle class="lh" data-lh="${t.id}" cx="${xs - 6}" cy="${y2}" r="4.5"><title>Drag off to unlink, or onto another task to move the link</title></circle></g>`);
@@ -1221,7 +1318,7 @@ function timelineHTML(ro) {
       }
     }
   });
-  const bodyH = LANEH + ROWH * VIS.length, W = G.total;
+  const bodyH = laneOff + ROWH * VIS.length, W = G.total;
   return `<div class="tl" style="width:${LW + W + 24}px">
     <div class="tl-head">
       <div class="hrow"><div class="corner"></div><div class="track hr1" style="width:${W}px">${wk}</div></div>
@@ -1230,7 +1327,7 @@ function timelineHTML(ro) {
     <div class="tl-body" id="tlBody">
       <div class="cols" style="width:${W}px">${cols}</div>
       <svg class="links" width="${W}" height="${bodyH}" aria-hidden="true">${links.join("")}</svg>
-      <div class="lane" data-lane="rev"><div class="rlab">Reviews</div><div class="track" style="width:${W}px">${marks}</div></div>
+      ${withLane ? `<div class="lane" data-lane="rev" style="height:${laneH}px;margin-bottom:${LANEGAP}px" title="WIPs and deliveries: click an empty day to add a WIP"><div class="rlab">Reviews</div><div class="track" style="width:${W}px">${marks}</div></div>` : ""}
       ${rows.join("")}
       ${ro ? "" : `<div class="droprow" data-drop="end"><div class="rlab"></div><span class="hintx">${S.tasks.length ? "Drag a pill from the left to add a row · right-click anywhere for a new block" : "No tasks yet. Drag stages or people from the pills on the left, or right-click to make a new block."}</span></div>`}
     </div></div>`;
@@ -1277,10 +1374,10 @@ function calendarHTML() {
       // a block only covers the days that are worked: it stops before a skipped Saturday / Sunday (or a holiday) and carries on after
       const v = R.get(t.id), runs = []; let cur = null;
       wkDays.forEach((d, k) => { const on = d >= v.start && d <= v.end && isWork(d); if (on) { if (cur && cur.b === k - 1) cur.b = k; else runs.push(cur = { a: k, b: k }); } });
-      const sel = SEL && SEL.kind === "task" && SEL.id === t.id;
+      const sel = isPicked(t.id);
       runs.forEach(({ a, b }, j) => {
         const first = wkDays[a] === v.start, last = wkDays[b] === v.end, cont = !first;
-        g += `<div class="cbar ${cont ? "cl" : ""} ${!last ? "cr" : ""} ${sel ? "sel" : ""}" data-tid="${t.id}" title="${esc(`${t.name} · ${fmt(v.start)} to ${fmt(v.end)} · ${t.days} days`)}" style="grid-column:${a + 1}/${b + 2};grid-row:${ri + EL + 2};--c:var(--c${t.color})">${first ? `<span class="h" data-edge="start"></span>` : ""}<span class="lbl">${j === 0 ? esc(t.name) + (cont ? " (cont.)" : "") : ""}</span>${last ? `<span class="dbadge">${t.days}d</span><span class="h" data-edge="end"></span>` : ""}</div>`;
+        g += `<div class="cbar ${cont ? "cl" : ""} ${!last ? "cr" : ""} ${sel ? "sel" : ""} ${darkCls(t.color)}" data-tid="${t.id}" title="${esc(`${t.name} · ${fmt(v.start)} to ${fmt(v.end)} · ${t.days} days`)}" style="grid-column:${a + 1}/${b + 2};grid-row:${ri + EL + 2};--c:var(--c${t.color})">${first ? `<span class="h" data-edge="start"></span>` : ""}<span class="lbl">${j === 0 ? esc(t.name) + (cont ? " (cont.)" : "") : ""}</span>${last ? `<span class="dbadge">${t.days}d</span><span class="h" data-edge="end"></span>` : ""}</div>`;
       });
     });
     // the day lines, drawn on top so they show through every block
@@ -1409,13 +1506,30 @@ function projectPanel() {
 /* =========================================================
    Selection, toast
    ========================================================= */
+/* Several blocks at once (Christian 2026-11-13): Shift-click adds a block to the selection (or takes it out). Dragging any selected
+   block moves them all, dragging one's end lengthens or shortens them all by the same number of days, Delete removes them all.
+   A plain click on a block, or on empty space, goes back to one / none. */
+let MULTI = new Set();
+let VIEW_ONLY = false;   // opened from a Share link
+const isPicked = id => MULTI.has(id) || (SEL && SEL.kind === "task" && SEL.id === id);
+function pickedTasks() { const ids = new Set(MULTI); if (SEL && SEL.kind === "task") ids.add(SEL.id); return S.tasks.filter(t => ids.has(t.id)); }
+function shiftPick(id) {
+  if (SEL && SEL.kind === "task") MULTI.add(SEL.id);
+  if (MULTI.has(id)) MULTI.delete(id); else MULTI.add(id);
+  SEL = MULTI.size ? { kind: "task", id: MULTI.has(id) ? id : [...MULTI][MULTI.size - 1] } : null;
+  if (!MULTI.has(SEL && SEL.id)) MULTI.clear();
+  paintSel();
+  if (MULTI.size > 1) toast(`${MULTI.size} blocks selected. Drag one to move them all, drag an end to lengthen them all, Delete removes them.`);
+}
+function paintSel() {
+  document.querySelectorAll(".sel").forEach(e => e.classList.remove("sel"));
+  if (SEL && SEL.kind !== "task") { const attr = { review: "data-rid", delivery: "data-did", pill: "data-pill", rpill: "data-rpill", output: "data-out" }[SEL.kind]; document.querySelectorAll(`[${attr}="${SEL.id}"]`).forEach(e => { if (e.matches(".mk,.chip,.pill,.cev")) e.classList.add("sel"); }); }
+  pickedTasks().forEach(t => document.querySelectorAll(`[data-tid="${t.id}"]`).forEach(e => { if (e.matches(".bar,.cbar")) e.classList.add("sel"); }));
+}
 function select(kind, id) {
   SEL = kind ? { kind, id } : null;
-  document.querySelectorAll(".sel").forEach(e => e.classList.remove("sel"));
-  if (SEL) {
-    const attr = { task: "data-tid", review: "data-rid", delivery: "data-did", pill: "data-pill", rpill: "data-rpill", output: "data-out" }[kind];
-    document.querySelectorAll(`[${attr}="${id}"]`).forEach(e => { if (e.matches(".bar,.cbar,.trow,.mk,.chip,.pill")) e.classList.add("sel"); });
-  }
+  MULTI.clear();
+  paintSel();
   renderDetails();
 }
 let toastT;
@@ -1458,7 +1572,8 @@ function barUnder(e) { for (const el of document.elementsFromPoint(e.clientX, e.
 function overBoard(e) { const r = board.getBoundingClientRect(); return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom; }
 
 board.addEventListener("pointerdown", e => {
-  if (e.button !== 0 || e.target.closest(".inl,.dbadge,[data-sub],[data-colpick]")) return;
+  if (VIEW_ONLY) { if (e.type === "contextmenu") e.preventDefault(); return; }
+  if (e.button !== 0 || e.target.closest(".inl,.dbadge,[data-sub],[data-colpick],[data-skipday]")) return;
   const knob = e.target.closest("[data-knob]"), lh = e.target.closest("[data-lh]");
   if (knob || lh) {
     e.preventDefault(); e.stopPropagation();
@@ -1481,7 +1596,9 @@ board.addEventListener("pointerdown", e => {
   e.preventDefault();
   if (bar) {
     const t = taskById(bar.dataset.tid), h = e.target.closest(".h");
-    D = { kind: "task", id: t.id, edge: h ? h.dataset.edge : "move", anchor, x0: e.clientX, y0: e.clientY, orig: { ...R.get(t.id) }, snap: JSON.stringify(S), moved: false, onLabel: !!e.target.closest(".lbl") };
+    D = { kind: "task", id: t.id, edge: h ? h.dataset.edge : "move", anchor, x0: e.clientX, y0: e.clientY, orig: { ...R.get(t.id) }, snap: JSON.stringify(S), moved: false, onLabel: !!e.target.closest(".lbl"), shift: e.shiftKey };
+    const grp = pickedTasks();
+    if (!e.shiftKey && grp.length > 1 && grp.some(x => x.id === t.id)) { D.group = grp.map(x => x.id); D.origs = Object.fromEntries(grp.map(x => [x.id, { ...R.get(x.id) }])); }
   } else {
     const rid = mk.dataset.rid, did = mk.dataset.did;
     const item = rid ? S.reviews.find(r => r.id === rid) : S.deliveries.find(r => r.id === did);
@@ -1510,7 +1627,18 @@ window.addEventListener("pointermove", e => {
   if (D.kind === "link") { drawRubber(e); return; }
   if (D.kind === "pal") { palMove(e); return; }
   const d = dateAt(e); if (!d) return;
-  if (D.kind === "task") {
+  if (D.kind === "task" && D.group) {   // several selected blocks: the same move or the same change of length for each
+    const delta = wdSteps(D.anchor, d);
+    S = JSON.parse(D.snap); STORE.list[S.id] = S; R = resolve();   // from where they all started, so linked blocks aren't pushed twice
+    const order = D.group.map(id => taskById(id)).filter(Boolean).sort((a, b) => D.origs[a.id].start < D.origs[b.id].start ? -1 : 1);
+    order.forEach(t => {
+      const o = D.origs[t.id];
+      if (D.edge === "move") setStart(t, addWD(o.start, delta));
+      else if (D.edge === "end") { let ne = addWD(o.end, delta); if (ne < o.start) ne = o.start; setEnd(t, ne); }
+      else { let ns = addWD(o.start, delta); if (ns > o.end) ns = o.end; setStart(t, ns); R = resolve(); setEnd(t, o.end); }
+      R = resolve();
+    });
+  } else if (D.kind === "task") {
     const t = taskById(D.id); if (!t) return;
     const delta = wdSteps(D.anchor, d);
     if (D.edge === "move") {
@@ -1539,7 +1667,9 @@ window.addEventListener("pointerup", e => {
   const d = D; D = null; SUPPRESS = Date.now(); document.body.style.cursor = ""; document.body.classList.remove("linking");
   if (d.kind === "link") return finishLink(d, e);
   if (d.kind === "pal") return finishPal(d, e);
-  if (d.moved) { if (d.snap !== JSON.stringify(S)) { UNDO.push(d.snap); REDO = []; save(); } SEL = { kind: d.kind, id: d.id }; render(); }
+  if (d.moved) { if (d.snap !== JSON.stringify(S)) { UNDO.push(d.snap); REDO = []; save(); } SEL = { kind: d.kind, id: d.id }; if (!d.group) MULTI.clear(); render(); }
+  else if (d.kind === "task" && d.shift) shiftPick(d.id);
+  else if (d.kind === "review") { select("review", d.id); wipTypeMenu(d.id, e.clientX, e.clientY); }   // click a WIP: switch it to another kind
   else select(d.kind, d.id);
 });
 function finishLink(d, e) {
@@ -1562,7 +1692,7 @@ function finishLink(d, e) {
 function palInfo(el) {
   const pre = el.dataset.pre;
   if (pre === "crew") { const n = el.dataset.name; return { type: "task", name: n, color: presetColor(n), days: 5 }; }
-  if (pre === "custom") return { type: "task", name: "New block", color: 9, days: 5, nameIt: true };
+  if (pre === "custom") return { type: "task", name: "New block", color: 7, days: 5, nameIt: true };
   if (pre === "cust") { const c = (S.customs || []).find(x => x.name === el.dataset.name) || { color: 9 }; return { type: "task", name: el.dataset.name, color: c.color, days: 5 }; }
   if (pre === "holiday" || pre === "dayoff") return { type: "holiday", name: pre === "holiday" ? "Public holiday" : "Day off" };
   if (pre === "workday") return { type: "workday", name: "Working weekend day" };
@@ -1632,8 +1762,17 @@ function finishPal(d, e) {
 
 /* clicks, inline edits */
 board.addEventListener("click", e => {
+  if (VIEW_ONLY) { if (e.type === "contextmenu") e.preventDefault(); return; }
   const badge = e.target.closest("button.dbadge[data-days]");
   if (badge) return inlineEdit(badge, "days");
+  const sk = e.target.closest("[data-skipday]");   // a greyed weekend / holiday inside a block
+  if (sk) {
+    const d = sk.dataset.skipday, items = [{ head: fmt(d) }];
+    if (isHoliday(d)) items.push({ label: "Remove the holiday (work this day)", run: () => change(() => { S.holidays = S.holidays.filter(h => h.date !== d); (S.holidayOff = S.holidayOff || []).push(d); }) });
+    else if (isWeekend(d)) items.push({ label: "Don't skip (work this day)", run: () => change(() => { if (!S.workdays.includes(d)) S.workdays.push(d); }) },
+      { label: "Don't skip any weekends", run: () => change(() => { S.skipWeekends = false; }) });
+    return menu(items, e.clientX, e.clientY);
+  }
   const cp = e.target.closest("[data-colpick]");   // the little rectangle on a block: pick its colour
   if (cp) { const t = taskById(cp.dataset.colpick), r = cp.getBoundingClientRect(); if (t) menu([{ head: "Colour" }, { swatch: t.color, pick: c => change(() => { t.color = c; }) }], r.left, r.bottom + 4); return; }
   const sb = e.target.closest("[data-sub]");
@@ -1675,6 +1814,7 @@ function renameLabel(lab) {
   inp.addEventListener("pointerdown", ev => ev.stopPropagation());
 }
 board.addEventListener("dblclick", e => {
+  if (VIEW_ONLY) { if (e.type === "contextmenu") e.preventDefault(); return; }
   const lab = e.target.closest("[data-lab]");
   if (lab) { clearTimeout(labT); return renameLabel(lab); }
   const lbl = e.target.closest(".bar .lbl");
@@ -1689,6 +1829,15 @@ board.addEventListener("dblclick", e => {
     });
   }
 });
+// the kinds of WIP, to switch one to another (or repeat / delete it)
+function wipTypeMenu(id, x, y) {
+  const r = S.reviews.find(v => v.id === id); if (!r) return;
+  menu([{ head: rvText(r.type) + " · " + fmt(r.date) },
+    ...S.reviewPills.map(p => ({ label: rvText(p.name), on: p.name === r.type, run: () => change(() => { r.type = p.name; r.color = p.color; }) })),
+    { sep: true },
+    { label: "Repeat next week", run: () => change(() => S.reviews.push({ ...r, id: uid("r"), date: addDays(r.date, 7) })) },
+    { label: "Delete", danger: true, run: () => change(() => { S.reviews = S.reviews.filter(v => v !== r); SEL = null; }) }], x, y);
+}
 // types a block's name on the block itself (a narrow block widens its box to fit)
 function renameBar(id) {
   const l = board.querySelector(`.bar[data-tid="${id}"] .lbl`); if (!l) return;
@@ -1839,6 +1988,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && MENU) { cl
 window.addEventListener("blur", closeMenu);
 
 board.addEventListener("contextmenu", e => {
+  if (VIEW_ONLY) { if (e.type === "contextmenu") e.preventDefault(); return; }
   if (VIEW === "calendar") {   // right-click a Saturday or Sunday: Don't skip (work it) / Skip again
     const el = e.target.closest("[data-date]"), d = el && el.dataset.date; if (!d) return;
     e.preventDefault();
@@ -1924,6 +2074,7 @@ async function holidaysFor(cc, year) {
 }
 let holRun = 0;
 async function autoHolidays() {
+  if (VIEW_ONLY) return;
   if (!S || !S.country) return;
   const run = ++holRun, sid = S.id, cc = S.country, days = dayRange(), y0 = +days[0].slice(0, 4), y1 = +days[days.length - 1].slice(0, 4);
   let found = [];
@@ -2037,7 +2188,44 @@ hsT.addEventListener("pointerdown", e => {
 });
 hs.addEventListener("pointerdown", e => { if (e.target !== hs) return; const r = hsT.getBoundingClientRect(); board.scrollBy({ left: (e.clientX < r.left ? -1 : 1) * board.clientWidth * .9, behavior: "smooth" }); });
 hs.addEventListener("wheel", e => { e.preventDefault(); board.scrollLeft += (e.deltaY || e.deltaX); }, { passive: false });
-$("themeSel").onchange = e => change(() => { S.theme = e.target.value; });
+$("themeSel").onchange = e => { change(() => { S.theme = e.target.value; }); if (S.theme === "own") ownThemeEditor(); };
+/* The colour editor: 2 to 4 colours, then saturation for the whole theme. Changes show as you make them; one undo step each. */
+function ownThemeEditor() {
+  closeMenu();
+  if (!Array.isArray(S.own) || S.own.length < 2) S.own = themeColors(S.theme === "own" ? "studio" : S.theme).filter((_, i) => i === 0 || i === 9);
+  const m = document.createElement("div"); m.className = "cmenu owned"; MENU = m;
+  const draw = () => {
+    m.innerHTML = `<div class="mh">Your own colours</div>
+      <div class="ownrow">${S.own.map((c, i) => `<label class="ownc" title="Colour ${i + 1}"><input type="color" data-own="${i}" value="${c}">${S.own.length > 2 ? `<button type="button" class="x" data-ownrm="${i}" aria-label="Remove colour ${i + 1}">×</button>` : ""}</label>`).join("")}
+        ${S.own.length < 4 ? `<button type="button" class="ownadd" data-ownadd title="Add a colour (up to 4)">+</button>` : ""}</div>
+      <div class="ownramp">${ownColors(S.own).map(c => `<i style="background:${saturate(c, S.sat ?? 1)}"></i>`).join("")}</div>
+      <div class="mh">Saturation</div>
+      <div class="ownsat"><span>Muted</span><input type="range" min="0" max="2" step="0.05" value="${S.sat ?? 1}" data-sat aria-label="Saturation"><span>Vivid</span></div>
+      <div class="ownfoot"><button type="button" data-ownreset>Normal saturation</button><button type="button" data-owndone class="on">Done</button></div>`;
+  };
+  const live = () => { applyTheme(); const r = m.querySelector(".ownramp"); if (r) r.innerHTML = ownColors(S.own).map(c => `<i style="background:${saturate(c, S.sat ?? 1)}"></i>`).join(""); };
+  // live edits change S as you drag; each finished change becomes one undo step back to how it was before it
+  let before = JSON.stringify(S);
+  const settle = () => { const now = JSON.stringify(S); if (now !== before) { UNDO.push(before); REDO = []; before = now; save(); render(); } };
+  const commit = fn => { fn(); S.theme = "own"; settle(); };
+  draw(); document.body.appendChild(m);
+  const r = $("ramp").getBoundingClientRect(); m.style.left = Math.max(4, r.left) + "px"; m.style.top = (r.bottom + 6) + "px";
+  m.addEventListener("input", e => {
+    const el = e.target;
+    if (el.dataset.own != null) { S.own[+el.dataset.own] = el.value; S.theme = "own"; live(); }
+    else if (el.dataset.sat != null) { S.sat = +el.value; live(); }
+  });
+  m.addEventListener("change", settle);
+  m.addEventListener("click", e => {
+    const t = e.target;
+    if (t.closest("[data-ownadd]")) { commit(() => S.own.push(S.own[S.own.length - 1])); draw(); }
+    else if (t.closest("[data-ownrm]")) { const i = +t.closest("[data-ownrm]").dataset.ownrm; commit(() => S.own.splice(i, 1)); draw(); }
+    else if (t.closest("[data-ownreset]")) { S.sat = 1; settle(); draw(); }
+    else if (t.closest("[data-owndone]")) { closeMenu(); return; }
+    MENU = m; if (!m.isConnected) document.body.appendChild(m);
+  });
+}
+$("ramp").onclick = ownThemeEditor;
 $("undoBtn").onclick = undo; $("redoBtn").onclick = redo;
 document.addEventListener("keydown", e => {
   const inField = e.target.matches && e.target.matches("input,textarea,select");
@@ -2046,7 +2234,8 @@ document.addEventListener("keydown", e => {
   else if ((e.ctrlKey || e.metaKey) && !inField && e.key.toLowerCase() === "y") { e.preventDefault(); redo(); }
   else if (!inField && (e.key === "Delete" || e.key === "Backspace") && SEL && ["task", "review", "delivery"].includes(SEL.kind)) {
     e.preventDefault();
-    const o = selObj();
+    const o = selObj(), many = SEL.kind === "task" ? pickedTasks() : [];
+    if (many.length > 1) { change(() => { many.forEach(t => { if (taskById(t.id)) removeTask(t); }); SEL = null; MULTI.clear(); }); return toast(`Deleted ${many.length} blocks. Ctrl+Z brings them back.`); }
     change(() => {
       if (SEL.kind === "task") removeTask(o);
       else if (SEL.kind === "review") S.reviews = S.reviews.filter(r => r !== o);
@@ -2080,7 +2269,8 @@ try { setSide(localStorage.getItem(KEY + ":sideOpen") === "1"); } catch (e) { se
 })();
 
 /* export / import */
-$("dataBtn").onclick = () => { $("dataTxt").value = JSON.stringify(S, null, 2); $("dataMsg").textContent = ""; $("dataDlg").hidden = false; };
+$("dataBtn").onclick = () => {
+  $("dataT").textContent = "Export / import"; $("dataDlg").querySelector("header p").textContent = "This JSON is the whole schedule. Kontroll will read the same format."; $("dataImport").hidden = false; $("dataTxt").rows = 14; $("dataDlg").querySelector(".mfoot .grow").textContent = "To import, paste a schedule's JSON above, then choose Import."; $("dataTxt").value = JSON.stringify(S, null, 2); $("dataMsg").textContent = ""; $("dataDlg").hidden = false; };
 $("dataClose").onclick = () => { $("dataDlg").hidden = true; };
 $("dataCopy").onclick = async () => {
   try { await navigator.clipboard.writeText($("dataTxt").value); $("dataMsg").textContent = "Copied."; }
@@ -2508,30 +2698,145 @@ window.addEventListener("beforeunload", e => { if (DIRTY.size && accessToken) { 
 
 /* Print / PDF: the same page as on screen — title block, deliverables, then the schedule fitted to the width of A4 landscape
    (open embedded schedules print open). Save as PDF in the print window. */
-function printHTML() {
-  const keep = SEL, keepW = DAYW, keepG = GEO; SEL = null; let body;
+/* Print / PDF (Christian 2026-11-13: "it does a pretty bad job … landscape … it just needs to look better"). A4 landscape, always.
+   Timeline: page 1 is the title block, the deliverables and as many rows as fit; further pages repeat the weeks header and carry
+   on with the rows; every page has a footer (project / client · page n of m). Each page is a fixed A4 sheet and anything that
+   would spill over is scaled down to fit it, so a page never breaks in the middle. Calendar view prints the calendar instead,
+   whole weeks only. */
+const PRINT_W = 1047, PRINT_H = 714;   // A4 landscape less 10 mm margins, in CSS pixels
+// caps: {cap1, capN} = rows on page 1 / on each later page, measured from a first layout (see the Print button); {all:true} = one page
+function printHTML(caps = {}) {
+  const keep = SEL, keepW = DAYW, keepG = GEO, keepL = LANEH, keepM = MULTI; SEL = null; MULTI = new Set(); let body;
   try {
     R = resolve();
-    const n = dayRange().length; DAYW = Math.max(4, (1040 - labw() - 24) / n);
-    body = `<div class="doc print"><div class="projhead">${headHTML(true)}</div><div class="deliv">${delivHTML(true)}</div><div class="board">${timelineHTML(true)}</div></div>`;
-  } finally { SEL = keep; DAYW = keepW; GEO = keepG; }
+    const head = `<div class="projhead">${headHTML(true)}</div><div class="deliv">${delivHTML(true)}</div>`;
+    const foot = (i, n) => `<div class="pfoot"><span>${esc(S.name)}${S.client ? " / " + esc(S.client) : ""}</span><span>${n > 1 ? `Page ${i + 1} of ${n}` : esc(fmt(projStart()) + " to " + fmt(projEnd()))}</span></div>`;
+    if (VIEW === "calendar") {
+      body = `<div class="doc print calprint">${head}<div class="board">${calendarHTML()}</div>${foot(0, 1)}</div>`;
+    } else {
+      DAYW = Math.max(4, (PRINT_W - 24) / dayRange().length);
+      timelineHTML(true, { to: 0 });   // works out the deliverables / WIP band's height (LANEH)
+      const nOut = S.outputs.length, dRows = nOut <= 3 ? Math.max(1, nOut) : nOut <= 6 ? 3 : Math.ceil(nOut / 2);
+      const headH = 150 + dRows * 30 + 40, weeksH = 90, footH = 30;
+      const total = visTasks().length;
+      let cap1 = caps.cap1 || Math.max(3, Math.floor((PRINT_H - headH - weeksH - LANEH - footH) / ROWH)), capN = caps.capN || Math.max(6, Math.floor((PRINT_H - weeksH - footH - 40) / ROWH));
+      if (caps.all || total <= Math.floor(cap1 * 1.2)) cap1 = total;   // nearly fits: one page, shrunk a little, beats a second page with two rows
+      const parts = [{ from: 0, to: Math.min(total, cap1) }];
+      for (let from = parts[0].to; from < total; from += capN) parts.push({ from, to: Math.min(total, from + capN), lane: false });
+      body = `<div class="doc print">${parts.map((p, i) => `<section class="sheet"><div class="sheet-in">${i === 0 ? head : `<div class="contd">${esc(S.name)} <span>continued</span></div>`}<div class="board">${timelineHTML(true, p)}</div>${foot(i, parts.length)}</div></section>`).join("")}</div>`;
+    }
+  } finally { SEL = keep; DAYW = keepW; GEO = keepG; LANEH = keepL; MULTI = keepM; }
   const css = [...document.querySelectorAll("style")].map(x => x.textContent).join("\n");
   const vars = document.documentElement.getAttribute("style") || "";
   const fonts = document.querySelector('link[rel="stylesheet"]');
-  return '<!doctype html><html lang="en" style="' + esc(vars) + '"><head><meta charset="utf-8"><title>' + esc(S.name) + '</title>' + (fonts ? fonts.outerHTML : "") + '<style>' + css +
-    '\n@page{size:A4 landscape;margin:10mm}\nhtml,body{height:auto;background:var(--surface)}\nbody{display:block;overflow:visible;-webkit-print-color-adjust:exact;print-color-adjust:exact}\n.doc.print{overflow:visible;padding:0;gap:14px}\n.board{overflow:visible}\n.ttl .pname{font-size:46px}\n.ttl .pclient{font-size:20px}\n.trow{break-inside:avoid}\n.bar,.mk{cursor:default}\n.bar .h,.knob,.subico,svg.links circle.lh{display:none}\n.rlab{cursor:default}\n</style></head><body>' + body + '</body></html>';
+  return '<!doctype html><html lang="en" style="' + esc(vars) + '"><head><meta charset="utf-8"><title>' + esc(S.name) + '</title>' + (fonts ? fonts.outerHTML : "") + '<style>' + css + `
+@page{size:A4 landscape;margin:10mm}
+html,body{height:auto;margin:0;background:var(--surface)}
+body{display:block;overflow:visible;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.doc.print{display:block;overflow:visible;padding:0;width:${PRINT_W}px}
+.sheet{width:${PRINT_W}px;height:${PRINT_H}px;overflow:hidden;break-after:page;page-break-after:always}
+.sheet:last-child{break-after:auto;page-break-after:auto}
+.sheet-in{width:${PRINT_W}px;min-height:${PRINT_H}px;display:flex;flex-direction:column;gap:12px;transform-origin:0 0}
+.print .projhead{gap:20px}
+.print .ttl .pname{font-size:44px}
+.print .ttl .pclient{font-size:18px;margin-top:4px}
+.print .fact .fv{font-size:16px}
+.print .deliv{padding:14px 18px 12px}
+.print .board{overflow:visible;flex:none}
+.print .tl{width:auto!important}
+.contd{font-weight:900;font-size:20px;text-transform:uppercase;letter-spacing:-.01em}
+.contd span{font-weight:300;font-size:13px;letter-spacing:.24em;margin-left:10px;color:var(--ink-2)}
+.pfoot{margin-top:auto;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);padding-top:6px;border-top:1px solid var(--line-2)}
+.calprint{display:flex!important;flex-direction:column;gap:12px}
+.calprint .cal{min-width:0}
+.calprint .wkt{break-after:avoid;page-break-after:avoid}
+.calprint .wk{break-inside:avoid;page-break-inside:avoid}
+.calprint .pfoot{margin-top:8px}
+.bar,.mk,.cbar,.cev{cursor:default}
+.bar .h,.knob,.subico,.cpick,svg.links circle.lh,.cbar .h,.lanetag{display:none}
+.lane{cursor:default}
+</style></head><body>` + body + '</body></html>';
+}
+// shrinks any printed page whose content is taller (or wider) than an A4 sheet, so nothing spills onto the next page
+function fitPrintPages(doc) {
+  doc.querySelectorAll(".sheet-in").forEach(s => {
+    const k = Math.min(1, PRINT_H / s.scrollHeight, PRINT_W / s.scrollWidth);
+    if (k < 1) { s.style.width = PRINT_W / k + "px"; s.style.minHeight = PRINT_H / k + "px"; s.style.transform = `scale(${k})`; }
+  });
+  const cal = doc.querySelector(".calprint"); if (cal && cal.scrollWidth > PRINT_W) cal.style.zoom = PRINT_W / cal.scrollWidth;
 }
 $("pdfBtn").onclick = () => {
   if (!S) return;
   const f = document.createElement("iframe");
-  f.style.cssText = "position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden";
-  f.onload = () => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast("Printing isn't available here."); } setTimeout(() => f.remove(), 60000); };
-  f.srcdoc = printHTML(); document.body.appendChild(f);
+  // laid out off-screen at the page's width so the pages can be measured and fitted before printing
+  f.style.cssText = `position:fixed;left:-20000px;top:0;width:${PRINT_W}px;height:${PRINT_H}px;border:0`;
+  // first layout: everything on one sheet, to measure how much room the title, deliverables, weeks header and band really take
+  let pass = VIEW === "calendar" ? 2 : 1;
+  f.onload = async () => {
+    try {
+      const d = f.contentDocument; try { await d.fonts.ready; } catch (e) {}
+      if (pass === 1) {
+        pass = 2;
+        // the whole schedule fits on one sheet at 70% size or more: keep it on one page
+        const one = d.querySelector(".sheet-in");
+        if (one && Math.min(PRINT_H / one.scrollHeight, PRINT_W / one.scrollWidth) >= .7) { fitPrintPages(d); f.contentWindow.focus(); f.contentWindow.print(); setTimeout(() => f.remove(), 60000); return; }
+        const top = el => el ? el.getBoundingClientRect().top : 0, row = d.querySelector(".trow"), foot = d.querySelector(".pfoot");
+        const firstRow = row ? top(row) - top(d.querySelector(".sheet-in")) : 300, footH = foot ? foot.getBoundingClientRect().height + 14 : 30;
+        const weeks = d.querySelector(".tl-head"), weeksH = weeks ? weeks.getBoundingClientRect().height : 90, contdH = 40;
+        const cap1 = Math.max(3, Math.floor((PRINT_H - firstRow - footH) / ROWH)), capN = Math.max(6, Math.floor((PRINT_H - contdH - weeksH - footH - 12) / ROWH));
+        f.srcdoc = printHTML({ cap1, capN }); return;
+      }
+      fitPrintPages(d);
+      f.contentWindow.focus(); f.contentWindow.print();
+    } catch (e) { toast("Printing isn't available here."); }
+    setTimeout(() => f.remove(), 60000);
+  };
+  f.srcdoc = printHTML({ all: VIEW !== "calendar" }); document.body.appendChild(f);
 };
 
 /* boot */
-load(); render(); DAYW = fitDayW(); renderBoard(); renderChat(); initAI();   // opens with the whole job in view, like the reference layouts
-if (window.gsiLoaded) window.initGoogle();
+(async () => {
+  const shared = await readShareLink();
+  if (shared) { VIEW_ONLY = true; S = shared; migrate(S); document.body.classList.add("viewonly"); $("voNote").hidden = false; document.title = S.name + " · Schedule"; }
+  else load();
+  render(); DAYW = fitDayW(); renderBoard(); renderChat(); initAI();
+  if (!VIEW_ONLY && window.gsiLoaded) window.initGoogle();
+})();
+/* Share (Christian 2026-11-13): a link with the schedule packed into it (compressed, after the #, so it never reaches a server).
+   It is a copy as of now: whoever opens it sees the page, the timeline and the calendar and can print, but can't change anything.
+   After more changes, make a new link. */
+async function packShare(obj) {
+  const { driveId, updatedAt, example, ...body } = obj;
+  const bytes = new TextEncoder().encode(JSON.stringify(body));
+  const cs = new Blob([bytes]).stream().pipeThrough(new CompressionStream("deflate-raw"));
+  const buf = new Uint8Array(await new Response(cs).arrayBuffer());
+  let bin = ""; for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode.apply(null, buf.subarray(i, i + 0x8000));
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+async function readShareLink() {
+  const m = location.hash.match(/^#view=([A-Za-z0-9_-]+)$/); if (!m) return null;
+  try {
+    const b64 = m[1].replace(/-/g, "+").replace(/_/g, "/"), bin = atob(b64 + "===".slice((b64.length + 3) % 4));
+    const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+    const ds = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    const v = JSON.parse(await new Response(ds).text());
+    if (!v || !Array.isArray(v.tasks) || !validDate(v.start)) throw new Error("not a schedule");
+    return v;
+  } catch (e) { setTimeout(() => toast("This share link couldn't be read. Ask for a new one."), 300); return null; }
+}
+$("shareBtn").onclick = async () => {
+  if (!S) return;
+  let url;
+  try { url = location.origin + location.pathname + "#view=" + await packShare(S); }
+  catch (e) { return toast("Sharing isn't available in this browser."); }
+  const box = $("dataDlg");
+  $("dataT").textContent = "Share this schedule";
+  box.querySelector("header p").textContent = "Send this link. It opens this schedule as it is now, read-only: the page, timeline and calendar, and they can print it. After more changes, make a new link.";
+  $("dataTxt").value = url; $("dataTxt").rows = 4; $("dataMsg").textContent = "";
+  $("dataImport").hidden = true; box.querySelector(".mfoot .grow").textContent = url.length > 8000 ? "A long link: it works in browsers, but some email apps cut long links, so a chat message is safer." : "";
+  box.hidden = false;
+  try { await navigator.clipboard.writeText(url); $("dataMsg").textContent = "Copied to the clipboard."; } catch (e) {}
+};   // opens with the whole job in view, like the reference layouts
 window.addEventListener("resize", () => { clearTimeout(window.__rz); window.__rz = setTimeout(renderBoard, 120); });
 })();
 </script>
