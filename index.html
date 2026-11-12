@@ -285,7 +285,14 @@ svg.rubber circle{fill:var(--accent)}
 .sugg button:hover{color:var(--ink);border-color:var(--ink-3)}
 #aiForm{border-top:1px solid var(--line-2);padding:10px 14px 14px;display:flex;flex-direction:column;gap:8px}
 #aiForm textarea{width:100%;min-height:62px}
-.aibar{display:flex;align-items:center;gap:8px}
+.aibar{display:flex;align-items:center;gap:8px;padding-right:52px}   /* room for Kontroll's chat bubble in the bottom-right corner */
+.aiic{width:30px;padding:0;justify-content:center;font-weight:700}
+.aiic.live{color:#fff;background:var(--danger)}
+.aimodel{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2)}
+.aimodel select{flex:1;min-width:0;height:26px;font-size:12px}
+.msg.help{align-self:stretch;max-width:none;background:var(--panel);border:1px solid var(--line-2);font-size:12.5px}
+.msg.help b{font-weight:600}
+.msg.help ul{margin:6px 0 0;padding-left:18px}
 .aibar .st{flex:1;font-size:12px;color:var(--ink-2)}
 
 /* wizard */
@@ -300,6 +307,15 @@ svg.rubber circle{fill:var(--accent)}
 .wz-body{flex:1;padding:22px 22px 10px;display:flex;flex-direction:column;gap:18px}
 .wz-body h2{margin:0;font-size:22px;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
 .wz-body .lead{margin:-10px 0 0;color:var(--ink-2)}
+.optrow{display:flex;align-items:center;gap:10px;margin-top:6px}
+.optrow>span{width:110px;font-size:12.5px;color:var(--ink-2)}
+.stgrid{display:flex;flex-wrap:wrap;gap:6px}
+.stchip{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px 0 8px;border-radius:6px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-3);cursor:pointer;font-size:12.5px}
+.stchip i{width:10px;height:10px;border-radius:2px;background:var(--line-2)}
+.stchip small{font-size:10.5px;color:var(--ink-3)}
+.stchip.on{color:var(--ink);background:color-mix(in srgb,var(--c) 22%,var(--surface));border-color:color-mix(in srgb,var(--c) 70%,transparent)}
+.stchip.on i{background:var(--c)}
+.stchip.on small{color:var(--ink-2)}
 .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
 .type{display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;padding:12px 14px;border:1px solid var(--line-2);border-radius:10px;background:var(--panel);cursor:pointer}
 .type:hover{border-color:var(--ink-3)}
@@ -313,6 +329,14 @@ svg.rubber circle{fill:var(--accent)}
 .role{display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--panel)}
 .role.off{opacity:.55}
 .role .rn{flex:1;min-width:0;font-size:12.5px}
+.role{flex-wrap:wrap}
+.pdurs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 8px;padding-top:4px}
+.pdur{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--ink-2)}
+.pdur input{width:52px;height:22px;border:1px solid var(--line-2);border-radius:4px;background:var(--surface);padding:0 4px;font:inherit;color:var(--ink);text-align:right}
+.pdur .pfull{display:inline-flex;align-items:center;gap:3px;margin-left:4px;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.pdur .pfull input{width:auto;height:auto;margin:0}
+.pdur input:disabled{opacity:.4}
+.pdur input::placeholder{color:var(--ink-3)}
 .step{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:6px;overflow:hidden}
 .step button{width:24px;height:24px;border:0;background:var(--raise);cursor:pointer}
 .step button:hover{background:var(--raise-2)}
@@ -321,6 +345,15 @@ svg.rubber circle{fill:var(--accent)}
 .days button{width:40px;height:26px;border:1px solid var(--line-2);border-radius:6px;background:var(--raise);color:var(--ink-2);cursor:pointer;font-size:12px}
 .days button.on{background:var(--accent);color:var(--bar-ink);border-color:transparent;font-weight:600}
 .outrow{display:grid;grid-template-columns:62px 1fr 150px 24px;gap:6px;align-items:center}
+/* the job as a green line under each deliverable; the picked day is orange */
+.otlrow{display:flex;align-items:center;gap:10px;margin:2px 30px 8px 68px}
+.otl{flex:1;display:flex;height:14px;border-radius:3px;overflow:hidden;background:color-mix(in srgb,var(--go) 22%,var(--surface))}
+.otl i{flex:1;min-width:1px;background:color-mix(in srgb,var(--go) 55%,var(--surface));box-shadow:inset -1px 0 0 rgba(255,255,255,.35);cursor:pointer}
+.otl i.nw{flex:.45;background:color-mix(in srgb,var(--go) 18%,var(--surface))}
+.otl i.mon{box-shadow:inset 1px 0 0 rgba(0,0,0,.25),inset -1px 0 0 rgba(255,255,255,.35)}
+.otl i:hover{background:var(--go)}
+.otl i.on{background:#e8892b;box-shadow:0 0 0 1px #b8641a inset}
+.otl-cap{flex:none;font-family:var(--mono);font-size:11px;color:var(--ink-2);white-space:nowrap;min-width:170px}
 .wsum{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
 .wz-foot{padding:14px 22px 18px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--line)}
 .wz-foot .grow{flex:1}
@@ -401,7 +434,7 @@ body.side-off .side,body.side-off .splitter{display:none}
 .cmenu .ownfoot button.on::after{content:none}
 .cmenu .ownfoot button.on{background:#2f6fde;color:#fff;border-color:transparent}
 /* Timeline / Calendar sits under the deliverables, on the right */
-.viewrow{display:flex;justify-content:flex-end;margin:-6px 0 -6px}
+.viewrow{display:flex;justify-content:flex-start;margin:-6px 0 -6px}
 /* buttons that were dark text on dark grey: a clear blue with white text */
 .btn.pri{background:#2f6fde;color:#fff;border-color:transparent}
 .btn.pri:hover{filter:brightness(1.1)}
@@ -473,8 +506,8 @@ body.viewonly .bar,body.viewonly .mk,body.viewonly .cbar,body.viewonly .cev,body
 .wipday{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--c) 30%,transparent);box-shadow:inset 0 -2px 0 color-mix(in srgb,var(--c) 85%,var(--ink));pointer-events:none}
 .trow{border-bottom:1px solid var(--line)}
 /* skipped weekends and holidays inside a block: heavy grey with a hint of the block's colour */
-.bar .skip{position:absolute;top:0;bottom:0;background:color-mix(in srgb,#9a978f 78%,var(--c));cursor:pointer;z-index:0}
-.bar .skip:hover{background:color-mix(in srgb,#9a978f 60%,var(--c))}
+.bar .skip{position:absolute;top:0;bottom:0;background:rgba(40,38,34,.11);cursor:pointer;z-index:0}
+.bar .skip:hover{background:rgba(40,38,34,.2)}
 .bar>.h,.bar>.lbl,.bar>.dbadge,.bar>.cpick,.bar>.subico,.bar>.inl{position:relative;z-index:1}
 .droprow{height:46px}
 .droprow .hintx{position:sticky;left:calc(var(--labw) + 8px);align-self:center;font-size:12px;color:var(--ink-3);pointer-events:none}
@@ -489,9 +522,9 @@ body.viewonly .bar,body.viewonly .mk,body.viewonly .cbar,body.viewonly .cev,body
 .cal .cbg.wknd,.cal .cbg.nw{background:var(--nonwork)}
 .cal .cbg.hol{background:repeating-linear-gradient(135deg,var(--hatch) 0 2px,transparent 2px 9px),var(--nonwork)}
 .cal .cbg.today{box-shadow:inset 0 0 0 1.5px var(--ink-3)}
-.cal .dh{background:var(--surface);padding:4px 2px;display:flex;flex-direction:column;align-items:stretch;gap:3px;min-width:0}
+.cal .dh{background:transparent;padding:0;display:flex;flex-direction:column;align-items:stretch;gap:3px;min-width:0}
 /* day names: solid 25% grey, bold black text, no outline; Saturday and Sunday solid 50% grey with white text */
-.cal .dh span{display:block;background:#bfbfbf;color:#000;border-radius:0;padding:4px 6px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.cal .dh span{display:block;background:#bfbfbf;color:#000;border-radius:0;padding:11px 6px;box-shadow:inset -1px 0 0 rgba(0,0,0,.07);font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
 .cal .dh.wkend span{background:#808080;color:#fff}
 .cal .dh.off:not(.wkend) span{background:#a9a9a9}
 .cal .dh em{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -500,7 +533,8 @@ body.viewonly .bar,body.viewonly .mk,body.viewonly .cbar,body.viewonly .cev,body
 .cev.rv{background:color-mix(in srgb,var(--c) 45%,var(--surface));color:var(--ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 80%,var(--ink))}
 .cev.dl{flex-basis:100%;background:var(--go);color:#fff}
 .cev.sel{box-shadow:inset 0 0 0 2px var(--ink)}
-.cal .cbar{margin:2px 0;opacity:.92}
+.cal .cbar{margin:0 0 1px;position:relative}
+.cal .cbar .rep{position:absolute;top:0;bottom:0;display:flex;align-items:center;padding:0 4px;white-space:nowrap;pointer-events:none}
 .vline{border-left:1px solid rgba(20,18,14,.28);pointer-events:none;z-index:4}
 /* embedded schedules */
 .subtog{flex:none;width:16px;height:16px;margin-right:4px;border:0;background:transparent;color:var(--ink-2);cursor:pointer;padding:0;font-size:11px;line-height:1}
@@ -514,7 +548,32 @@ body.viewonly .bar,body.viewonly .mk,body.viewonly .cbar,body.viewonly .cev,body
 /* WIPs read as words in a box, not symbols */
 .mk.rv{top:50%;height:20px;width:auto;margin:-10px 0 0;transform:translateX(-50%);padding:0 6px;border-radius:2px;background:color-mix(in srgb,var(--c) 30%,var(--surface));border:1.5px solid color-mix(in srgb,var(--c) 75%,var(--ink));color:var(--ink);font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;display:flex;align-items:center;white-space:nowrap;box-shadow:none;text-transform:uppercase}
 .mk.rv.sel{box-shadow:0 0 0 2px var(--ink)}
-.holtag{position:absolute;top:4px;transform:translateX(-50%);font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase;white-space:nowrap;pointer-events:none;z-index:3;background:var(--surface);padding:0 3px}
+.holtag{position:absolute;top:4px;transform:translateX(-50%);font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase;white-space:nowrap;z-index:3;background:var(--surface);padding:0 3px;cursor:pointer;border-radius:2px}
+.holtag:hover{color:var(--ink);box-shadow:0 0 0 1px var(--ink-3)}
+.dc.hol{cursor:pointer}
+/* menus: a × on removable items, and a box to type a new one */
+.cmenu button .mdel{margin-left:auto;padding:0 4px;border-radius:3px;color:var(--ink-3);font-size:13px;line-height:1}
+.cmenu button .mdel:hover{color:var(--danger);background:var(--raise-2)}
+.cmenu button.on .mdel{margin-left:8px}
+.cmenu .mi-in{display:flex;gap:6px;padding:4px 6px}
+.cmenu .mi-in input{flex:1;min-width:0;height:26px;border:1px solid var(--line-2);border-radius:4px;background:var(--surface);padding:0 6px;font:inherit}
+.cmenu .mi-in button{width:auto;height:26px;padding:0 10px;background:#2f6fde;color:#fff;justify-content:center}
+.cmenu .mi-in button:hover{background:#2f6fde;filter:brightness(1.1)}
+/* print preview */
+.pview{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;background:#6f6c66}
+.pv-bar{display:flex;align-items:center;gap:10px;padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--line-2)}
+.pv-bar b{font-weight:600}
+.pv-bar span{color:var(--ink-2);font-size:12px}
+.pv-bar .grow{flex:1}
+.pview iframe{flex:1;width:100%;border:0;background:#8d8a83}
+/* New schedule: the public holidays in the job, each on or off */
+.holgrid{display:flex;flex-wrap:wrap;gap:6px}
+.holp2{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:6px 10px;border-radius:6px;border:1px solid var(--line-2);background:repeating-linear-gradient(135deg,var(--hatch) 0 2px,transparent 2px 7px),var(--surface);cursor:pointer;text-align:left;min-width:150px}
+.holp2 b{font-size:12.5px;font-weight:600}
+.holp2 small{font-family:var(--mono);font-size:10.5px;color:var(--ink-2)}
+.holp2 em{font-style:normal;font-size:10.5px;color:var(--ink-2)}
+.holp2.work{background:var(--surface);opacity:.7}
+.holp2.work b{text-decoration:line-through}
 /* the preset tray under the schedule */
 .tray{flex:none;max-height:36vh;overflow:auto;border-top:1px solid var(--line-2);background:var(--panel);padding:10px max(24px,env(safe-area-inset-right,0px)) 12px max(24px,env(safe-area-inset-left,0px));display:flex;flex-wrap:wrap;gap:8px 18px;align-items:flex-start}
 .tg{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
@@ -617,8 +676,9 @@ body.viewonly .bar,body.viewonly .mk,body.viewonly .cbar,body.viewonly .cev,body
         <div class="msgs" id="msgs"></div>
         <div class="sugg" id="sugg"></div>
         <form id="aiForm">
-          <textarea class="in" id="aiIn" placeholder="Tell the assistant what to change, e.g. add an agency WIP on Thursdays and Fridays, except the 18th"></textarea>
-          <div class="aibar"><span class="st" id="aiStatus"></span><button type="button" class="btn" id="aiStop" hidden>Stop</button><button type="submit" class="btn pri" id="aiSend">Send</button></div>
+          <label class="aimodel" id="aiModelRow" hidden><span>Assistant</span><select class="in" id="aiModel" aria-label="Which assistant"></select></label>
+          <textarea class="in" id="aiIn" placeholder="Tell the assistant what to build or change, e.g. build a 6-week 3D job starting 1 December with two animators"></textarea>
+          <div class="aibar"><button type="button" class="btn ghost aiic" id="aiMic" title="Dictate (Kontroll's mic)" aria-label="Dictate"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button type="button" class="btn ghost aiic" id="aiHelp" title="What the assistant can do" aria-label="Help">?</button><span class="st" id="aiStatus"></span><button type="button" class="btn" id="aiStop" hidden>Stop</button><button type="submit" class="btn pri" id="aiSend">Send</button></div>
         </form>
       </div>
       <div id="details" hidden></div>
@@ -630,7 +690,7 @@ body.viewonly .bar,body.viewonly .mk,body.viewonly .cbar,body.viewonly .cev,body
   <div class="modal" role="dialog" aria-modal="true" aria-label="New schedule">
     <div class="wz-top"><div class="dots" id="wzDots"></div><span class="wz-step" id="wzStep"></span><button class="x" id="wzClose" aria-label="Close">×</button></div>
     <div class="wz-body" id="wzBody"></div>
-    <div class="wz-foot"><button class="btn ghost" id="wzBack">Back</button><span class="grow muted" id="wzNote" style="font-size:12px"></span><button class="btn" id="wzNext">Next</button><button class="btn pri" id="wzGo">Create schedule</button></div>
+    <div class="wz-foot"><button class="btn ghost" id="wzBack">Back</button><span class="grow muted" id="wzNote" style="font-size:12px"></span><button class="btn ghost" id="wzSkip" title="Leave this step as it is and go on">Skip</button><button class="btn" id="wzNext">Next</button><button class="btn pri" id="wzGo">Create schedule</button></div>
   </div>
 </div>
 
@@ -699,12 +759,33 @@ const LIB = [
   { key: "online", name: "Online & deliverables", role: "Editors", when: () => true, s: .93, l: .07, deps: ["grade"] },
 ];
 LIB.forEach((x, i) => x.color = Math.round(i / (LIB.length - 1) * 9));
+/* More detailed stages for the setup's Stages step (Christian 2026-11-13: "character design … character modeling …"). */
+{
+  const at = k => LIB.findIndex(x => x.key === k);
+  LIB.splice(at("concept") + 1, 0,
+    { key: "chardesign", name: "Character design", role: "Character designers", when: () => false, s: .04, l: .12, deps: ["concept", "brief"], color: 1 },
+    { key: "styleframes", name: "Styleframes", role: "Designers", when: () => false, s: .06, l: .12, deps: ["concept", "brief"], color: 2 });
+  LIB.splice(at("model"), 0,
+    { key: "charmodel", name: "Character modeling", role: "Modelers", when: () => false, s: .12, l: .22, deps: ["chardesign", "concept"], color: 3 },
+    { key: "envmodel", name: "Environment modeling", role: "Environment artists", when: () => false, s: .12, l: .26, deps: ["concept"], color: 3 });
+  LIB.splice(at("anim2d"), 0,
+    { key: "rig2d", name: "2D rigging", role: "2D riggers", when: () => false, s: .2, l: .12, deps: ["chardesign", "animatic2d", "story"], color: 4 });
+  const dep = (k, front, back = []) => { const x = LIB.find(y => y.key === k); x.deps = [...front, ...x.deps, ...back]; };
+  dep("rig", ["charmodel"]); dep("texture", ["charmodel", "envmodel"]); dep("anim2d", ["rig2d"]); dep("motion", [], ["styleframes", "animatic2d", "story"]);
+}
+// on every job, whatever its kind (Christian 2026-11-13): a row of their own when picked; added after the colours so the stages keep theirs
+const ALWAYS_ROLES = { Producer: "producer", Director: "director", Generalist: "general" };
+LIB.unshift(
+  { key: "producer", name: "Producer", role: "Producer", when: () => false, s: 0, l: 1, deps: [], color: 6 },
+  { key: "director", name: "Director", role: "Director", when: () => false, s: 0, l: 1, deps: [], color: 7 },
+  { key: "general", name: "Generalist", role: "Generalist", when: () => false, s: .1, l: .8, deps: [], color: 4 });
 const ROLE_DEF = { "3D animators": 3, "2D animators": 3, "Modelers": 2, "Compositors": 2, "AI artists": 2, "Stop-motion animators": 2, "Fabricators": 2, "Model makers": 2 };
 const REVIEW_DEF = [
   { name: "Internal WIP", color: 6 }, { name: "Client WIP", color: 1 }, { name: "Agency WIP", color: 8 },
   { name: "Client feedback", color: 2 }, { name: "Sign-off", color: 4 },
 ];
-const OUTPUT_QUICK = ["60s film", "30s film", "15s cutdown", "6s bumper", "Print stills", "Social cutdowns", "Key visual", "OOH"];
+const OUTPUT_QUICK = ["60s film", "30s film", "15s cutdown", "6s bumper", "Print stills", "Social cutdowns", "Key visual", "OOH",
+  "Short film", "Feature film", "Full-length film", "Series episode", "Documentary", "Music video", "Trailer", "Title sequence"];
 /* The tray under the schedule (Christian 2026-11-13): groups of presets to drag in, each opened or closed. People and stages become
    rows; WIPs land on a day; holidays and worked weekends change a day; Custom is a plain new block. "stages", "wips" and
    "outputs" are filled from the schedule itself. */
@@ -721,6 +802,9 @@ const PRESET_GROUPS = [
 ];
 const presetColor = name => { const i = PRESET_GROUPS.flatMap(g => g.items || []).indexOf(name); return i < 0 ? 9 : i % 10; };
 const rvText = type => type === "Internal WIP" ? "WIP" : type;   // a WIP box says what it is in words
+// the boxes on the timeline and calendar are short — they sit close together; hovering one shows the full name and date
+const RV_SHORT = { "Internal WIP": "WIP", "Client WIP": "CL.WIP", "Agency WIP": "AG.WIP", "Client feedback": "CL.FB", "Sign-off": "SIGN-OFF" };
+const rvShort = type => RV_SHORT[type] || (String(type).length > 9 ? String(type).slice(0, 8) + "." : type);
 const THEMES = {
   studio: { label: "Studio", c: ["#e58f8f", "#e8a46c", "#e6c35a", "#bccf6a", "#78c99a", "#5cc6c0", "#5aa9e6", "#8a93e8", "#ad8ce6", "#d98bc9"] },
   dusk: { label: "Dusk", a: ["#8794ff", "#c79af2", "#ff9e80", "#ffd27a"] },
@@ -816,7 +900,8 @@ const labw = () => { const v = parseFloat(getComputedStyle(document.documentElem
 let PAL_CAT = "stages";
 try { PAL_CAT = localStorage.getItem("kontroll-schedule-builder-v1:palcat") || "stages"; } catch (e) {}
 let UNDO = [], REDO = [], R = new Map(), GEO = null, DAYW = 36;
-const ROWH = 34, LANEGAP = 10; let LANEH = 44;   // LANEH = the WIP row's height plus the gap under it; set by timelineHTML
+const ROWH = 34, LANEGAP = 10, LANE_DR = 30;   // LANE_DR: the deliverables row at the top of the band
+let LANEH = 44;   // LANEH = the WIP row's height plus the gap under it; set by timelineHTML
 const CHATS = {};
 
 /* =========================================================
@@ -932,11 +1017,35 @@ function placeOutput(outId, date) {
 function pickedItems(types, team) {
   const ts = types.length ? types : ["3d"];
   const defRoles = new Set(LIB.filter(x => x.when(ts)).map(x => x.role));
-  return LIB.filter(x => (team[x.role] | 0) > 0 && (x.when(ts) || !defRoles.has(x.role)));
+  return LIB.filter(x => (team[x.role] | 0) > 0 && (x.when(ts) || (!defRoles.has(x.role) && (!ALWAYS_ROLES[x.role] || ALWAYS_ROLES[x.role] === x.key))));
+}
+/* The stages suggested for the kind of project and its answers (characters, environments, 2D style); the Stages step starts from
+   these and you add or take any out. */
+const SCOPE_DEF = { chars: "simple", envs: "simple", style2d: "cel" };
+function suggestStages(types, opt) {
+  const ts = types.length ? types : ["3d"], o = { ...SCOPE_DEF, ...(opt || {}) }, k = new Set(LIB.filter(x => x.when(ts)).map(x => x.key));
+  if (ts.includes("3d")) {
+    if (o.chars === "none") { k.delete("rig"); k.delete("chardesign"); k.delete("charmodel"); }
+    if (o.chars === "complex") { k.add("chardesign"); k.add("charmodel"); }
+    if (o.envs === "large") { k.add("envmodel"); k.add("fx"); }
+    if (k.has("charmodel") && k.has("envmodel")) k.delete("model");
+  }
+  if (ts.includes("2d")) {
+    if (o.style2d === "cel") k.add("chardesign");
+    if (o.style2d === "mograph") { ["layout2d", "anim2d", "clean"].forEach(x => k.delete(x)); k.add("styleframes"); k.add("motion"); }
+    if (o.style2d === "cutout") { k.delete("clean"); k.add("chardesign"); k.add("rig2d"); }
+  }
+  return k;
+}
+// the people the chosen stages need (plus Producer, Director, Generalist); every other role is under More roles
+function rolesForStages(stages) {
+  const st = new Set(stages);
+  const main = [...new Set([...Object.keys(ALWAYS_ROLES), ...LIB.filter(x => st.has(x.key)).map(x => x.role)])];
+  return { main, extra: [...new Set(LIB.map(x => x.role))].filter(r => !main.includes(r)) };
 }
 function rolesFor(types) {
   const ts = types.length ? types : ["3d"];
-  const main = [...new Set(LIB.filter(x => x.when(ts)).map(x => x.role))];
+  const main = [...new Set([...Object.keys(ALWAYS_ROLES), ...LIB.filter(x => x.when(ts)).map(x => x.role)])];
   const extra = [...new Set(LIB.map(x => x.role))].filter(r => !main.includes(r));
   return { main, extra };
 }
@@ -955,17 +1064,25 @@ function generate(o) {
     const ts = sc.types.length ? sc.types : ["3d"];
     const wd = []; for (let d = sc.start; d <= projEnd(); d = addDays(d, 1)) if (isWork(d)) wd.push(d);
     const N = Math.max(1, wd.length);
-    const items = pickedItems(sc.types, o.team);
+    const per = sc.skipWeekends ? 5 : 7, stageSet = o.stages ? new Set(o.stages) : null;
+    // with stages picked: those, the always-roles that have people, and any role given people whose stage wasn't picked (its first stage)
+    const covered = stageSet ? new Set(LIB.filter(x => stageSet.has(x.key)).map(x => x.role)) : null;
+    const items = stageSet ? LIB.filter(x => stageSet.has(x.key) || ((o.team[x.role] | 0) > 0 && (ALWAYS_ROLES[x.role] ? ALWAYS_ROLES[x.role] === x.key : !covered.has(x.role) && LIB.find(y => y.role === x.role) === x)))
+      : pickedItems(sc.types, o.team);
+    // a role's people grouped by how long each works: [{n, days|null}] — null = the stage's usual length
+    const groupsFor = (n, durs) => { const m = new Map(); for (let i = 0; i < n; i++) { const v = (durs || [])[i], w = parseFloat(v); const k = v === "full" ? "full" : w > 0 ? Math.max(1, Math.round(w * per)) : null; m.set(k, (m.get(k) || 0) + 1); } return [...m].map(([days, n]) => days === "full" ? { days: N, n, full: true } : { days, n }); };
     // palette = the stages for this kind of project plus anything picked
     const palKeys = new Set([...LIB.filter(x => x.when(ts)).map(x => x.key), ...items.map(x => x.key)]);
     sc.pills = LIB.filter(x => palKeys.has(x.key)).map(x => ({ id: uid("p"), key: x.key, name: x.name, color: x.color, days: 5 }));
     Object.entries(o.team).forEach(([role, n]) => { if (n > 0) sc.team.push({ id: uid("m"), label: role, count: n }); });
     (o.customRoles || []).forEach(r => { if (r.label && r.count > 0) sc.team.push({ id: uid("m"), label: r.label, count: r.count }); });
+    const customRows = [];   // your own roles become rows too, from the start, for as long as each person works (the whole job if not set)
+    (o.customRoles || []).forEach(r => { if (!r.label || !(r.count > 0)) return; groupsFor(r.count, r.dur).forEach(g => customRows.push({ id: uid("t"), name: r.label.trim(), color: 9, people: g.n, days: g.days || N, notes: "", mode: "start", after: null, lag: 0, date: null })); });
     let shootIdx = -1;
     if (sc.shoot && validDate(sc.shoot.date)) { const sd = snapF(sc.shoot.date); shootIdx = wd.indexOf(sd); if (shootIdx < 0) shootIdx = sd < wd[0] ? 0 : N - 1; }
     const placed = {};
     items.forEach(x => {
-      const n = Math.max(1, o.team[x.role] | 0);
+      const cnt = o.team[x.role] | 0, n = Math.max(1, cnt);
       let si = Math.min(N - 1, Math.round(x.s * N));
       let len = Math.max(1, Math.round(x.l * N / (1 + 0.25 * (n - 1))));
       const dep = x.deps.map(k => placed[k]).find(Boolean);
@@ -980,10 +1097,17 @@ function generate(o) {
       }
       if (si > N - 1) si = N - 1;
       if (si + len > N) len = Math.max(1, N - si);
-      t.days = len;
+      const groups = cnt ? groupsFor(cnt, (o.dur || {})[x.role]) : [{ days: null, n: 0 }];   // a stage with nobody on it yet still gets its row
+      if (groups[0].days) len = groups[0].days;   // the first person's own length sets the row
+      t.days = len; t.people = groups[0].n;
       if (t.mode !== "date") { if (dep) { t.mode = "after"; t.after = dep.id; t.lag = si - (dep.si + dep.len); } else t.lag = si; }
+      if (groups[0].full) { t.mode = "start"; t.after = null; t.lag = 0; t.date = null; }   // works the full project: from day one to the end
       sc.tasks.push(t); placed[x.key] = { id: t.id, si, len, shoot: !!x.shoot };
+      // people working a different length get a row of their own, starting together with the first
+      groups.slice(1).forEach(g => sc.tasks.push({ ...t, id: uid("t"), people: g.n, days: g.days || Math.max(1, Math.round(x.l * N)), ...(g.full ? { mode: "start", after: null, lag: 0, date: null } : {}) }));
     });
+    sc.tasks.push(...customRows);
+    (o.ownStages || []).forEach(st => { const nm = String(st || "").trim(); if (nm) sc.tasks.push({ id: uid("t"), name: nm, color: 9, people: 0, days: Math.max(1, Math.round(N * .2)), notes: "", mode: "start", after: null, lag: 0, date: null }); });
     const rc = name => sc.reviewPills.find(r => r.name === name).color;
     wd.forEach((d, i) => {
       if (i < 3 || i === wd.length - 1) return;
@@ -1069,7 +1193,7 @@ function selObj(sel = SEL) {
   return L ? L.find(x => x.id === sel.id) || null : null;
 }
 function fixSel() { if (SEL && !selObj()) SEL = null; }
-function useSchedule(s) { S = s; migrate(S); UNDO = []; REDO = []; SEL = null; save(); render(); renderChat(); }
+function useSchedule(s) { S = s; migrate(S); UNDO = []; REDO = []; SEL = null; save(); render(); renderChat(); ZOOM_AUTO = true; if (VIEW === "timeline") { DAYW = fitDayW(); renderBoard(); } }
 
 /* =========================================================
    Render
@@ -1266,12 +1390,12 @@ function timelineHTML(ro, part = {}) {
     const tip = `${fmt(d)}${hol ? ": " + (S.holidays.find(h => h.date === d).name || "Holiday") : work ? "" : " (not worked)"}. Double-click to ${isWeekend(d) && S.skipWeekends && !hol ? (work ? "stop working it" : "work this day") : (hol ? "remove the holiday" : "mark as a holiday")}.`;
     dc += `<div class="dc ${cls}" data-date="${d}" title="${esc(tip)}" style="left:${G.xs[i]}px;width:${G.ws[i]}px">${G.ws[i] >= 10 ? WD[dow(d)][0] : ""}</div>`;
     cols += `<div class="col ${cls} ${dow(d) === 1 ? "wkstart" : ""} ${d === pe ? "pend" : ""}" style="left:${G.xs[i]}px;width:${G.ws[i]}px"></div>`;
-    if (hol) hols += `<div class="holtag" style="left:${G.xs[i] + G.ws[i] / 2}px">${esc((S.holidays.find(h => h.date === d).name || "Holiday").length > 14 && G.ws[i] < 60 ? "Holiday" : (S.holidays.find(h => h.date === d).name || "Holiday"))}</div>`;
+    if (hol) hols += `<div class="holtag" ${ro ? "" : `data-holday="${d}" title="${esc(S.holidays.find(h => h.date === d).name || "Holiday")} · click to remove it and work this day"`} style="left:${G.xs[i] + G.ws[i] / 2}px">${esc((S.holidays.find(h => h.date === d).name || "Holiday").length > 14 && G.ws[i] < 60 ? "Holiday" : (S.holidays.find(h => h.date === d).name || "Holiday"))}</div>`;
   });
   /* The WIP row (Christian 2026-11-13): set a little apart from the schedule; WIPs on the same day stack one under another and the row
      grows to fit; each WIP starts on its own day, and that day is tinted in its colour so it's clear which day it is. */
   // two rows in one band: deliverables on top, WIPs under them (as many WIP rows as the busiest day needs)
-  const stack = {}, IH = 22, IG = 3, DR = 30; let marks = hols, tints = "";
+  const stack = {}, IH = 22, IG = 3, DR = LANE_DR; let marks = hols, tints = "";
   const itemsOn = {}; S.reviews.forEach(r => (itemsOn[r.date] = itemsOn[r.date] || []).push(r));
   const laneRows = Math.max(1, ...Object.values(itemsOn).map(a => a.length)), laneH = DR + 8 + laneRows * (IH + IG);
   LANEH = laneH + LANEGAP;
@@ -1281,7 +1405,7 @@ function timelineHTML(ro, part = {}) {
     const x = xOf(r.date); if (x == null) return;
     const w = G.ws[G.idx[r.date]];
     if (!stack[r.date]) tints += `<div class="wipday" style="left:${x}px;width:${w}px;top:${DR}px;--c:var(--c${r.color ?? 6})"></div>`;
-    marks += `<div class="mk rv ${SEL && SEL.id === r.id ? "sel" : ""}" data-rid="${r.id}" title="${esc(r.type + " · " + fmt(r.date) + (r.note ? " · " + r.note : "") + " · click to change the type")}" style="left:${x + 1}px;top:${slot(r.date)}px;min-width:${Math.max(0, w - 2)}px;--c:var(--c${r.color ?? 6})">${esc(rvText(r.type))}</div>`;
+    marks += `<div class="mk rv ${SEL && SEL.id === r.id ? "sel" : ""}" data-rid="${r.id}" title="${esc(r.type + " · " + fmt(r.date) + (r.note ? " · " + r.note : "") + " · click to change the type")}" style="left:${x + 1}px;top:${slot(r.date)}px;min-width:${Math.max(0, w - 2)}px;--c:var(--c${r.color ?? 6})">${esc(rvShort(r.type))}</div>`;
   });
   S.deliveries.forEach(d => {
     const x = xOf(d.date); if (x == null) return;
@@ -1366,7 +1490,7 @@ function calendarHTML() {
         const line = perDay[k][l] || [];
         const inner = line.map(x => x.dl
           ? `<div class="cev dl ${SEL && SEL.id === x.dl.id ? "sel" : ""} chip" data-did="${x.dl.id}" title="${esc("Delivery " + fmt(d) + ": " + deliveryLabel(x.dl))}">${esc(deliveryLabel(x.dl))} delivery</div>`
-          : `<div class="cev rv ${SEL && SEL.id === x.rv.id ? "sel" : ""} chip" data-rid="${x.rv.id}" title="${esc(x.rv.type + (x.rv.note ? " · " + x.rv.note : ""))}" style="--c:var(--c${x.rv.color ?? 6})">${esc(rvText(x.rv.type))}</div>`).join("");
+          : `<div class="cev rv ${SEL && SEL.id === x.rv.id ? "sel" : ""} chip" data-rid="${x.rv.id}" title="${esc(x.rv.type + (x.rv.note ? " · " + x.rv.note : ""))}" style="--c:var(--c${x.rv.color ?? 6})">${esc(rvShort(x.rv.type))}</div>`).join("");
         g += `<div class="dr" data-date="${d}" style="grid-column:${k + 1};grid-row:${l + 2}">${inner}</div>`;
       }
     });
@@ -1375,9 +1499,11 @@ function calendarHTML() {
       const v = R.get(t.id), runs = []; let cur = null;
       wkDays.forEach((d, k) => { const on = d >= v.start && d <= v.end && isWork(d); if (on) { if (cur && cur.b === k - 1) cur.b = k; else runs.push(cur = { a: k, b: k }); } });
       const sel = isPicked(t.id);
+      // a block that covers Monday through at least Thursday shows its name again on Wednesday (Christian 2026-11-13)
+      const cw = k => k < 5 ? 1 : .5, rep = (a, b, t) => { if (!(a === 0 && b >= 3)) return ""; let before = 0, all = 0; for (let k = a; k <= b; k++) { all += cw(k); if (k < 2) before += cw(k); } return `<span class="rep" style="left:${(before / all * 100).toFixed(2)}%">${esc(t.name)}</span>`; };
       runs.forEach(({ a, b }, j) => {
         const first = wkDays[a] === v.start, last = wkDays[b] === v.end, cont = !first;
-        g += `<div class="cbar ${cont ? "cl" : ""} ${!last ? "cr" : ""} ${sel ? "sel" : ""} ${darkCls(t.color)}" data-tid="${t.id}" title="${esc(`${t.name} · ${fmt(v.start)} to ${fmt(v.end)} · ${t.days} days`)}" style="grid-column:${a + 1}/${b + 2};grid-row:${ri + EL + 2};--c:var(--c${t.color})">${first ? `<span class="h" data-edge="start"></span>` : ""}<span class="lbl">${j === 0 ? esc(t.name) + (cont ? " (cont.)" : "") : ""}</span>${last ? `<span class="dbadge">${t.days}d</span><span class="h" data-edge="end"></span>` : ""}</div>`;
+        g += `<div class="cbar ${cont ? "cl" : ""} ${!last ? "cr" : ""} ${sel ? "sel" : ""} ${darkCls(t.color)}" data-tid="${t.id}" title="${esc(`${t.name} · ${fmt(v.start)} to ${fmt(v.end)} · ${t.days} days`)}" style="grid-column:${a + 1}/${b + 2};grid-row:${ri + EL + 2};--c:var(--c${t.color})">${first ? `<span class="h" data-edge="start"></span>` : ""}<span class="lbl">${j === 0 ? esc(t.name) + (cont ? " (cont.)" : "") : ""}</span>${last ? `<span class="dbadge">${t.days}d</span><span class="h" data-edge="end"></span>` : ""}${rep(a, b, t)}</div>`;
       });
     });
     // the day lines, drawn on top so they show through every block
@@ -1783,7 +1909,11 @@ board.addEventListener("click", e => {
     if (lab.querySelector("input")) return;
     clearTimeout(labT); labT = setTimeout(() => labelMenu(lab), 260); return;
   }
+  const hd = e.target.closest("[data-holday]") || e.target.closest(".dc.hol[data-date]") || e.target.closest(".cal .dh[data-date]");
+  if (hd && isHoliday(hd.dataset.holday || hd.dataset.date)) return holidayMenu(hd.dataset.holday || hd.dataset.date, e.clientX, e.clientY);
   if (e.target.closest(".bar,.cbar,.mk,.chip,input,button,svg,.rlab")) return;
+  const ln = e.target.closest(".lane");
+  if (ln && e.clientY - ln.getBoundingClientRect().top < LANE_DR) return;   // the deliverables row: clicking it does nothing
   if (e.target.closest(".lane,.dr")) {
     const date = e.target.closest(".dr") ? e.target.closest(".dr").dataset.date : dateAt(e); if (!date) return;
     const rp = S.reviewPills[0]; if (!rp) return;
@@ -1830,10 +1960,29 @@ board.addEventListener("dblclick", e => {
   }
 });
 // the kinds of WIP, to switch one to another (or repeat / delete it)
+// a public holiday: remove it (that day is worked) — and it stays removed when holidays fill in again
+function holidayMenu(d, x, y) {
+  const h = S.holidays.find(v => v.date === d); if (!h) return;
+  menu([{ head: (h.name || "Holiday") + " · " + fmt(d) },
+    { label: "Remove this holiday (work this day)", danger: true, run: () => change(() => { S.holidays = S.holidays.filter(v => v.date !== d); if (!(S.holidayOff || []).includes(d)) (S.holidayOff = S.holidayOff || []).push(d); }) }], x, y);
+}
 function wipTypeMenu(id, x, y) {
   const r = S.reviews.find(v => v.id === id); if (!r) return;
+  // your own kinds of WIP: typed in here, kept in this schedule's list, × removes one (after asking)
+  const addOwn = name => {
+    name = String(name || "").trim(); if (!name) return;
+    change(() => {
+      let p = S.reviewPills.find(v => v.name.toLowerCase() === name.toLowerCase());
+      if (!p) { p = { id: uid("rp"), name, color: (S.reviewPills.length * 3 + 2) % 10, custom: true }; S.reviewPills.push(p); }
+      r.type = p.name; r.color = p.color;
+    });
+  };
+  const askRemove = p => menu([{ head: `Remove “${rvText(p.name)}” from the WIP list?` },
+    { label: "Yes, remove it", danger: true, run: () => change(() => { S.reviewPills = S.reviewPills.filter(v => v !== p); }) },
+    { label: "Keep it", run: () => {} }], x, y);
   menu([{ head: rvText(r.type) + " · " + fmt(r.date) },
-    ...S.reviewPills.map(p => ({ label: rvText(p.name), on: p.name === r.type, run: () => change(() => { r.type = p.name; r.color = p.color; }) })),
+    ...S.reviewPills.map(p => ({ label: rvText(p.name), on: p.name === r.type, del: p.custom ? () => askRemove(p) : null, run: () => change(() => { r.type = p.name; r.color = p.color; }) })),
+    { input: true, placeholder: "Your own kind of WIP…", button: "Add", submit: addOwn },
     { sep: true },
     { label: "Repeat next week", run: () => change(() => S.reviews.push({ ...r, id: uid("r"), date: addDays(r.date, 7) })) },
     { label: "Delete", danger: true, run: () => change(() => { S.reviews = S.reviews.filter(v => v !== r); SEL = null; }) }], x, y);
@@ -1967,23 +2116,30 @@ try { const v = JSON.parse(localStorage.getItem(KEY + ":tray")); if (v && typeof
 /* ---------- menus: right-click anywhere, the row-name list, the ⋯ menu ---------- */
 let MENU = null;
 function closeMenu() { if (MENU) { MENU.remove(); MENU = null; } }
-// items: {label, run, on, danger} · {head} · {sep} · {swatch: cur, pick(i)}
+// items: {label, run, on, danger, del} · {head} · {sep} · {swatch: cur, pick(i)} · {input, placeholder, button, submit(text)}
 function menu(items, x, y) {
   closeMenu();
   const m = document.createElement("div"); m.className = "cmenu"; m.setAttribute("role", "menu");
   m.innerHTML = items.map((it, i) => it.head ? `<div class="mh">${esc(it.head)}</div>` : it.sep ? "<hr>" : it.swatch != null ? `<div class="swatches">${[...Array(30).keys()].map(k => `<button type="button" data-mi="${i}" data-sw="${k}" class="${k === it.swatch ? "on" : ""}" style="--c:var(--c${k})" aria-label="Colour ${k + 1}"></button>`).join("")}</div>`
-    : `<button type="button" role="menuitem" data-mi="${i}" class="${it.on ? "on" : ""} ${it.danger ? "danger" : ""}">${esc(it.label)}</button>`).join("");
+    : it.input ? `<div class="mi-in"><input type="text" data-in="${i}" placeholder="${esc(it.placeholder || "")}" aria-label="${esc(it.placeholder || "Name")}"><button type="button" data-go="${i}">${esc(it.button || "Add")}</button></div>`
+    : `<button type="button" role="menuitem" data-mi="${i}" class="${it.on ? "on" : ""} ${it.danger ? "danger" : ""}"><span>${esc(it.label)}</span>${it.del ? `<span class="mdel" data-del="${i}" title="Remove from the list" aria-label="Remove ${esc(it.label)}">×</span>` : ""}</button>`).join("");
   document.body.appendChild(m); MENU = m;
   const r = m.getBoundingClientRect();
   m.style.left = Math.max(4, Math.min(x, innerWidth - r.width - 4)) + "px";
   m.style.top = Math.max(4, Math.min(y, innerHeight - r.height - 4)) + "px";
   m.addEventListener("click", ev => {
+    const dl = ev.target.closest("[data-del]"); if (dl) { ev.stopPropagation(); const it = items[+dl.dataset.del]; closeMenu(); return it.del(); }
+    const go = ev.target.closest("[data-go]"); if (go) { const it = items[+go.dataset.go], v = m.querySelector(`[data-in="${go.dataset.go}"]`).value; closeMenu(); return it.submit(v); }
     const b = ev.target.closest("[data-mi]"); if (!b) return;
     const it = items[+b.dataset.mi]; closeMenu();
     if (b.dataset.sw != null) it.pick(+b.dataset.sw); else if (it.run) it.run();
   });
 }
 document.addEventListener("pointerdown", e => { if (MENU && !MENU.contains(e.target)) closeMenu(); }, true);
+document.addEventListener("keydown", e => {   // Enter in a menu's typing row adds it
+  const inp = e.target.closest && e.target.closest(".cmenu [data-in]"); if (!inp || e.key !== "Enter") return;
+  e.preventDefault(); const b = MENU && MENU.querySelector(`[data-go="${inp.dataset.in}"]`); if (b) b.click();
+});
 document.addEventListener("keydown", e => { if (e.key === "Escape" && MENU) { closeMenu(); e.stopPropagation(); } }, true);
 window.addEventListener("blur", closeMenu);
 
@@ -2148,7 +2304,9 @@ function syncZoom() {
   const f = fitDayW(), z = $("zoom");
   z.value = f >= MAXW ? 0 : Math.round(Math.max(0, Math.min(1, Math.log(DAYW / f) / Math.log(MAXW / f))) * 1000);
 }
+let ZOOM_AUTO = true;   // fit the whole job to the width (and keep fitting as the window resizes) until you zoom yourself
 function setDayW(w, clientX) {
+  ZOOM_AUTO = false;
   const f = fitDayW(); w = Math.max(f, Math.min(MAXW, w));
   if (Math.abs(w - DAYW) < .01) return syncZoom();
   const r = board.getBoundingClientRect(), ax = (clientX == null ? r.left + board.clientWidth / 2 : clientX) - r.left;
@@ -2178,7 +2336,16 @@ function drawHs() {
 }
 const hsSoon = () => { if (!hsRaf) hsRaf = requestAnimationFrame(drawHs); };
 board.addEventListener("scroll", hsSoon, { passive: true });
-if (typeof ResizeObserver !== "undefined") { const ro = new ResizeObserver(() => { hsSoon(); if (VIEW === "timeline") syncZoom(); }); ro.observe(board); ro.observe(hs); }
+if (typeof ResizeObserver !== "undefined") {
+  const ro = new ResizeObserver(() => {
+    hsSoon();
+    if (VIEW !== "timeline" || !S) return;
+    // the page often starts squeezed (a Kontroll tab opening, a window still sizing): refit as soon as the real width arrives
+    if (ZOOM_AUTO && board.clientWidth > 200) { const f = fitDayW(); if (Math.abs(f - DAYW) > .3) { DAYW = f; renderBoard(); } }
+    syncZoom();
+  });
+  ro.observe(board); ro.observe(hs);
+}
 hsT.addEventListener("pointerdown", e => {
   e.preventDefault(); e.stopPropagation(); hsT.setPointerCapture(e.pointerId); hsT.classList.add("drag");
   const x0 = e.clientX, s0 = board.scrollLeft;
@@ -2287,25 +2454,78 @@ $("dataImport").onclick = () => {
 /* =========================================================
    New schedule wizard
    ========================================================= */
-const STEPS = ["type", "who", "when", "outputs", "team", "reviews"];
+const STEPS = ["type", "stages", "who", "when", "outputs", "team", "reviews"];
 let W = null;
 function openWiz() {
   W = { step: 0, types: [], name: "", client: "", agency: "", start: nextMonday(), weeks: 6, days: 0, skip: true, hol: "", shootDate: "", shootDays: 2,
-    outputs: [], deliveryDate: "", team: {}, teamTouched: false, custom: [], moreRoles: false, clientDays: [5], internalDays: [2], agencyDays: [] };
-  resetTeam(); $("wiz").hidden = false; drawWiz();
+    outputs: [], deliveryDate: "", team: {}, teamTouched: false, custom: [], moreRoles: false, clientDays: [5], internalDays: [2], agencyDays: [],
+    country: (S && S.country) || defaultCountry(), pub: [], holOff: [], opt: { ...SCOPE_DEF }, stages: [], ownStages: [], moreStages: false };
+  W.stages = [...suggestStages(W.types, W.opt)];
+  resetTeam(); $("wiz").hidden = false; drawWiz(); wizLoadHol();
 }
 function closeWiz() { $("wiz").hidden = true; }
-function resetTeam() { W.team = {}; rolesFor(W.types).main.forEach(r => W.team[r] = ROLE_DEF[r] || 1); }
+// one small box per person: how many weeks they work (empty = fit the stage)
+function durRow(attr, key, n, durs) {
+  if (!(n > 0)) return "";
+  return `<div class="pdurs">${[...Array(n).keys()].map(i => `<span class="pdur" title="How long person ${i + 1} works, in weeks (empty fits the stage)"><span>${n > 1 ? "#" + (i + 1) : "for"}</span><input type="number" min="0.2" step="0.5" ${attr}="${esc(String(key))}" data-pi="${i}" value="${(durs || [])[i] === "full" ? "" : esc(String(((durs || [])[i]) ?? ""))}" placeholder="auto"${(durs || [])[i] === "full" ? " disabled" : ""}><span>wk</span><label class="pfull" title="Works the whole project"><input type="checkbox" data-full="${attr}" data-fk="${esc(String(key))}" data-pi="${i}"${(durs || [])[i] === "full" ? " checked" : ""}> Full project</label></span>`).join("")}</div>`;
+}
+function resetTeam() { W.team = {}; W.dur = {}; rolesForStages(W.stages).main.forEach(r => W.team[r] = ALWAYS_ROLES[r] ? 0 : (ROLE_DEF[r] || 1)); }
+// the stages changed: suggested again from the kind of project, and the team follows unless you've already set it
+function wizStagesChanged(resuggest) {
+  if (resuggest) W.stages = [...suggestStages(W.types, W.opt)];
+  if (!W.teamTouched) return resetTeam();
+  const main = new Set(rolesForStages(W.stages).main);
+  Object.keys(W.team).forEach(r => { if (!main.has(r)) { delete W.team[r]; if (W.dur) delete W.dur[r]; } });
+  main.forEach(r => { if (W.team[r] == null) W.team[r] = ALWAYS_ROLES[r] ? 0 : (ROLE_DEF[r] || 1); });
+}
 const hasShoot = () => W.types.some(t => ["live", "stop", "mini"].includes(t));
 function wizHolidays() {
   return W.hol.split(/\n+/).map(l => l.trim()).filter(Boolean).map(l => { const m = l.match(/(\d{4}-\d{2}-\d{2})\s*(.*)/); return m && validDate(m[1]) ? { date: m[1], name: m[2] || "Holiday" } : null; }).filter(Boolean);
 }
-function wizCal() { const prev = S; S = { start: W.start, weeks: W.weeks, days: W.days, skipWeekends: W.skip, workdays: [], holidays: wizHolidays() }; const r = { end: projEnd(), n: workDaysBetween(W.start, projEnd()) }; S = prev; return r; }
-function presetText() {
-  const ts = W.types.length ? W.types : ["3d"];
-  const st = LIB.filter(x => x.when(ts)).map(x => x.name);
-  return `${W.types.length ? "" : "Nothing picked, so this starts as a 3D animation job. "}Your timeline starts with <b>${st.length} stages</b>: ${st.map(esc).join(", ")}. You can add, rename or remove any of them later.`;
+/* The public holidays inside the job (the schedule's dates plus a fortnight), for its country; each can be switched off — worked
+   through — before the schedule is made (Christian 2026-11-13: "full control of public holidays"). */
+function wizRange() { const prev = S; S = { start: W.start, weeks: W.weeks, days: W.days, skipWeekends: W.skip, workdays: [], holidays: [] }; const end = addDays(projEnd(), 14); S = prev; return [W.start, end]; }
+function wizPub() { const [a, b] = wizRange(); return W.pub.filter(h => h.date >= a && h.date <= b && !(W.skip && isWeekendIso(h.date))); }
+const isWeekendIso = d => { const w = dow(d); return w === 0 || w === 6; };
+const wizPubOn = () => wizPub().filter(h => !W.holOff.includes(h.date));
+async function wizLoadHol() {
+  if (!W || !validDate(W.start)) return;
+  const cc = W.country, [a, b] = wizRange(); let out = [];
+  if (cc) for (let y = +a.slice(0, 4); y <= +b.slice(0, 4); y++) out = out.concat(await holidaysFor(cc, y));
+  if (!W || W.country !== cc) return;
+  W.pub = out; wizHolGrid();
 }
+function wizHolGrid() {
+  const el = $("wHolGrid"); if (!el) return;
+  const list = wizPub();
+  el.innerHTML = list.length ? list.map(h => { const off = W.holOff.includes(h.date); return `<button type="button" class="holp2 ${off ? "work" : ""}" data-holtog="${h.date}" aria-pressed="${!off}" title="${off ? "Worked through — click to take the day off again" : "A day off — click to work through it"}"><b>${esc(h.name)}</b><small>${esc(fmt(h.date))}</small><em>${off ? "Working" : "Day off"}</em></button>`; }).join("")
+    : `<p class="hint">${W.country ? "No public holidays fall on working days in these dates." : "No country picked."}</p>`;
+  const s2 = $("wSum"); if (s2) { const c = wizCal(); s2.textContent = validDate(W.start) ? `${fmt(W.start)} to ${fmt(c.end)} · ${c.n} working days` : "Pick a start date."; }
+}
+/* Deliverables in New schedule (Christian 2026-11-13): each delivers on the job's last working day unless another is picked. Under
+   each one a green line is the whole job, one notch a day (weekends and holidays narrower and greyed); hover shows the date, click
+   picks it, and the picked day is an orange mark — so print stills "somewhere in the middle" can be placed by eye. */
+function wizLastDay() { const prev = S; S = { start: W.start, weeks: W.weeks, days: W.days, skipWeekends: W.skip, workdays: [], holidays: [...wizHolidays(), ...wizPubOn()] }; const d = snapB(projEnd()); S = prev; return d; }
+function otlHTML(o, i, last) {
+  if (!validDate(W.start)) return "";
+  const prev = S; S = { start: W.start, weeks: W.weeks, days: W.days, skipWeekends: W.skip, workdays: [], holidays: [...wizHolidays(), ...wizPubOn()] };
+  try {
+    const end = projEnd(), pick = o.date || last, cells = []; let n = 0, k = 0;
+    for (let d = W.start; d <= end; d = addDays(d, 1)) if (isWork(d)) n++;
+    for (let d = W.start; d <= end; d = addDays(d, 1)) {
+      const work = isWork(d); if (work) k++;
+      cells.push(`<i class="${work ? "" : "nw"} ${d === pick ? "on" : ""} ${dow(d) === 1 ? "mon" : ""}" data-otd="${d}" data-oi="${i}" title="${esc(fmt(d) + (work ? ` · day ${k} of ${n}` : isHoliday(d) ? " · holiday" : " · weekend"))}"></i>`);
+    }
+    const kk = (() => { let c = 0; for (let d = W.start; d <= pick && d <= end; d = addDays(d, 1)) if (isWork(d)) c++; return c; })();
+    return `<div class="otlrow"><div class="otl">${cells.join("")}</div><span class="otl-cap">${esc(fmt(pick))}${pick > end ? " · after the job ends" : ` · day ${kk} of ${n}`}${o.date && o.date !== last ? "" : " · last day"}</span></div>`;
+  } finally { S = prev; }
+}
+function wizCal() { const prev = S; S = { start: W.start, weeks: W.weeks, days: W.days, skipWeekends: W.skip, workdays: [], holidays: [...wizHolidays(), ...wizPubOn()] }; const r = { end: projEnd(), n: workDaysBetween(W.start, projEnd()) }; S = prev; return r; }
+function presetText() {
+  const st = LIB.filter(x => W.stages.includes(x.key)).map(x => x.name);
+  return `${W.types.length ? "" : "Nothing picked, so this starts as a 3D animation job. "}<b>${st.length} stages</b> suggested: ${st.map(esc).join(", ")}. Next you can add or take out any of them.`;
+}
+const optRow = (key, label, choices) => `<div class="optrow"><span>${label}</span><div class="seg">${choices.map(([v, n]) => `<button type="button" data-opt="${key}" data-v="${v}" class="${W.opt[key] === v ? "on" : ""}">${n}</button>`).join("")}</div></div>`;
 const dayBtns = (arr, key) => `<div class="days" data-days-key="${key}">${[1, 2, 3, 4, 5].map(w => `<button type="button" data-w="${w}" class="${arr.includes(w) ? "on" : ""}">${WD[w]}</button>`).join("")}</div>`;
 function drawWiz() {
   const step = STEPS[W.step];
@@ -2315,7 +2535,19 @@ function drawWiz() {
   if (step === "type") {
     h = `<h2>What kind of project is it?</h2><p class="lead">Pick one or more. A mix like 3D animation plus live action is fine.</p>
       <div class="types">${TYPES.map(t => `<button type="button" class="type ${W.types.includes(t.key) ? "on" : ""}" data-type="${t.key}"><b>${t.name}</b><small>${t.desc}</small></button>`).join("")}</div>
+      ${W.types.includes("3d") || !W.types.length ? `<div class="sec"><h3>3D: what's in it?</h3>${optRow("chars", "Characters", [["none", "None"], ["simple", "Simple"], ["complex", "Complex"]])}${optRow("envs", "Environments", [["none", "None"], ["simple", "Simple"], ["large", "Large / complex"]])}</div>` : ""}
+      ${W.types.includes("2d") ? `<div class="sec"><h3>2D: what kind?</h3>${optRow("style2d", "Style", [["cel", "Character / cel"], ["mograph", "Motion graphics"], ["cutout", "Cut-out / rigged"]])}</div>` : ""}
       <div class="preset">${presetText()}</div>`;
+  } else if (step === "stages") {
+    const sug = suggestStages(W.types, W.opt), on = new Set(W.stages), isStage = x => ALWAYS_ROLES[x.role] !== x.key;
+    const shown = LIB.filter(x => isStage(x) && (sug.has(x.key) || on.has(x.key))), more = LIB.filter(x => isStage(x) && !shown.includes(x));
+    const chip = x => `<button type="button" class="stchip ${on.has(x.key) ? "on" : ""}" data-stage="${x.key}" aria-pressed="${on.has(x.key)}" style="--c:var(--c${x.color})"><i></i><span>${esc(x.name)}</span><small>${esc(x.role)}</small></button>`;
+    h = `<h2>Which stages will it have?</h2><p class="lead">Suggested for the kind of project you picked. Click one to take it out or put it back. The team step then only offers the people these stages need.</p>
+      <div class="stgrid">${shown.map(chip).join("")}</div>
+      <button type="button" class="morebtn" id="wMoreStages">${W.moreStages ? "▾" : "▸"} More stages (${more.length})</button>
+      ${W.moreStages ? `<div class="stgrid">${more.map(chip).join("")}</div>` : ""}
+      <div class="sec"><h3>Your own stages</h3><div class="list">${W.ownStages.map((n, i) => `<div class="li"><input class="in" data-osi="${i}" value="${esc(n)}" placeholder="Stage name"><button type="button" class="x" data-osrm="${i}" aria-label="Remove">×</button></div>`).join("")}
+      <div><button type="button" class="btn sm" id="wAddStage">+ Add a stage</button></div></div></div>`;
   } else if (step === "who") {
     h = `<h2>Who is it for?</h2><p class="lead">This goes on the calendar you share. Leave anything blank.</p>
       <label class="fld"><span>Project name</span><input class="in" id="wName" value="${esc(W.name)}" placeholder="e.g. Commercial Bay, Christmas campaign"></label>
@@ -2331,24 +2563,27 @@ function drawWiz() {
       ${hasShoot() ? `<div class="sec"><h3>Shoot</h3><p class="hint">The shoot usually decides the shape of the schedule. Pre-production lands before it and the post work after it.</p>
         <div class="grid2"><label class="fld"><span>Shoot starts</span><input class="in" type="date" id="wShoot" value="${W.shootDate}"></label>
         <label class="fld"><span>Shoot days</span><input class="in" type="number" min="1" id="wShootDays" value="${W.shootDays}"></label></div></div>` : ""}
-      <label class="fld"><span>Public holidays (one per line: date, then name)</span><textarea class="in" id="wHol" rows="2" placeholder="2026-12-25 Christmas Day">${esc(W.hol)}</textarea></label>`;
+      <div class="sec"><h3 style="display:flex;align-items:center;gap:8px">Public holidays <select class="in" id="wCountry" style="height:24px;font-size:12px">${[["", "None"], ...HOLIDAY_COUNTRIES].map(([cc, n]) => `<option value="${cc}"${cc === W.country ? " selected" : ""}>${esc(n)}</option>`).join("")}</select></h3>
+        <div class="holgrid" id="wHolGrid"><p class="hint">Looking up the public holidays…</p></div>
+        <p class="hint">Each one is a day off. Click one to work through it instead; click again to take it off again.</p></div>
+      <label class="fld"><span>Other days off (one per line: date, then name)</span><textarea class="in" id="wHol" rows="2" placeholder="2026-12-24 Studio closed">${esc(W.hol)}</textarea></label>`;
   } else if (step === "outputs") {
-    h = `<h2>What are you delivering?</h2><p class="lead">Add each output. If they all deliver on the same day, set one date. Give an output its own date if it delivers separately, like print stills.</p>
+    const last = wizLastDay();
+    h = `<h2>What are you delivering?</h2><p class="lead">Add each output. Each one delivers on the last day of the job unless you pick another day: click its line, or type a date.</p>
       <div class="chiprow">${OUTPUT_QUICK.map(q => `<button type="button" class="tag" data-quick="${esc(q)}">+ ${esc(q)}</button>`).join("")}</div>
-      <div class="list">${W.outputs.map((o, i) => `<div class="outrow"><input class="in" type="number" min="1" data-oi="${i}" data-ok="count" value="${o.count}" aria-label="How many"><input class="in" data-oi="${i}" data-ok="name" value="${esc(o.name)}" aria-label="Output"><input class="in" type="date" data-oi="${i}" data-ok="date" value="${o.date}" aria-label="Own delivery date" title="Only if this one delivers on its own date"><button type="button" class="x" data-orm="${i}" aria-label="Remove">×</button></div>`).join("")}
-      <div><button type="button" class="btn sm" id="wAddOut">+ Add output</button></div></div>
-      <label class="fld" style="max-width:240px"><span>Delivery date for everything</span><input class="in" type="date" id="wDeliv" value="${W.deliveryDate}"></label>
-      <p class="hint">Without a date, everything delivers on the last working day.</p>`;
+      <div class="list">${W.outputs.map((o, i) => `<div class="outrow"><input class="in" type="number" min="1" data-oi="${i}" data-ok="count" value="${o.count}" aria-label="How many"><input class="in" data-oi="${i}" data-ok="name" value="${esc(o.name)}" aria-label="Output"><input class="in" type="date" data-oi="${i}" data-ok="date" value="${o.date || last}" aria-label="Delivers on"><button type="button" class="x" data-orm="${i}" aria-label="Remove">×</button></div>${otlHTML(o, i, last)}`).join("")}
+      <div><button type="button" class="btn sm" id="wAddOut">+ Add output</button></div></div>`;
   } else if (step === "team") {
-    const R2 = rolesFor(W.types), roleRow = r => `<div class="role ${W.team[r] ? "" : "off"}"><span class="rn">${esc(r)}</span><span class="step"><button type="button" data-role="${esc(r)}" data-d="-1" aria-label="Fewer">−</button><span>${W.team[r] | 0}</span><button type="button" data-role="${esc(r)}" data-d="1" aria-label="More">+</button></span></div>`;
-    h = `<h2>Build your team</h2><p class="lead">These suit the kind of project you picked. Set a role to 0 to leave its stage out. Adding people makes a stage shorter.</p>
+    wizStagesChanged(false);
+    const R2 = rolesForStages(W.stages), roleRow = r => `<div class="role ${W.team[r] ? "" : "off"}"><span class="rn">${esc(r)}</span><span class="step"><button type="button" data-role="${esc(r)}" data-d="-1" aria-label="Fewer">−</button><span>${W.team[r] | 0}</span><button type="button" data-role="${esc(r)}" data-d="1" aria-label="More">+</button></span>${durRow("data-dur", r, W.team[r] | 0, (W.dur || {})[r])}</div>`;
+    h = `<h2>Build your team</h2><p class="lead">Pick how many of each, then how long each one works (in weeks). Leave a length empty and it fits the stage. Set a role to 0 to leave it out.</p>
       <div class="roles">${R2.main.map(roleRow).join("")}</div>
       <button type="button" class="morebtn" id="wMoreRoles">${W.moreRoles ? "▾" : "▸"} More roles (${R2.extra.length})</button>
       ${W.moreRoles ? `<div class="roles">${R2.extra.map(roleRow).join("")}</div>` : ""}
-      <div class="sec"><h3>Your own roles</h3><div class="list">${W.custom.map((c, i) => `<div class="li"><input class="in" data-ci="${i}" value="${esc(c.label)}" placeholder="Role"><span class="step"><button type="button" data-cs="${i}" data-d="-1">−</button><span>${c.count}</span><button type="button" data-cs="${i}" data-d="1">+</button></span><button type="button" class="x" data-crm="${i}" aria-label="Remove">×</button></div>`).join("")}
+      <div class="sec"><h3>Your own roles</h3><div class="list">${W.custom.map((c, i) => `<div class="li" style="flex-wrap:wrap"><input class="in" data-ci="${i}" value="${esc(c.label)}" placeholder="Role"><span class="step"><button type="button" data-cs="${i}" data-d="-1">−</button><span>${c.count}</span><button type="button" data-cs="${i}" data-d="1">+</button></span><button type="button" class="x" data-crm="${i}" aria-label="Remove">×</button>${durRow("data-cdur", i, c.count, c.dur)}</div>`).join("")}
       <div><button type="button" class="btn sm" id="wAddRole">+ Add role</button></div></div></div>`;
   } else {
-    const items = pickedItems(W.types, W.team);
+    const items = { length: W.stages.length + W.ownStages.filter(x => x.trim()).length };
     h = `<h2>How often do you show work?</h2><p class="lead">These go in as WIP reviews on those weekdays. You can drag them around afterwards.</p>
       <div class="grid3" style="grid-template-columns:1fr 1fr 1fr">
         <div class="sec"><h3>Client WIPs</h3>${dayBtns(W.clientDays, "clientDays")}</div>
@@ -2357,10 +2592,11 @@ function drawWiz() {
       <div class="preset">Ready to build <b>${esc(W.name || "Untitled schedule")}</b>: ${items.length} stages, a crew of ${Object.values(W.team).reduce((a, b) => a + (b | 0), 0) + W.custom.reduce((a, c) => a + c.count, 0)}, ${Math.max(1, W.outputs.filter(o => o.name.trim()).length)} output${W.outputs.length === 1 ? "" : "s"}${W.shootDate && hasShoot() ? `, shooting ${fmt(W.shootDate)}` : ""}. It's a rough start. Drag everything into place after.</div>`;
   }
   $("wzBody").innerHTML = h;
+  if (step === "when") wizHolGrid();
   $("wzBack").disabled = W.step === 0;
   $("wzNext").hidden = W.step === STEPS.length - 1;
   $("wzGo").hidden = W.step !== STEPS.length - 1;   // Create only on the last screen; before that it's Back / Next
-  $("wzNote").textContent = W.step < STEPS.length - 1 ? "Leave anything blank and press Next." : "";
+  $("wzNote").textContent = ""; $("wzSkip").hidden = W.step === STEPS.length - 1;
   const f = $("wzBody").querySelector("input:not([type=checkbox]),textarea"); if (f && step !== "outputs") setTimeout(() => f.focus(), 20);
 }
 function wizRead() {
@@ -2373,15 +2609,28 @@ function wizRead() {
     if ($("wShoot")) { W.shootDate = v("wShoot"); W.shootDays = Math.max(1, parseInt(v("wShootDays"), 10) || 1); }
   }
   if (v("wDeliv") != null) W.deliveryDate = v("wDeliv");
-  $("wzBody").querySelectorAll("[data-oi]").forEach(el => { const o = W.outputs[+el.dataset.oi]; if (o) o[el.dataset.ok] = el.dataset.ok === "count" ? Math.max(1, parseInt(el.value, 10) || 1) : el.value; });
+  const lastD = validDate(W.start) ? wizLastDay() : "";
+  $("wzBody").querySelectorAll("[data-oi][data-ok]").forEach(el => { const o = W.outputs[+el.dataset.oi]; if (!o) return; const k = el.dataset.ok;
+    // left on the last day, it stays "the last day" — it moves with the job's length
+    o[k] = k === "count" ? Math.max(1, parseInt(el.value, 10) || 1) : k === "date" ? (el.value === lastD ? "" : el.value) : el.value; });
   $("wzBody").querySelectorAll("[data-ci]").forEach(el => { const c = W.custom[+el.dataset.ci]; if (c) c.label = el.value; });
+  $("wzBody").querySelectorAll("[data-osi]").forEach(el => { W.ownStages[+el.dataset.osi] = el.value; });
+  W.dur = W.dur || {};
+  $("wzBody").querySelectorAll("[data-dur]").forEach(el => { const k = el.dataset.dur; (W.dur[k] = W.dur[k] || [])[+el.dataset.pi] = el.value; });
+  $("wzBody").querySelectorAll("[data-full]").forEach(el => { if (!el.checked) return; const k = el.dataset.fk, i = +el.dataset.pi; if (el.dataset.full === "data-dur") (W.dur[k] = W.dur[k] || [])[i] = "full"; else { const c = W.custom[+k]; if (c) (c.dur = c.dur || [])[i] = "full"; } });
+  $("wzBody").querySelectorAll("[data-cdur]").forEach(el => { const c = W.custom[+el.dataset.cdur]; if (c) (c.dur = c.dur || [])[+el.dataset.pi] = el.value; });
 }
 function wizGo(n) { wizRead(); W.step = Math.max(0, Math.min(STEPS.length - 1, n)); drawWiz(); }
 $("newBtn").onclick = openWiz;
 $("wzClose").onclick = closeWiz;
 $("wzBack").onclick = () => wizGo(W.step - 1);
 $("wzNext").onclick = () => wizGo(W.step + 1);
+$("wzSkip").onclick = () => { W.step = Math.min(STEPS.length - 1, W.step + 1); drawWiz(); };
+// a typed delivery date moves the orange mark on that deliverable's line
+$("wiz").addEventListener("change", e => { if (e.target.dataset && (e.target.dataset.ok === "date" || e.target.dataset.full)) { wizRead(); drawWiz(); } });
 $("wiz").addEventListener("input", e => {
+  if (e.target.id === "wCountry") { W.country = e.target.value; W.holOff = []; W.pub = []; wizHolGrid(); wizLoadHol(); return; }
+  if (["wStart", "wWeeks", "wDays", "wSkip"].includes(e.target.id)) { wizRead(); wizLoadHol(); }
   if (["wStart", "wWeeks", "wDays", "wSkip", "wHol"].includes(e.target.id)) { wizRead(); const c = wizCal(); $("wSum").textContent = validDate(W.start) ? `${fmt(W.start)} to ${fmt(c.end)} · ${c.n} working days` : "Pick a start date."; }
 });
 $("wiz").addEventListener("click", e => {
@@ -2389,15 +2638,25 @@ $("wiz").addEventListener("click", e => {
   const t = e.target;
   const go = t.closest("[data-go]"); if (go) return wizGo(+go.dataset.go);
   const ty = t.closest("[data-type]");
-  if (ty) { const k = ty.dataset.type, i = W.types.indexOf(k); i >= 0 ? W.types.splice(i, 1) : W.types.push(k); if (!W.teamTouched) resetTeam(); return drawWiz(); }
+  if (ty) { const k = ty.dataset.type, i = W.types.indexOf(k); i >= 0 ? W.types.splice(i, 1) : W.types.push(k); wizStagesChanged(true); return drawWiz(); }
+  const op = t.closest("[data-opt]"); if (op) { W.opt[op.dataset.opt] = op.dataset.v; wizStagesChanged(true); return drawWiz(); }
+  const sg = t.closest("[data-stage]");
+  if (sg) { const k = sg.dataset.stage, i = W.stages.indexOf(k); i >= 0 ? W.stages.splice(i, 1) : W.stages.push(k); wizStagesChanged(false); return drawWiz(); }
+  if (t.closest("#wMoreStages")) { W.moreStages = !W.moreStages; return drawWiz(); }
+  if (t.closest("#wAddStage")) { wizRead(); W.ownStages.push(""); drawWiz(); const ins = $("wzBody").querySelectorAll("[data-osi]"); ins[ins.length - 1].focus(); return; }
+  const osr = t.closest("[data-osrm]"); if (osr) { wizRead(); W.ownStages.splice(+osr.dataset.osrm, 1); return drawWiz(); }
   const q = t.closest("[data-quick]"); if (q) { wizRead(); W.outputs.push({ name: q.dataset.quick, count: 1, date: "" }); return drawWiz(); }
   if (t.closest("#wAddOut")) { wizRead(); W.outputs.push({ name: "", count: 1, date: "" }); drawWiz(); const ins = $("wzBody").querySelectorAll('[data-ok="name"]'); ins[ins.length - 1].focus(); return; }
   const orm = t.closest("[data-orm]"); if (orm) { wizRead(); W.outputs.splice(+orm.dataset.orm, 1); return drawWiz(); }
-  const r = t.closest("[data-role]"); if (r) { W.teamTouched = true; const k = r.dataset.role; W.team[k] = Math.max(0, Math.min(30, (W.team[k] | 0) + (+r.dataset.d))); return drawWiz(); }
+  const r = t.closest("[data-role]"); if (r) { wizRead(); W.teamTouched = true; const k = r.dataset.role; W.team[k] = Math.max(0, Math.min(30, (W.team[k] | 0) + (+r.dataset.d))); return drawWiz(); }
   if (t.closest("#wMoreRoles")) { W.moreRoles = !W.moreRoles; return drawWiz(); }
   if (t.closest("#wAddRole")) { wizRead(); W.custom.push({ label: "", count: 1 }); drawWiz(); const ins = $("wzBody").querySelectorAll("[data-ci]"); ins[ins.length - 1].focus(); return; }
   const cs = t.closest("[data-cs]"); if (cs) { wizRead(); const c = W.custom[+cs.dataset.cs]; c.count = Math.max(0, c.count + (+cs.dataset.d)); return drawWiz(); }
   const crm = t.closest("[data-crm]"); if (crm) { wizRead(); W.custom.splice(+crm.dataset.crm, 1); return drawWiz(); }
+  const od = t.closest("[data-otd]");   // a day on a deliverable's line
+  if (od) { wizRead(); const o = W.outputs[+od.dataset.oi]; if (o) o.date = od.dataset.otd === wizLastDay() ? "" : od.dataset.otd; return drawWiz(); }
+  const ht = t.closest("[data-holtog]");
+  if (ht) { const d = ht.dataset.holtog, i = W.holOff.indexOf(d); i >= 0 ? W.holOff.splice(i, 1) : W.holOff.push(d); return wizHolGrid(); }
   const dw = t.closest("[data-w]");
   if (dw) { const arr = W[dw.closest("[data-days-key]").dataset.daysKey], v = +dw.dataset.w, i = arr.indexOf(v); i >= 0 ? arr.splice(i, 1) : arr.push(v); return drawWiz(); }
 });
@@ -2406,10 +2665,11 @@ $("wzGo").onclick = () => {
   const types = W.types.length ? W.types.slice() : ["3d"];
   const sc = generate({
     name: W.name.trim() || "Untitled schedule", client: W.client.trim(), agency: W.agency.trim(), types, start: W.start, weeks: W.weeks, days: W.days, skipWeekends: W.skip,
-    holidays: wizHolidays(), shootDate: hasShoot() && validDate(W.shootDate) ? W.shootDate : null, shootDays: W.shootDays,
-    outputs: W.outputs, deliveryDate: W.deliveryDate, team: { ...W.team }, customRoles: W.custom,
+    holidays: [...wizPubOn().map(h => ({ ...h, auto: true })), ...wizHolidays()], country: W.country, shootDate: hasShoot() && validDate(W.shootDate) ? W.shootDate : null, shootDays: W.shootDays,
+    outputs: W.outputs, deliveryDate: W.deliveryDate, team: { ...W.team }, dur: W.dur || {}, customRoles: W.custom, stages: W.stages.slice(), ownStages: W.ownStages.slice(),
     clientDays: W.clientDays, internalDays: W.internalDays, agencyDays: W.agencyDays, theme: S ? S.theme : "studio"
   });
+  sc.holidayOff = W.holOff.slice();
   closeWiz(); VIEW = "timeline"; useSchedule(sc);
   toast(`Created ${sc.name}: ${sc.tasks.length} tasks, ${sc.reviews.length} reviews, ${sc.deliveries.length} deliver${sc.deliveries.length === 1 ? "y" : "ies"}.`);
 };
@@ -2418,7 +2678,7 @@ $("wzGo").onclick = () => {
    Assistant
    ========================================================= */
 let AI = null, aiCtl = null;
-const SUGG = ["Add a client WIP every Friday", "Add an internal WIP every 2nd day during animation", "Make animation 3 days longer", "Add an agency WIP on Thursdays and Fridays, except next week", "Link compositing to lighting", "Print stills deliver a week earlier"];
+const SUGG = ["Build me a 6-week 3D job starting next Monday with two animators", "Add a client WIP every Friday", "Add an internal WIP every 2nd day during animation", "Make animation 3 days longer", "Add an agency WIP on Thursdays and Fridays, except next week", "Link compositing to lighting", "Print stills deliver a week earlier"];
 const RULES = `You edit a production schedule for an animation, VFX and live-action studio. You get the current schedule and the producer's request. Reply with ONLY a JSON object:
 {"reply":"one or two short plain sentences to the producer saying what you changed, or a question if the request is unclear","ops":[ ...operations... ]}
 
@@ -2436,6 +2696,8 @@ Operations. Use exact ids from the schedule. Dates are YYYY-MM-DD.
 - {"op":"set_holiday","date":"<date>","name":"...","on":true}. A holiday is a day nobody works. Use on:false to remove one.
 - {"op":"set_workday","date":"<date>","on":true}. This makes a skipped weekend day a working day. Use on:false to undo it.
 - {"op":"set_project", plus any of "name","client","agency","start","weeks","days","skipWeekends"}. "days" is extra working days on top of the weeks.
+- {"op":"build","name":"...","client":"...","agency":"...","start":"<date>","weeks":6,"days":0,"types":["3d"],"chars":"none|simple|complex","envs":"none|simple|large","style2d":"cel|mograph|cutout","stages":["<stage key>",...],"people":{"<role>":2},"lengths":{"<role>":[3,"full"]},"outputs":[{"name":"30s film","count":1,"date":"<date or empty for the last day>"}],"clientWipDays":[5],"agencyWipDays":[],"internalWipDays":[2],"skipWeekends":true}
+  Makes a NEW schedule from scratch and switches to it; later ops in the same list change the new one. Use it when the producer asks to build, make or start a schedule. "types" are 3d, 2d, live, stop, mini, ai. Leave "stages" out to get the ones suggested for the types and answers; otherwise use STAGE KEYS. "people" uses ROLES (count per role); Producer, Director and Generalist are 0 unless asked. "lengths" gives each person's weeks (or "full" for the whole project), in the same order as the count. WIP days are weekdays 1 (Mon) to 5 (Fri). Anything not said: leave it out.
 
 How the schedule works: lengths are in working days. Skipped weekends and holidays are not counted. A linked task moves by itself when the task it follows moves or gets longer, so to push a chain, change only the first task. Reviews are single days. A delivery day holds one or more outputs.
 For repeating patterns ("every 2nd day", "Thursdays and Fridays except the 18th"), work out each date from the WORKING DAYS list and add one op per date. "Every 2nd day" means every second working day. If the request names a stage ("during animation"), stay inside that task's start and end dates. If it gives no range, use the project dates.
@@ -2465,6 +2727,8 @@ WORKING DAYS:
 ${lines.join("\n")}
 HOLIDAYS: ${off.join("; ") || "none"}
 WEEKEND DAYS WORKED: ${S.workdays.join(", ") || "none"}
+STAGE KEYS (key = name, role): ${LIB.map(x => `${x.key} = ${x.name} (${x.role})`).join("; ")}
+ROLES: ${[...new Set(LIB.map(x => x.role))].join(", ")}
 TASK PILLS (name: colour): ${S.pills.map(p => `${p.name}: ${p.color}`).join("; ")}
 REVIEW TYPES: ${S.reviewPills.map(p => p.name).join(", ")}
 TASKS (row order):
@@ -2525,6 +2789,21 @@ function applyOps(ops) {
         case "move_delivery": { const d = S.deliveries.find(x => x.id === op.id); if (!d) throw new Error(`no delivery "${op.id}"`); const nd = need(op.date), other = S.deliveries.find(x => x !== d && x.date === nd); if (other) { other.outputs.push(...d.outputs); S.deliveries = S.deliveries.filter(x => x !== d); } else d.date = nd; note("Moved a delivery"); break; }
         case "set_holiday": { const d = need(op.date); S.holidays = S.holidays.filter(h => h.date !== d); if (op.on !== false) { S.holidays.push({ date: d, name: String(op.name || "Holiday") }); note("Added holiday"); } else note("Removed holiday"); break; }
         case "set_workday": { const d = need(op.date); S.workdays = S.workdays.filter(x => x !== d); if (op.on !== false) { S.workdays.push(d); note("Made a weekend day a working day"); } else note("Weekend day off again"); break; }
+        case "build": {
+          const types = (Array.isArray(op.types) && op.types.length ? op.types : ["3d"]).filter(t => TYPES.some(x => x.key === t));
+          const opt = { chars: op.chars || SCOPE_DEF.chars, envs: op.envs || SCOPE_DEF.envs, style2d: op.style2d || SCOPE_DEF.style2d };
+          const stages = Array.isArray(op.stages) && op.stages.length ? op.stages.filter(k => LIB.some(x => x.key === k)) : [...suggestStages(types, opt)];
+          const team = {}; rolesForStages(stages).main.forEach(ro => team[ro] = ALWAYS_ROLES[ro] ? 0 : (ROLE_DEF[ro] || 1));
+          if (op.people && typeof op.people === "object") Object.entries(op.people).forEach(([ro, n]) => { team[ro] = Math.max(0, parseInt(n, 10) || 0); });
+          const outs = (Array.isArray(op.outputs) ? op.outputs : []).map(o => ({ name: String(o.name || "Output"), count: Math.max(1, parseInt(o.count, 10) || 1), date: validDate(o.date) ? o.date : "" }));
+          const days = arr => Array.isArray(arr) ? arr.map(n => parseInt(n, 10)).filter(n => n >= 1 && n <= 5) : null;
+          const sc = generate({ name: String(op.name || "New schedule"), client: String(op.client || ""), agency: String(op.agency || ""), types,
+            start: validDate(op.start) ? op.start : nextMonday(), weeks: Math.max(1, parseInt(op.weeks, 10) || 6), days: Math.max(0, parseInt(op.days, 10) || 0),
+            skipWeekends: op.skipWeekends !== false, holidays: [], team, dur: op.lengths && typeof op.lengths === "object" ? op.lengths : {}, stages, outputs: outs,
+            clientDays: days(op.clientWipDays) || [5], internalDays: days(op.internalWipDays) || [2], agencyDays: days(op.agencyWipDays) || [], theme: S.theme, country: S.country });
+          sc.updatedAt = Date.now(); STORE.list[sc.id] = sc; STORE.current = sc.id; S = sc; queueDrive(sc.id);
+          note(`Built ${sc.name}: ${sc.tasks.length} rows from ${fmt(sc.start)}`); break;
+        }
         case "set_project": {
           if (op.name) S.name = String(op.name); if (op.client != null) S.client = String(op.client); if (op.agency != null) S.agency = String(op.agency);
           if (op.start) S.start = need(op.start); if (op.weeks != null || op.days != null) setLen(op.weeks ?? S.weeks, op.days ?? S.days);
@@ -2541,9 +2820,10 @@ function applyOps(ops) {
 function chat() { return CHATS[S.id] || (CHATS[S.id] = []); }
 function renderChat() {
   const m = $("msgs"), c = chat();
-  let h = !AI ? `<div class="msg sys">The assistant isn't connected on this page yet. Everything else works without it.</div>`
+  let h = !AI ? `<div class="msg sys">The assistant runs in Kontroll's Schedule tab (Tabs › Open Schedule), on Kontroll's assistant models. Everything else works here without it.</div>`
     : `<div class="msg sys">Ask in plain words. The assistant can add, move, resize and link tasks, and add WIPs, deliveries and holidays. Every change can be undone.</div>`;
   c.forEach((x, i) => {
+    if (x.help) { h += `<div class="msg help"><b>What the assistant can do</b><ul><li><b>Build a schedule from scratch</b>: "Build me a 6-week 3D job starting 1 December, complex characters, two animators, a director for 3 weeks, client WIPs on Fridays, a 30s film and print stills."</li><li><b>Change this one</b>: add, move, lengthen, link or delete blocks; add WIPs, deliveries, holidays.</li><li><b>Patterns</b>: "a client WIP every second Friday during animation".</li></ul><p style="margin:6px 0 0">The 🎤 dictates (Kontroll's mic); the menu above the box picks which assistant answers (Kontroll › Settings › Assign roles › Schedule assistant sets the default). Every change can be undone.</p></div>`; return; }
     if (x.role === "user") h += `<div class="msg u">${esc(x.text)}</div>`;
     else h += `<div class="msg a">${esc(x.text)}${x.log && x.log.length ? `<ul>${x.log.map(l => `<li>${esc(l)}</li>`).join("")}</ul>` : ""}${x.skipped && x.skipped.length ? `<ul style="color:var(--danger)">${x.skipped.map(l => `<li>Skipped ${esc(l)}</li>`).join("")}</ul>` : ""}${x.snap && !x.undone ? `<div class="acts"><button class="btn sm" data-undo="${i}">Undo these changes</button></div>` : ""}</div>`;
   });
@@ -2563,7 +2843,7 @@ $("aiForm").addEventListener("submit", async e => {
   e.preventDefault();
   const text = $("aiIn").value.trim(); if (!text || !AI || aiCtl) return;
   const c = chat(); c.push({ role: "user", text }); $("aiIn").value = ""; renderChat();
-  const history = c.slice(-9, -1).map(x => ({ role: x.role, content: x.role === "user" ? x.text : (x.text + (x.log && x.log.length ? "\n(Applied: " + x.log.join("; ") + ")" : "")) }));
+  const history = c.filter(x => !x.help).slice(-9, -1).map(x => ({ role: x.role, content: x.role === "user" ? x.text : (x.text + (x.log && x.log.length ? "\n(Applied: " + x.log.join("; ") + ")" : "")) }));
   const input = [{ role: "user", content: RULES }, ...history, { role: "user", content: `CURRENT SCHEDULE\n${scheduleContext()}\n\nREQUEST: ${text}` }];
   aiCtl = new AbortController();
   $("aiStatus").textContent = "Thinking…"; $("aiStop").hidden = false; $("aiSend").disabled = true;
@@ -2575,6 +2855,7 @@ $("aiForm").addEventListener("submit", async e => {
     const snap = JSON.stringify(S);
     let out = { log: [], skipped: [] };
     if (ops.length) { UNDO.push(snap); REDO = []; out = applyOps(ops); fixSel(); save(); render(); }
+    if (S.id !== sid) { CHATS[S.id] = c; ZOOM_AUTO = true; if (VIEW === "timeline") { DAYW = fitDayW(); renderBoard(); } }
     c.push({ role: "assistant", text: String((res && res.reply) || (ops.length ? "Done." : "I didn't change anything.")), log: out.log, skipped: out.skipped, snap: ops.length && out.log.length ? snap : null });
   } catch (err) {
     const code = err && err.code;
@@ -2583,7 +2864,8 @@ $("aiForm").addEventListener("submit", async e => {
       : code === "rate_limited" ? "Too many requests just now. Try again in a minute."
       : code === "invalid_json" ? "The answer came back in a form I couldn't read, so nothing was changed. Try again, maybe in smaller steps."
       : code === "moved" ? "You switched schedules, so the changes weren't applied."
-      : "Something went wrong reaching Claude. Nothing was changed. Try again.";
+      : code === "failed" ? "The assistant couldn't answer" + (err.message ? ": " + err.message : "") + ". Nothing was changed."
+      : "Something went wrong reaching the assistant. Nothing was changed. Try again.";
     c.push({ role: "assistant", text: msg });
     if (code === "not_granted" || code === "sampling_disabled") AI = null;
   } finally {
@@ -2591,9 +2873,54 @@ $("aiForm").addEventListener("submit", async e => {
   }
 });
 async function initAI() {
+  if (AI) return renderChat();   // Kontroll got here first
   try { AI = window.claude && window.claude.use ? await window.claude.use("sample") : null; } catch (e) { AI = null; }
   renderChat();
 }
+/* In Kontroll's Schedule tab the assistant runs on Kontroll: its own assistant models (the Schedule assistant role, or the one picked
+   here), and Kontroll's mic. The page queues a request in window.__kSched and logs "[kontroll-sched]"; Kontroll answers through
+   reply(), and says hello on every load. Outside Kontroll nothing here is used. */
+let MIC_ON = false;
+const KS = window.__kSched = {
+  q: [], waits: {}, host: null,
+  send(kind, data) { const id = uid("k"); this.q.push({ id, kind, ...(data || {}) }); console.log("[kontroll-sched]"); return id; },
+  ask(kind, data) { return new Promise(res => { const id = this.send(kind, data); this.waits[id] = res; }); },
+  take() { return this.q.splice(0); },
+  reply(id, d) { const f = this.waits[id]; if (f) { delete this.waits[id]; f(d || {}); } },
+  hello(info) { this.host = info || {}; onKontroll(this.host); },
+  dictated(text) { const t = $("aiIn"); if (t) { t.value = String(text || ""); t.scrollTop = t.scrollHeight; } },
+  micState(on) { MIC_ON = !!on; const b = $("aiMic"); if (b) b.classList.toggle("live", MIC_ON); },
+};
+const kontrollAI = {
+  async json(input, { signal } = {}) {
+    const system = String(input[0] && input[0].content || "");
+    const user = input.slice(1).map(m => (m.role === "assistant" ? "YOUR EARLIER ANSWER: " : "") + m.content).join("\n\n");
+    if (signal) signal.addEventListener("abort", () => KS.send("cancel"));
+    const res = await KS.ask("ai", { system, user, engine: $("aiModel").value || "" });
+    if (res.cancelled || (signal && signal.aborted)) throw { code: "cancelled" };
+    if (!res.ok) throw { code: "failed", message: res.error || "" };
+    const m = String(res.text || "").match(/\{[\s\S]*\}/); if (!m) throw { code: "invalid_json" };
+    try { return JSON.parse(m[0]); } catch (e) { throw { code: "invalid_json" }; }
+  }
+};
+function onKontroll(info) {
+  AI = kontrollAI;
+  const sel = $("aiModel"), list = Array.isArray(info.engines) ? info.engines : [], fb = list.find(e => e.id === info.fallback);
+  sel.innerHTML = `<option value="">Schedule assistant (Kontroll's default${fb ? ": " + esc(fb.label) : ""})</option>` + list.map(e => `<option value="${esc(e.id)}"${e.id === info.engine ? " selected" : ""}>${esc(e.label)}</option>`).join("");
+  $("aiModelRow").hidden = false;
+  renderChat();
+}
+$("aiModel").addEventListener("change", e => { if (KS.host) KS.send("engine", { engine: e.target.value }); });
+$("aiMic").onclick = () => {
+  if (!KS.host) return toast("The mic works in Kontroll's Schedule tab. Here, use your keyboard's own dictation.");
+  MIC_ON = !MIC_ON; $("aiMic").classList.toggle("live", MIC_ON);
+  KS.send("mic", { on: MIC_ON, text: $("aiIn").value });
+};
+$("aiHelp").onclick = () => {
+  const c = chat();
+  if (c.some(x => x.help)) { CHATS[S.id] = c.filter(x => !x.help); return renderChat(); }
+  c.push({ role: "assistant", help: true, text: "" }); renderChat();
+};
 
 /* =========================================================
    Google Drive: one file per schedule in a "Schedules" folder. The app only ever sees files it made (drive.file).
@@ -2712,7 +3039,7 @@ function printHTML(caps = {}) {
     const head = `<div class="projhead">${headHTML(true)}</div><div class="deliv">${delivHTML(true)}</div>`;
     const foot = (i, n) => `<div class="pfoot"><span>${esc(S.name)}${S.client ? " / " + esc(S.client) : ""}</span><span>${n > 1 ? `Page ${i + 1} of ${n}` : esc(fmt(projStart()) + " to " + fmt(projEnd()))}</span></div>`;
     if (VIEW === "calendar") {
-      body = `<div class="doc print calprint">${head}<div class="board">${calendarHTML()}</div>${foot(0, 1)}</div>`;
+      body = `<div class="doc print calprint"${caps.calZoom && caps.calZoom < 1 ? ` style="zoom:${caps.calZoom}"` : ""}>${head}<div class="board">${calendarHTML()}</div>${foot(0, 1)}</div>`;
     } else {
       DAYW = Math.max(4, (PRINT_W - 24) / dayRange().length);
       timelineHTML(true, { to: 0 });   // works out the deliverables / WIP band's height (LANEH)
@@ -2723,7 +3050,10 @@ function printHTML(caps = {}) {
       if (caps.all || total <= Math.floor(cap1 * 1.2)) cap1 = total;   // nearly fits: one page, shrunk a little, beats a second page with two rows
       const parts = [{ from: 0, to: Math.min(total, cap1) }];
       for (let from = parts[0].to; from < total; from += capN) parts.push({ from, to: Math.min(total, from + capN), lane: false });
-      body = `<div class="doc print">${parts.map((p, i) => `<section class="sheet"><div class="sheet-in">${i === 0 ? head : `<div class="contd">${esc(S.name)} <span>continued</span></div>`}<div class="board">${timelineHTML(true, p)}</div>${foot(i, parts.length)}</div></section>`).join("")}</div>`;
+      const sc = i => { const k = caps.scales && caps.scales[i]; return k && k < 1 ? ` style="width:${PRINT_W / k}px;min-height:${PRINT_H / k}px;transform:scale(${k})"` : ""; };
+      // a page shrunk to fit is laid out wider before shrinking, so its days are widened to fill it edge to edge
+      const nDays = dayRange().length, dayWFor = i => { const k = caps.scales && caps.scales[i]; return Math.max(4, (PRINT_W / (k && k < 1 ? k : 1) - 24) / nDays); };
+      body = `<div class="doc print">${parts.map((p, i) => { DAYW = dayWFor(i); return `<section class="sheet"><div class="sheet-in"${sc(i)}>${i === 0 ? head : `<div class="contd">${esc(S.name)} <span>continued</span></div>`}<div class="board">${timelineHTML(true, p)}</div>${foot(i, parts.length)}</div></section>`; }).join("")}</div>`;
     }
   } finally { SEL = keep; DAYW = keepW; GEO = keepG; LANEH = keepL; MULTI = keepM; }
   const css = [...document.querySelectorAll("style")].map(x => x.textContent).join("\n");
@@ -2755,43 +3085,70 @@ body{display:block;overflow:visible;-webkit-print-color-adjust:exact;print-color
 .bar,.mk,.cbar,.cev{cursor:default}
 .bar .h,.knob,.subico,.cpick,svg.links circle.lh,.cbar .h,.lanetag{display:none}
 .lane{cursor:default}
+/* on screen (the preview only): grey desk, each A4 page white with its margins and a shadow */
+@media screen{
+  body{background:#8d8a83;padding:24px 0}
+  .doc.print{width:auto}
+  .sheet{box-sizing:content-box;padding:38px;margin:0 auto 24px;background:var(--surface);box-shadow:0 6px 24px rgba(0,0,0,.25)}
+  .calprint{box-sizing:content-box;width:${PRINT_W}px;padding:38px;margin:0 auto;background:var(--surface)}
+}
 </style></head><body>` + body + '</body></html>';
 }
-// shrinks any printed page whose content is taller (or wider) than an A4 sheet, so nothing spills onto the next page
-function fitPrintPages(doc) {
-  doc.querySelectorAll(".sheet-in").forEach(s => {
-    const k = Math.min(1, PRINT_H / s.scrollHeight, PRINT_W / s.scrollWidth);
-    if (k < 1) { s.style.width = PRINT_W / k + "px"; s.style.minHeight = PRINT_H / k + "px"; s.style.transform = `scale(${k})`; }
-  });
-  const cal = doc.querySelector(".calprint"); if (cal && cal.scrollWidth > PRINT_W) cal.style.zoom = PRINT_W / cal.scrollWidth;
-}
-$("pdfBtn").onclick = () => {
-  if (!S) return;
+/* Measure, then bake the sizes in: the final page prints the same with no script running — in a browser's print window, and in
+   Kontroll, which makes the PDF itself (vector) with scripts off. Laid out off-screen at the page's width:
+   1. everything on one sheet: if it fits at 70% or more, that's the page;
+   2. otherwise as many rows on page 1 as the title, deliverables, weeks and band leave room for, the rest on following pages;
+   3. each page measured once more and shrunk just enough to fit its sheet. */
+async function buildPrint() {
   const f = document.createElement("iframe");
-  // laid out off-screen at the page's width so the pages can be measured and fitted before printing
   f.style.cssText = `position:fixed;left:-20000px;top:0;width:${PRINT_W}px;height:${PRINT_H}px;border:0`;
-  // first layout: everything on one sheet, to measure how much room the title, deliverables, weeks header and band really take
-  let pass = VIEW === "calendar" ? 2 : 1;
-  f.onload = async () => {
-    try {
-      const d = f.contentDocument; try { await d.fonts.ready; } catch (e) {}
-      if (pass === 1) {
-        pass = 2;
-        // the whole schedule fits on one sheet at 70% size or more: keep it on one page
-        const one = d.querySelector(".sheet-in");
-        if (one && Math.min(PRINT_H / one.scrollHeight, PRINT_W / one.scrollWidth) >= .7) { fitPrintPages(d); f.contentWindow.focus(); f.contentWindow.print(); setTimeout(() => f.remove(), 60000); return; }
-        const top = el => el ? el.getBoundingClientRect().top : 0, row = d.querySelector(".trow"), foot = d.querySelector(".pfoot");
-        const firstRow = row ? top(row) - top(d.querySelector(".sheet-in")) : 300, footH = foot ? foot.getBoundingClientRect().height + 14 : 30;
-        const weeks = d.querySelector(".tl-head"), weeksH = weeks ? weeks.getBoundingClientRect().height : 90, contdH = 40;
-        const cap1 = Math.max(3, Math.floor((PRINT_H - firstRow - footH) / ROWH)), capN = Math.max(6, Math.floor((PRINT_H - contdH - weeksH - footH - 12) / ROWH));
-        f.srcdoc = printHTML({ cap1, capN }); return;
-      }
-      fitPrintPages(d);
-      f.contentWindow.focus(); f.contentWindow.print();
-    } catch (e) { toast("Printing isn't available here."); }
-    setTimeout(() => f.remove(), 60000);
+  document.body.appendChild(f);
+  const load = html => new Promise(res => { f.onload = async () => { const d = f.contentDocument; try { await d.fonts.ready; } catch (e) {} res(d); }; f.srcdoc = html; });
+  const fit = s => Math.min(1, PRINT_H / s.scrollHeight, PRINT_W / s.scrollWidth);
+  try {
+    if (VIEW === "calendar") {
+      const d = await load(printHTML({})), cal = d.querySelector(".calprint");
+      return printHTML({ calZoom: cal && cal.scrollWidth > PRINT_W ? PRINT_W / cal.scrollWidth : 1 });
+    }
+    let d = await load(printHTML({ all: true }));
+    const one = d.querySelector(".sheet-in");
+    if (one && fit(one) >= .7) return printHTML({ all: true, scales: [fit(one)] });
+    const top = el => el ? el.getBoundingClientRect().top : 0, row = d.querySelector(".trow"), foot = d.querySelector(".pfoot");
+    const firstRow = row ? top(row) - top(one) : 300, footH = foot ? foot.getBoundingClientRect().height + 14 : 30;
+    const weeks = d.querySelector(".tl-head"), weeksH = weeks ? weeks.getBoundingClientRect().height : 90;
+    const caps = { cap1: Math.max(3, Math.floor((PRINT_H - firstRow - footH) / ROWH)), capN: Math.max(6, Math.floor((PRINT_H - 40 - weeksH - footH - 12) / ROWH)) };
+    d = await load(printHTML(caps));
+    caps.scales = [...d.querySelectorAll(".sheet-in")].map(fit);
+    return printHTML(caps);
+  } finally { f.remove(); }
+}
+/* Print / PDF opens a preview of exactly what will print; its button sends it to the printer (Save as PDF there) — in Kontroll,
+   straight to a PDF in Downloads. */
+function printNow(html) {
+  const f = document.createElement("iframe");
+  f.style.cssText = `position:fixed;left:-20000px;top:0;width:${PRINT_W}px;height:${PRINT_H}px;border:0`;
+  f.onload = () => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast("Printing isn't available here."); } setTimeout(() => f.remove(), 60000); };
+  f.srcdoc = html; document.body.appendChild(f);
+}
+$("pdfBtn").onclick = async () => {
+  if (!S) return;
+  toast("Laying out the pages…");
+  let html; try { html = await buildPrint(); } catch (e) { return toast("Couldn't lay out the pages."); }
+  const pv = document.createElement("div"); pv.className = "pview";
+  pv.innerHTML = `<div class="pv-bar"><b>Print preview</b><span id="pvInfo">A4 landscape</span><span class="grow"></span><button class="btn" id="pvClose">Close</button><button class="btn pri" id="pvGo">Print / Save PDF</button></div><iframe id="pvFrame" title="Print preview"></iframe>`;
+  document.body.appendChild(pv);
+  const fr = pv.querySelector("#pvFrame");
+  fr.onload = () => {
+    const d = fr.contentDocument, n = d.querySelectorAll(".sheet").length || 1;
+    $("pvInfo").textContent = `A4 landscape · ${n} page${n === 1 ? "" : "s"}`;
+    const z = Math.min(1, (fr.clientWidth - 40) / (PRINT_W + 76)); d.body.style.zoom = z;
   };
-  f.srcdoc = printHTML({ all: VIEW !== "calendar" }); document.body.appendChild(f);
+  fr.srcdoc = html;
+  const close = () => { pv.remove(); document.removeEventListener("keydown", esc_); };
+  const esc_ = e => { if (e.key === "Escape") close(); };
+  document.addEventListener("keydown", esc_);
+  $("pvClose").onclick = close;
+  $("pvGo").onclick = () => { printNow(html); close(); };
 };
 
 /* boot */
