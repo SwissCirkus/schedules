@@ -280,12 +280,13 @@ svg.rubber circle{fill:var(--accent)}
 .msg.a ul{margin:6px 0 0;padding-left:16px;color:var(--ink-2);font-size:12px;white-space:normal}
 .msg .acts{margin-top:8px;display:flex;gap:6px}
 .msg.sys{align-self:stretch;max-width:none;background:transparent;border:1px dashed var(--line-2);color:var(--ink-2);font-size:12px}
-.sugg{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;padding:2px 0 4px}
 .sugg button{height:24px;padding:0 9px;border-radius:12px;border:1px solid var(--line-2);background:transparent;color:var(--ink-2);font-size:12px;cursor:pointer}
 .sugg button:hover{color:var(--ink);border-color:var(--ink-3)}
-#aiForm{border-top:1px solid var(--line-2);padding:10px 14px 14px;display:flex;flex-direction:column;gap:8px}
+#aiForm{border-top:1px solid var(--line-2);padding:12px 14px 56px;display:flex;flex-direction:column;gap:8px;background:#e1ded6}   /* darker than the chat above; the bottom 56px stays free for Kontroll's floating chat and help buttons */
+#aiForm textarea{background:var(--surface)}
 #aiForm textarea{width:100%;min-height:62px}
-.aibar{display:flex;align-items:center;gap:8px;padding-right:52px}   /* room for Kontroll's chat bubble in the bottom-right corner */
+.aibar{display:flex;align-items:center;gap:8px}   /* room for Kontroll's chat bubble in the bottom-right corner */
 .aiic{width:30px;padding:0;justify-content:center;font-weight:700}
 .aiic.live{color:#fff;background:var(--danger)}
 .aimodel{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2)}
@@ -378,6 +379,7 @@ body.side-off .side,body.side-off .splitter{display:none}
 .crewtab th{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:4px 4px 6px;border-bottom:1px solid var(--line-2)}
 .crewtab td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:middle}
 .crewtab td.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+.crewtab tr.crewh td{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding-top:10px;border-bottom:1px solid var(--line-2)}
 .crewtab tfoot td{font-weight:700;border-bottom:0;border-top:1px solid var(--line-2)}
 .doc{flex:1;min-height:0;overflow:auto;padding:22px max(24px,env(safe-area-inset-right,0px)) 18px max(24px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:18px}
 .boardcol{flex:none;gap:18px}
@@ -674,11 +676,10 @@ body.viewonly .bar,body.viewonly .mk,body.viewonly .cbar,body.viewonly .cev,body
     <div class="side-body">
       <div id="ai">
         <div class="msgs" id="msgs"></div>
-        <div class="sugg" id="sugg"></div>
         <form id="aiForm">
           <label class="aimodel" id="aiModelRow" hidden><span>Assistant</span><select class="in" id="aiModel" aria-label="Which assistant"></select></label>
           <textarea class="in" id="aiIn" placeholder="Tell the assistant what to build or change, e.g. build a 6-week 3D job starting 1 December with two animators"></textarea>
-          <div class="aibar"><button type="button" class="btn ghost aiic" id="aiMic" title="Dictate (Kontroll's mic)" aria-label="Dictate"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button type="button" class="btn ghost aiic" id="aiHelp" title="What the assistant can do" aria-label="Help">?</button><span class="st" id="aiStatus"></span><button type="button" class="btn" id="aiStop" hidden>Stop</button><button type="submit" class="btn pri" id="aiSend">Send</button></div>
+          <div class="aibar"><button type="button" class="btn ghost aiic" id="aiMic" title="Dictate (Kontroll's mic)" aria-label="Dictate"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><span class="st" id="aiStatus"></span><button type="button" class="btn" id="aiStop" hidden>Stop</button><button type="submit" class="btn pri" id="aiSend">Send</button></div>
         </form>
       </div>
       <div id="details" hidden></div>
@@ -729,7 +730,10 @@ const LIB = [
   { key: "preprod", name: "Pre-production", role: "Producer", when: any("live", "stop", "mini"), s: 0, l: .18, deps: ["brief"] },
   { key: "concept", name: "Concept & design", role: "Concept artists", when: any("3d", "2d", "stop", "ai", "mini"), s: 0, l: .14, deps: ["brief"] },
   { key: "casting", name: "Casting", role: "Casting", when: () => false, s: .04, l: .1, deps: ["preprod"], preshoot: true },
-  { key: "location", name: "Location scout", role: "Locations", when: () => false, s: .04, l: .08, deps: ["preprod"], preshoot: true },
+  { key: "location", name: "Location recce", role: "Locations", when: () => false, s: .04, l: .08, deps: ["preprod"], preshoot: true },
+  { key: "wardrobe", name: "Wardrobe, props & art", role: "Art department", when: () => false, s: .1, l: .1, deps: ["casting", "location"], preshoot: true },
+  { key: "rehearse", name: "Table read & rehearsals", role: "Director", when: () => false, s: .18, l: .04, deps: ["casting"], preshoot: true },
+  { key: "techrecce", name: "Tech recce & camera tests", role: "DOP", when: () => false, s: .2, l: .02, deps: ["location"], preshoot: true },
   { key: "story", name: "Storyboard", role: "Storyboard artists", when: any("3d", "2d", "stop", "live"), s: .05, l: .12, deps: ["concept", "preprod", "brief"] },
   { key: "animatic2d", name: "Animatic", role: "Storyboard artists", when: ts => any("2d", "stop")(ts) && !ts.includes("3d"), s: .14, l: .12, deps: ["story"] },
   { key: "animatic", name: "3D animatic", role: "Layout artists", when: any("3d"), s: .14, l: .16, deps: ["story", "concept"] },
@@ -746,7 +750,7 @@ const LIB = [
   { key: "layout2d", name: "Layout & backgrounds", role: "Background artists", when: any("2d"), s: .20, l: .22, deps: ["animatic2d", "animatic", "story"] },
   { key: "anim2d", name: "2D animation", role: "2D animators", when: any("2d"), s: .30, l: .38, deps: ["animatic2d", "animatic", "layout2d"] },
   { key: "clean", name: "Clean-up & colour", role: "2D animators", when: any("2d"), s: .58, l: .22, deps: ["anim2d"] },
-  { key: "aigen", name: "AI generation", role: "AI artists", when: any("ai"), s: .26, l: .36, deps: ["ailook"] },
+  { key: "aigen", name: "Full generation", role: "AI artists", when: any("ai"), s: .44, l: .24, deps: ["ailook"] },
   { key: "aiclean", name: "Upscale & clean-up", role: "AI artists", when: any("ai"), s: .60, l: .18, deps: ["aigen"] },
   { key: "fx", name: "FX", role: "FX artists", when: () => false, s: .52, l: .22, deps: ["anim"] },
   { key: "light", name: "Lighting & rendering", role: "Lighters", when: any("3d"), s: .48, l: .36, deps: ["texture", "anim", "model"] },
@@ -771,6 +775,54 @@ LIB.forEach((x, i) => x.color = Math.round(i / (LIB.length - 1) * 9));
   LIB.splice(at("anim2d"), 0,
     { key: "rig2d", name: "2D rigging", role: "2D riggers", when: () => false, s: .2, l: .12, deps: ["chardesign", "animatic2d", "story"], color: 4 });
   const dep = (k, front, back = []) => { const x = LIB.find(y => y.key === k); x.deps = [...front, ...x.deps, ...back]; };
+  /* The AI pipeline as it is run (Christian 2026-11-13): look development, then character look (character sheets) and environment
+     look; key frames locked with the client; optionally 3D animation guides (playblasts); then draft generation and full generation. */
+  LIB.splice(at("ailook") + 1, 0,
+    { key: "aichar", name: "Character look", role: "AI artists", when: any("ai"), s: .12, l: .12, deps: ["ailook", "concept"], color: 1 },
+    { key: "aienv", name: "Environment look", role: "AI artists", when: any("ai"), s: .12, l: .12, deps: ["ailook", "concept"], color: 2 },
+    { key: "aiframes", name: "Key frames", role: "AI artists", when: any("ai"), s: .22, l: .1, deps: ["aichar", "aienv", "ailook"], color: 3 });
+  LIB.splice(at("aigen"), 0,
+    { key: "aiguides", name: "3D guides (playblasts)", role: "3D animators", when: () => false, s: .3, l: .14, deps: ["aiframes", "animatic", "story"], color: 5 },
+    { key: "aidraft", name: "Draft generation", role: "AI artists", when: any("ai"), s: .32, l: .14, deps: ["aiguides", "aiframes", "ailook"], color: 6 });
+  dep("aigen", ["aidraft", "aiframes"]);
+  // 3D with characters and live action (Christian 2026-11-13): props, hair & fur and cloth before the shoot; a day of ingest after it
+  LIB.splice(at("model"), 0, { key: "propmodel", name: "Props modeling", role: "Modelers", when: () => false, s: .14, l: .2, deps: ["concept"], color: 3 });
+  LIB.splice(at("texture") + 1, 0,
+    { key: "groom", name: "Hair & fur", role: "Groom artists", when: () => false, s: .3, l: .14, deps: ["texture", "charmodel"], color: 4 },
+    { key: "cloth", name: "Cloth setup", role: "CFX artists", when: () => false, s: .3, l: .14, deps: ["rig", "charmodel"], color: 4 });
+  LIB.splice(at("aigen"), 0,
+    { key: "aibgframes", name: "Background frames", role: "AI artists", when: () => false, s: .16, l: .14, deps: ["aienv", "ailook"], color: 2 },
+    { key: "aiplates", name: "Plates (camera moves)", role: "AI artists", when: () => false, s: .3, l: .14, deps: ["aibgframes", "aiguides"], color: 6 });
+  // Script development can go first on any job; motion graphics works from a block-in (Christian 2026-11-13)
+  // traditional 2D (cel): designs, layout, key poses signed off, then in-betweens; the backgrounds broken down with camera moves alongside
+  LIB.splice(at("layout2d"), 0, { key: "envdesign", name: "Environment design", role: "Background artists", when: () => false, s: .08, l: .14, deps: ["animatic2d", "story", "concept"], color: 2 });
+  LIB.splice(at("anim2d"), 0,
+    { key: "keyposes", name: "Key poses", role: "2D animators", when: () => false, s: .3, l: .18, deps: ["layout2d", "animatic2d"], color: 5 },
+    { key: "inbetween", name: "In-betweens", role: "2D animators", when: () => false, s: .45, l: .24, deps: ["keyposes"], color: 5 });
+  LIB.splice(at("clean") + 1, 0, { key: "bgbreak", name: "Background breakdown & camera moves", role: "Compositors", when: () => false, s: .32, l: .28, deps: ["layout2d"], color: 7 });
+  // voiceover and music on any job (Christian 2026-11-13): guides early, the voices recorded before animating (lip sync), music towards the end
+  LIB.splice(at("sound"), 0,
+    { key: "voguide", name: "Guide voiceover", role: "Sound", when: () => false, s: .1, l: .04, deps: ["story", "script"], color: 8 },
+    { key: "vorec", name: "Voice recording", role: "Voice talent", when: () => false, s: .25, l: .04, deps: ["voguide"], color: 8 },
+    { key: "musicguide", name: "Guide music", role: "Sound", when: () => false, s: .1, l: .04, deps: ["story", "script"], color: 9 },
+    { key: "music", name: "Music & sound design", role: "Composer", when: () => false, s: .7, l: .2, deps: ["musicguide"], color: 9 });
+  // stop motion and miniatures (Christian 2026-11-13): look stills with placeholder characters, set lighting, wire removal, photogrammetry
+  LIB.splice(at("stopshoot"), 0,
+    { key: "lookstills", name: "Look stills (placeholders)", role: "Art department", when: () => false, s: .3, l: .06, deps: ["build", "minibuild"], color: 2 },
+    { key: "setlight", name: "Set lighting", role: "DOP", when: () => false, s: .34, l: .06, deps: ["lookstills", "minibuild", "build"], color: 6 });
+  LIB.splice(at("minibuild"), 0, { key: "blockout", name: "Rough blockout (cardboard)", role: "Model makers", when: () => false, s: .14, l: .06, deps: ["animatic", "animatic2d", "story"], color: 3 });
+  LIB.splice(at("minibuild") + 1, 0, { key: "print3d", name: "3D printing", role: "Generalist", when: () => false, s: .2, l: .14, deps: ["blockout", "concept"], color: 4 });
+  LIB.splice(at("minishoot") + 1, 0, { key: "photogram", name: "Photogrammetry scan", role: "Generalist", when: () => false, s: .44, l: .04, deps: ["minishoot", "minibuild"], color: 4 });
+  LIB.splice(at("comp"), 0, { key: "wires", name: "Wire & rig removal", role: "Compositors", when: () => false, s: .6, l: .2, deps: ["stopshoot"], color: 7 });
+  LIB.splice(at("sound"), 0,
+    { key: "soundedit", name: "Sound edit (dialogue, ADR, Foley)", role: "Sound", when: () => false, s: .7, l: .15, deps: ["edit"], color: 8 },
+    { key: "titles", name: "Titles & credits", role: "Motion designers", when: () => false, s: .85, l: .05, deps: ["edit"], color: 7 });
+  LIB.splice(at("sound"), 0, { key: "foley", name: "Foley & sound effects", role: "Sound", when: () => false, s: .75, l: .1, deps: ["comp", "edit"], color: 9 });
+  LIB.splice(at("brief") + 1, 0, { key: "script", name: "Script development", role: "Writers", when: () => false, s: 0, l: .12, deps: ["brief"], color: 0 });
+  dep("story", ["script"]); dep("concept", [], ["script"]);
+  LIB.splice(at("motion"), 0, { key: "blockin", name: "Block-in (rough placeholders)", role: "Motion designers", when: () => false, s: .2, l: .14, deps: ["styleframes", "concept"], color: 7 });
+  LIB.splice(at("track"), 0, { key: "key", name: "Keying", role: "Compositors", when: () => false, s: .5, l: .15, deps: ["ingest", "shoot"], color: 7 });
+  LIB.splice(at("edit"), 0, { key: "ingest", name: "Footage ingest", role: "Editors", when: () => false, s: .46, l: .02, deps: ["shoot"], color: 9 });
   dep("rig", ["charmodel"]); dep("texture", ["charmodel", "envmodel"]); dep("anim2d", ["rig2d"]); dep("motion", [], ["styleframes", "animatic2d", "story"]);
 }
 // on every job, whatever its kind (Christian 2026-11-13): a row of their own when picked; added after the colours so the stages keep theirs
@@ -782,7 +834,7 @@ LIB.unshift(
 const ROLE_DEF = { "3D animators": 3, "2D animators": 3, "Modelers": 2, "Compositors": 2, "AI artists": 2, "Stop-motion animators": 2, "Fabricators": 2, "Model makers": 2 };
 const REVIEW_DEF = [
   { name: "Internal WIP", color: 6 }, { name: "Client WIP", color: 1 }, { name: "Agency WIP", color: 8 },
-  { name: "Client feedback", color: 2 }, { name: "Sign-off", color: 4 },
+  { name: "Client feedback", color: 2 }, { name: "Sign-off", color: 4 }, { name: "Playblast review", color: 5 }, { name: "PPM", color: 0 },
 ];
 const OUTPUT_QUICK = ["60s film", "30s film", "15s cutdown", "6s bumper", "Print stills", "Social cutdowns", "Key visual", "OOH",
   "Short film", "Feature film", "Full-length film", "Series episode", "Documentary", "Music video", "Trailer", "Title sequence"];
@@ -803,7 +855,7 @@ const PRESET_GROUPS = [
 const presetColor = name => { const i = PRESET_GROUPS.flatMap(g => g.items || []).indexOf(name); return i < 0 ? 9 : i % 10; };
 const rvText = type => type === "Internal WIP" ? "WIP" : type;   // a WIP box says what it is in words
 // the boxes on the timeline and calendar are short — they sit close together; hovering one shows the full name and date
-const RV_SHORT = { "Internal WIP": "WIP", "Client WIP": "CL.WIP", "Agency WIP": "AG.WIP", "Client feedback": "CL.FB", "Sign-off": "SIGN-OFF" };
+const RV_SHORT = { "Internal WIP": "WIP", "Client WIP": "CL.WIP", "Agency WIP": "AG.WIP", "Client feedback": "CL.FB", "Sign-off": "SIGN-OFF", "Playblast review": "PB.REV", "PPM": "PPM" };
 const rvShort = type => RV_SHORT[type] || (String(type).length > 9 ? String(type).slice(0, 8) + "." : type);
 const THEMES = {
   studio: { label: "Studio", c: ["#e58f8f", "#e8a46c", "#e6c35a", "#bccf6a", "#78c99a", "#5cc6c0", "#5aa9e6", "#8a93e8", "#ad8ce6", "#d98bc9"] },
@@ -1021,20 +1073,62 @@ function pickedItems(types, team) {
 }
 /* The stages suggested for the kind of project and its answers (characters, environments, 2D style); the Stages step starts from
    these and you add or take any out. */
-const SCOPE_DEF = { chars: "simple", envs: "simple", style2d: "cel" };
+const SCOPE_DEF = { format: "ad", print3d: "no", chars: "simple", envs: "simple", style2d: "cel", aiguides: "no", charCount: 2, shootDays: "2", aiPart: "bg", greenscreen: "no", vo: "none", music: "none", foley: "no", smPart: "chars", photo: "no" };
 function suggestStages(types, opt) {
   const ts = types.length ? types : ["3d"], o = { ...SCOPE_DEF, ...(opt || {}) }, k = new Set(LIB.filter(x => x.when(ts)).map(x => x.key));
   if (ts.includes("3d")) {
     if (o.chars === "none") { k.delete("rig"); k.delete("chardesign"); k.delete("charmodel"); }
     if (o.chars === "complex") { k.add("chardesign"); k.add("charmodel"); }
     if (o.envs === "large") { k.add("envmodel"); k.add("fx"); }
+    if (o.chars === "complex") { k.add("propmodel"); k.add("groom"); k.add("cloth"); }   // complex characters: hair, fur and cloth
     if (k.has("charmodel") && k.has("envmodel")) k.delete("model");
+    if (ts.includes("live")) k.add("ingest");
   }
+  if (ts.includes("ai") && o.aiguides === "yes") k.add("aiguides");
+  if (ts.includes("live") && CG.some(x => ts.includes(x))) { k.add("ingest"); if (o.greenscreen === "yes") k.add("key"); }   // actors on green screen: keying feeds compositing
+  if (ts.includes("ai") && (ts.includes("3d") || ts.includes("live"))) {
+    ["aiframes", "aidraft", "aigen", "aienv"].forEach(x => k.delete(x));
+    k.add("aibgframes"); k.add("aiplates"); k.add("track"); k.add("comp");
+    if (ts.includes("3d")) k.add("aiguides");   // 3D camera guides steer the plates
+    if (o.aiPart === "chars") { ["charmodel", "rig", "groom", "cloth", "chardesign"].forEach(x => k.delete(x)); k.add("envmodel"); }
+    if (o.aiPart === "all") { ["charmodel", "rig", "groom", "cloth", "envmodel", "model", "propmodel"].forEach(x => k.delete(x)); }
+  }   // a 3D animator makes guides (playblasts) for the generation
   if (ts.includes("2d")) {
-    if (o.style2d === "cel") k.add("chardesign");
-    if (o.style2d === "mograph") { ["layout2d", "anim2d", "clean"].forEach(x => k.delete(x)); k.add("styleframes"); k.add("motion"); }
+    if (o.style2d === "cel") { k.add("chardesign"); k.add("envdesign"); k.add("keyposes"); k.add("inbetween"); k.add("bgbreak"); k.add("comp"); k.delete("anim2d"); }
+    if (o.style2d === "mograph") {
+      ["layout2d", "anim2d", "clean", "story", "animatic2d", "grade"].forEach(x => k.delete(x)); k.add("styleframes"); k.add("blockin"); k.add("motion"); k.add("comp");
+      if (ts.includes("ai")) { ["aichar", "aienv", "aiframes", "aidraft", "aiguides", "aiclean", "ailook"].forEach(x => k.delete(x)); k.add("aigen"); }   // just AI generation, built up with the rest
+    }
     if (o.style2d === "cutout") { k.delete("clean"); k.add("chardesign"); k.add("rig2d"); }
   }
+  // any shoot: casting (→ cast lock), location recce (→ location lock), wardrobe / props / art, tech recce; the PPM goes on as a WIP
+  if (ts.includes("live")) ["casting", "location", "wardrobe", "techrecce", "ingest"].forEach(x => k.add(x));
+  if (["short", "feature", "series"].includes(o.format)) {
+    ["script", "soundedit", "music", "sound", "titles", "grade"].forEach(x => k.add(x));
+    if (ts.includes("live")) k.add("rehearse");
+  }
+  // stop motion and miniatures
+  if (ts.includes("stop")) {
+    ["lookstills", "setlight", "wires"].forEach(x => k.add(x));
+    if (ts.includes("3d") && o.smPart === "chars") { ["charmodel", "rig", "groom", "cloth", "anim", "model"].forEach(x => k.delete(x)); k.add("envmodel"); k.add("key"); k.add("comp"); }
+    if (ts.includes("3d") && o.smPart === "bg") {
+      ["chardesign", "charmodel", "rig", "texture", "anim", "track", "comp", "light"].forEach(x => k.add(x));
+      ["model", "lookstills", "wires", "edit"].forEach(x => k.delete(x));   // the sets are background plates: lit, shot, tracked
+      if (o.photo === "yes") k.add("photogram");
+    }
+    if (ts.includes("live")) { k.add("key"); k.add("comp"); k.add("ingest"); k.delete("track"); }
+  }
+  if ((ts.includes("mini") || ts.includes("stop")) && o.print3d === "yes") k.add("print3d");
+  if (ts.includes("mini")) {
+    k.add("setlight"); k.add("comp");
+    if (!ts.includes("3d")) { k.add("blockout"); k.add("story"); k.add("animatic2d"); }   // a model-only job: boards, animatic, a cardboard blockout first
+    if (ts.includes("3d")) { ["chardesign", "charmodel", "rig", "texture", "anim", "track", "light"].forEach(x => k.add(x)); k.delete("model"); }
+    if (o.photo === "yes") k.add("photogram");
+  }
+  if (o.foley === "yes") { k.add("foley"); k.add("sound"); }
+  if (o.vo === "yes") { k.add("voguide"); k.add("vorec"); k.add("sound"); }
+  if (o.music === "guide") { k.add("musicguide"); k.add("music"); k.add("sound"); }
+  if (o.music === "final") { k.add("music"); k.add("sound"); }
   return k;
 }
 // the people the chosen stages need (plus Producer, Director, Generalist); every other role is under More roles
@@ -1048,6 +1142,344 @@ function rolesFor(types) {
   const main = [...new Set([...Object.keys(ALWAYS_ROLES), ...LIB.filter(x => x.when(ts)).map(x => x.role)])];
   const extra = [...new Set(LIB.map(x => x.role))].filter(r => !main.includes(r));
   return { main, extra };
+}
+/* 3D with live action, laid out the way the studio runs it (Christian 2026-11-13). Before the shoot: concept, character design and
+   storyboard first, the 3D animatic signed off just before the shoot; character / props modeling, rigging and texturing (hair & fur
+   and cloth for complex characters) alongside — more than three characters lets that work run past the shoot. After it: a day of
+   ingest, the offline edit (about a week, longer for a longer shoot), tracking, animation from the second day of tracking, and
+   lighting & rendering, FX and compositing overlapping animation towards the end; grade and online close it. Rows are linked where
+   one follows another, so moving one pushes the rest. Positions are working days (0 = the first). */
+function planAroundShoot(sc, placed, N, S0, SD, chars) {
+  const T = k => placed[k] ? sc.tasks.find(t => t.id === placed[k].id) : null, pos = new Map();
+  const at = k => { const t = T(k); return t && pos.get(t.id); };
+  const put = (k, start, len, prevK) => {
+    const t = T(k); if (!t) return null;
+    start = Math.max(0, Math.min(N - 1, Math.round(start))); len = Math.max(1, Math.round(len));
+    const p = prevK && T(prevK), pp = p && pos.get(p.id);
+    if (pp) { t.mode = "after"; t.after = p.id; t.lag = start - (pp[0] + pp[1]); } else { t.mode = "start"; t.after = null; t.lag = start; }
+    t.date = null; t.days = len; pos.set(t.id, [start, len]); return [start, len];
+  };
+  const endOf = k => { const v = at(k); return v ? v[0] + v[1] : null; };
+  const P = Math.max(4, S0), post0 = S0 + SD, POST = Math.max(6, N - post0), extra = Math.max(0, chars - 3) * 2;
+  const sh = T("shoot"); if (sh) pos.set(sh.id, [S0, SD]);
+  // before the shoot
+  put("preprod", 0, P);
+  // AI with live action: look and background frames (concept level) before the shoot; the plates come after it (below)
+  put("ailook", 0, P * .4); put("aibgframes", P * .3, P * .6, T("ailook") ? "ailook" : null); put("aichar", P * .2, P * .5);
+  put("concept", 0, P * .3); put("chardesign", 0, P * .3);
+  put("story", P * .12, P * .3);
+  const se = endOf("story") ?? Math.round(P * .42); put("animatic", se, Math.max(2, P - 1 - se), "story");
+  const cd = endOf("chardesign") ?? endOf("concept") ?? Math.round(P * .3);
+  put("charmodel", cd - 1, P * .45 + extra, T("chardesign") ? "chardesign" : null);
+  put("model", P * .25, P * .5 + (T("charmodel") ? 0 : extra));
+  put("propmodel", P * .3, P * .4); put("envmodel", P * .25, P * .55);
+  const mk = T("charmodel") ? "charmodel" : "model", m = at(mk);
+  if (m) { put("rig", m[0] + m[1] * .5, P * .3 + extra / 2, mk); put("texture", m[0] + m[1] * .5, P * .35 + extra / 2, mk); }
+  const tx = at("texture"); if (tx) put("groom", tx[0] + 2, P * .25, "texture");
+  const rg = at("rig"); if (rg) put("cloth", rg[0] + 1, P * .25, "rig");
+  // after the shoot
+  put("ingest", post0, 1, "shoot");
+  put("edit", post0, Math.max(5, Math.round(SD * 2.5)), "shoot");
+  const ing = endOf("ingest") ?? post0, finish = Math.max(ing + 6, N - 4);
+  put("track", ing, Math.max(3, POST * .25), T("ingest") ? "ingest" : "shoot");
+  put("key", ing, Math.max(3, POST * .3), T("ingest") ? "ingest" : "shoot");   // green screen keying, alongside tracking
+  // AI plates (backgrounds, set extensions) generated from the shot footage, upscaled, signed off
+  if (T("aiplates")) {
+    put("aiplates", ing + 1, Math.max(3, POST * .35), T("ingest") ? "ingest" : "shoot");
+    const pe = endOf("aiplates"); put("aiclean", pe, 2, "aiplates");
+    const so = sc.reviewPills.find(p => p.name === "Sign-off"), wdays = []; for (let d = sc.start; wdays.length <= N; d = addDays(d, 1)) { if (isWork(d)) wdays.push(d); if (wdays.length > 400) break; }
+    [endOf("aibgframes"), endOf("aiclean")].forEach(i => { if (i != null && wdays[Math.min(N - 1, i)]) sc.reviews.push({ id: uid("r"), date: wdays[Math.min(N - 1, i)], type: so ? so.name : "Sign-off", color: so ? so.color : 4, note: "" }); });
+  }
+  const aS = ing + 2, aLen = Math.max(4, finish - aS - Math.round(POST * .1));
+  put("anim", aS, aLen, T("track") ? "track" : null);
+  const toFinish = (k, from) => { const st = Math.round(from); put(k, st, Math.max(1, finish - st), "anim"); };
+  toFinish("fx", aS + aLen * .4); toFinish("light", aS + aLen * .45); toFinish("comp", aS + aLen * .5);
+  put("grade", finish, 2, "comp"); put("online", finish + 2, Math.max(1, N - finish - 2), "grade");
+}
+/* AI with 3D (or AI with live action), laid out like a shoot (Christian 2026-11-13): the AI side comes first and its plates are locked
+   before the 3D work goes on top. Character sheets and look first; background frames, signed off; plates generated from them with
+   camera moves (3D camera guides / playblasts steering them), upscaled, signed off; then tracking, animation from the second day of
+   tracking, lighting and compositing overlapping animation towards the end; grade and online close it. The 3D characters are built
+   alongside the AI work. Two Sign-off WIPs go on the frames and on the plates. aiPart: "bg" AI backgrounds (default), "chars" AI
+   characters, "all" both. */
+/* Motion graphics (with or without AI), usually one or two people (Christian 2026-11-13): script locked (or Script development first),
+   a little concept and styleframes, then a block-in of the whole piece with rough placeholders, and from there AI generation, motion
+   graphics and compositing built up side by side until the end, refining as it goes; online closes it. */
+/* Traditional 2D (cel), everything locked before animating (Christian 2026-11-13): storyboard, then the 2D animatic; character and
+   environment design, signed off; layout (shots locked); key poses, signed off; in-betweens, then clean-up & colour. The backgrounds
+   are broken down into elements with camera moves alongside, by someone else; compositing and grade at the end. */
+/* Stop motion and miniatures (Christian 2026-11-13).
+   stop:    strict storyboard; sets, puppets and props built; look stills with placeholder characters, signed off; set lighting, signed
+            off; the shoot, shot by shot, each shot signed off; wire & rig removal; grade, Foley, music.
+   chars3d: stop-motion characters on 3D backgrounds — the 3D sets modeled and lit first, the puppets shot on green screen matching
+            the 3D camera, keyed and composited.
+   onlive:  stop-motion characters on live-action plates — the plates filmed first, the puppets on green screen matching the moves,
+            keyed and composited (usually no tracking).
+   plates:  miniature (or stop-motion set) backgrounds with 3D characters — concept signed off, the model built, lit and signed off,
+            background plates shot (moves or stills), photogrammetry if picked; the 3D characters built meanwhile; then tracking, animation
+            from the second day of tracking, lighting and comp. */
+function planPhysical(sc, placed, N, wd, mode, shootIdx, shootDays) {
+  const T = k => placed[k] ? sc.tasks.find(t => t.id === placed[k].id) : null, pos = new Map();
+  const put = (k, start, len, prevK) => {
+    const t = T(k); if (!t) return null;
+    start = Math.max(0, Math.min(N - 1, Math.round(start))); len = Math.max(1, Math.round(len));
+    const p = prevK && T(prevK), pp = p && pos.get(p.id);
+    if (pp) { t.mode = "after"; t.after = p.id; t.lag = start - (pp[0] + pp[1]); } else { t.mode = "start"; t.after = null; t.lag = start; }
+    t.date = null; t.days = len; pos.set(t.id, [start, len]); return [start, len];
+  };
+  const endOf = k => { const t = T(k), v = t && pos.get(t.id); return v ? v[0] + v[1] : null; };
+  const so = sc.reviewPills.find(p => p.name === "Sign-off"), signOff = (i, note) => { if (i != null && wd[Math.min(N - 1, Math.max(0, i))]) sc.reviews.push({ id: uid("r"), date: wd[Math.min(N - 1, Math.max(0, i))], type: so ? so.name : "Sign-off", color: so ? so.color : 4, note: note || "" }); };
+  const rename = (k, n) => { const t = T(k); if (t) t.name = n; };
+  const finish = Math.max(8, N - 4);
+  let s0 = 0; if (T("script")) { put("script", 0, Math.max(2, N * .08)); s0 = endOf("script"); }
+  put("story", s0, N * .1, T("script") ? "script" : null); put("concept", s0, N * .1, T("script") ? "script" : null);
+  put("preprod", 0, N * .2);
+  const sb = endOf("story") ?? s0 + 3;
+  if (mode === "stop" || mode === "chars3d" || mode === "onlive") {
+    rename("build", mode === "stop" ? "Set, puppet & props build" : "Puppet & props build");
+    put("chardesign", s0 + 1, N * .1);
+    put("build", sb - 1, N * (mode === "stop" ? .28 : .24), "story");
+    if (mode === "chars3d") { put("envmodel", sb, N * .22, "story"); put("model", sb, N * .22, "story"); const em = T("envmodel") ? "envmodel" : "model", e = endOf(em); if (e != null) { put("texture", e - 3, N * .12, em); put("light", (endOf("texture") ?? e) - 1, N * .5, "texture"); } }
+    if (mode === "onlive") { put("shoot", shootIdx >= 0 ? shootIdx : N * .22, shootDays); put("ingest", (shootIdx >= 0 ? shootIdx : Math.round(N * .22)) + shootDays, 1, "shoot"); }
+    const b = endOf("build") ?? sb + 5;
+    put("lookstills", b - 2, Math.max(2, N * .05), "build");
+    const ls = endOf("lookstills") ?? b; signOff(ls, "Look stills");
+    put("setlight", ls, Math.max(2, N * .05), "lookstills");
+    const lit = endOf("setlight") ?? ls + 2; signOff(lit, "Lighting and look");
+    if (mode !== "stop") rename("stopshoot", "Stop-motion shoot (green screen" + (mode === "onlive" ? ", matching the plates)" : ", matching the 3D camera)"));
+    const shootLen = Math.max(5, Math.round((finish - lit) * .6));
+    put("stopshoot", lit, shootLen, "setlight");
+    for (let i = lit + 3; i < lit + shootLen; i += 3) signOff(i, "Shot sign-off");   // each shot is signed off as it's done
+    put("edit", lit + 3, Math.max(3, shootLen), "stopshoot");
+    const ss = lit;
+    put("key", ss + 2, Math.max(3, finish - ss - 4), "stopshoot");
+    put("wires", ss + Math.round(shootLen * .3), Math.max(3, finish - (ss + Math.round(shootLen * .3))), "stopshoot");
+    put("comp", ss + Math.round(shootLen * .4), Math.max(3, finish - (ss + Math.round(shootLen * .4))), "stopshoot");
+  } else if (mode === "mini") {
+    // a miniature-model job (Christian 2026-11-13): boards and animatics, a rough cardboard blockout, the build (the biggest part; 3D printed
+    // parts alongside), lighting, the model shoot at the end (non-animated puppets in it, sometimes), then clean-up, stitching shots, grade
+    rename("minibuild", "Miniature build"); rename("minishoot", "Model shoot"); rename("comp", "Clean-up & compositing");
+    put("animatic2d", sb, N * .08, "story"); put("animatic", sb, N * .08, "story");
+    const an = Math.max(endOf("animatic2d") ?? 0, endOf("animatic") ?? 0, sb);
+    put("blockout", an, Math.max(2, N * .06), T("animatic2d") ? "animatic2d" : T("animatic") ? "animatic" : "story");
+    const bo = endOf("blockout") ?? an + 3; signOff(bo, "Blockout");
+    put("minibuild", bo, Math.max(5, N * .42), T("blockout") ? "blockout" : null);
+    put("print3d", bo, Math.max(3, N * .25), T("blockout") ? "blockout" : null);
+    const be = endOf("minibuild") ?? bo + 10;
+    put("setlight", be - 2, Math.max(2, N * .05), "minibuild");
+    const le = endOf("setlight") ?? be + 2; signOff(le, "Model lit and signed off");
+    put("minishoot", le, Math.max(3, N * .1), "setlight");
+    const sh = endOf("minishoot") ?? le + 4;
+    put("photogram", sh - 1, Math.max(1, N * .03), "minishoot");
+    put("comp", sh - 1, Math.max(3, finish - sh + 1), "minishoot");
+  } else {   // plates: miniature or stop-motion set backgrounds, 3D characters
+    rename("minibuild", "Miniature build"); rename("minishoot", "Background plates (model shoot)");
+    rename("build", "Set build"); rename("stopshoot", "Background plates (sets)");
+    put("animatic", sb, N * .1, "story");
+    const cs = Math.max(endOf("concept") ?? 0, endOf("animatic") ?? 0); signOff(cs, "Concept and animatic");
+    const bk = T("minibuild") ? "minibuild" : "build";
+    put(bk, cs, N * .22, T("concept") ? "concept" : null);
+    const be = endOf(bk) ?? cs + 5;
+    put("setlight", be - 1, Math.max(2, N * .06), bk);
+    const le = endOf("setlight") ?? be + 2; signOff(le, "Model lit and signed off");
+    const pk = T("minishoot") ? "minishoot" : "stopshoot";
+    put(pk, le, Math.max(2, N * .08), "setlight");
+    const pe = endOf(pk) ?? le + 3;
+    put("photogram", pe - 1, Math.max(1, N * .03), pk);
+    // the 3D characters built while the model is made
+    put("chardesign", cs - 2, N * .1); put("charmodel", (endOf("chardesign") ?? cs) - 1, N * .2, "chardesign");
+    const cm = endOf("charmodel") ?? cs + 8; put("rig", cm - 3, N * .14, "charmodel"); put("texture", cm - 3, N * .14, "charmodel");
+    const ready = Math.max(pe, endOf("rig") ?? 0, endOf("texture") ?? 0);
+    put("track", ready, Math.max(3, (finish - ready) * .22), pk);
+    const aS = ready + 2, aLen = Math.max(4, finish - aS - 2);
+    put("anim", aS, aLen, "track");
+    const tf = (k, from) => { const st = Math.round(from); put(k, st, Math.max(1, finish - st), "anim"); };
+    tf("light", aS + aLen * .4); tf("comp", aS + aLen * .45);
+  }
+  put("grade", finish, 2, "comp"); put("online", finish + 2, Math.max(1, N - finish - 2), "grade");
+}
+/* Any job with a shoot (Christian 2026-11-13: "a casting session, a PPM … lock off cast, lock off locations"): casting → cast lock, the
+   location recce → location lock, wardrobe / props / art, the tech recce and camera tests 1–2 days before, and the PPM a few days
+   before the shoot. S0 = the shoot's first working day. */
+function planLivePrep(sc, placed, N, wd, S0) {
+  const T = k => placed[k] ? sc.tasks.find(t => t.id === placed[k].id) : null;
+  const set = (k, start, len) => { const t = T(k); if (!t) return null; start = Math.max(0, Math.min(N - 1, Math.round(start))); t.mode = "start"; t.after = null; t.date = null; t.lag = start; t.days = Math.max(1, Math.round(len)); return start + t.days; };
+  const rv = (i, type, note) => { const p = sc.reviewPills.find(x => x.name === type) || { name: type, color: 4 }; const d = wd[Math.min(N - 1, Math.max(0, i))]; if (d) sc.reviews.push({ id: uid("r"), date: d, type: p.name, color: p.color, note: note || "" }); };
+  const P = Math.max(4, S0);
+  const ce = set("casting", P * .15, Math.max(2, P * .45)); if (ce != null) rv(ce, "Sign-off", "Cast lock");
+  const le = set("location", P * .1, Math.max(2, P * .4)); if (le != null) rv(le, "Sign-off", "Location lock");
+  set("wardrobe", Math.max(ce ?? 0, P * .45), Math.max(2, P - 2 - Math.max(ce ?? 0, P * .45)));
+  set("rehearse", S0 - 6, 3);
+  set("techrecce", S0 - 2, 1);
+  if (T("script")) set("script", 0, Math.max(3, P * .25));
+  rv(Math.max(0, S0 - 3), "PPM", "Pre-production meeting: cast, locations, wardrobe, props, shooting board and schedule approved");
+}
+/* Short films, features and series (or anything 13+ weeks): rows grouped into phases — Development, Pre-production, Production,
+   Post-production, Delivery — each a block holding its own schedule, open. Production is the shoot on a live job, the animation /
+   build / generation work otherwise; what starts before it is pre-production, what follows is post. */
+/* Live action without CG: after the shoot a day of ingest, then the edit — about a week for an ad; for a film the assembly, director's
+   cut and recuts, about 40% of post — ending at picture lock (a Sign-off). After the lock: grade, sound edit (dialogue, ADR, Foley),
+   music (composed from midway through the edit), the final mix, titles; online and deliverables last. */
+function planLivePost(sc, placed, N, wd, S0, SD, long) {
+  const T = k => placed[k] ? sc.tasks.find(t => t.id === placed[k].id) : null, pos = new Map();
+  const put = (k, start, len, prevK) => {
+    const t = T(k); if (!t) return null;
+    start = Math.max(0, Math.min(N - 1, Math.round(start))); len = Math.max(1, Math.round(len));
+    const p = prevK && T(prevK), pp = p && pos.get(p.id);
+    if (pp) { t.mode = "after"; t.after = p.id; t.lag = start - (pp[0] + pp[1]); } else { t.mode = "start"; t.after = null; t.lag = start; }
+    t.date = null; t.days = len; pos.set(t.id, [start, len]); return [start, len];
+  };
+  const endOf = k => { const t = T(k), v = t && pos.get(t.id); return v ? v[0] + v[1] : null; };
+  const sh = T("shoot"); if (sh) pos.set(sh.id, [S0, SD]);
+  put("preprod", 0, S0);
+  const post0 = S0 + SD, POST = Math.max(6, N - post0), finish = Math.max(post0 + 5, N - 3);
+  put("ingest", post0, 1, "shoot");
+  const ed = endOf("ingest") ?? post0, edLen = long ? Math.max(8, POST * .4) : Math.max(5, Math.min(POST * .45, SD * 2.5 + 3));
+  put("edit", ed, edLen, T("ingest") ? "ingest" : "shoot");
+  const lock = endOf("edit") ?? ed + 5;
+  const so = sc.reviewPills.find(p => p.name === "Sign-off"); if (wd[Math.min(N - 1, lock)]) sc.reviews.push({ id: uid("r"), date: wd[Math.min(N - 1, lock)], type: so ? so.name : "Sign-off", color: so ? so.color : 4, note: "Picture lock" });
+  const after = Math.max(2, finish - lock);
+  put("comp", lock, after * .6, "edit"); put("grade", lock + after * .3, after * .5, "edit");
+  put("soundedit", lock, after * .6, "edit"); put("music", ed + edLen * .5, finish - 2 - (ed + edLen * .5), "edit");
+  put("foley", lock, after * .5, "edit"); put("titles", finish - Math.max(2, after * .2), Math.max(2, after * .2), "edit");
+  put("sound", finish - 2, 2, T("soundedit") ? "soundedit" : "edit");
+  put("online", finish, Math.max(1, N - finish), T("grade") ? "grade" : "edit");
+  sc.__keepSound = true;
+}
+function groupPhases(sc, wd, N) {
+  R = resolve();
+  const idx = d => { const i = wd.indexOf(d); return i < 0 ? (d < wd[0] ? 0 : N - 1) : i; };
+  const keyOf = t => { const l = LIB.find(x => x.name === t.name); return l ? l.key : t.name === "Production prep" ? "preprod" : ""; };
+  const hasShoot = sc.tasks.some(t => keyOf(t) === "shoot");
+  const PROD = hasShoot ? ["shoot", "stopshoot", "minishoot"] : ["anim", "anim2d", "keyposes", "inbetween", "clean", "stopshoot", "minishoot", "aigen", "aidraft", "aiplates", "motion", "blockin", "light", "fx"];
+  const DEV = ["brief", "script"], DEL = ["online"];
+  const top = sc.tasks.filter(t => !t.parent);
+  top.forEach(t => { if (keyOf(t) === "preprod") t.name = "Production prep"; });   // not to be confused with the Pre-production phase
+  const prodStart = Math.min(...top.filter(t => PROD.includes(keyOf(t))).map(t => idx(R.get(t.id).start)), N);
+  const phaseOf = t => { const k = keyOf(t); if (DEV.includes(k)) return 0; if (DEL.includes(k)) return 4; if (PROD.includes(k)) return 2; return idx(R.get(t.id).start) < prodStart ? 1 : 3; };
+  const names = ["Development", "Pre-production", "Production", "Post-production", "Delivery"], groups = names.map(() => []);
+  top.forEach(t => groups[phaseOf(t)].push(t));
+  const parents = [];
+  groups.forEach((g, i) => {
+    if (!g.length) return;
+    const a = Math.min(...g.map(t => idx(R.get(t.id).start))), b = Math.max(...g.map(t => idx(R.get(t.id).end)));
+    const p = { id: uid("t"), name: names[i], color: [0, 2, 5, 7, 9][i], people: 0, days: b - a + 1, notes: "", mode: "start", after: null, lag: a, date: null, sub: true, open: true };
+    g.forEach(t => { t.parent = p.id; }); parents.push(p, ...g);
+  });
+  sc.tasks = [...parents, ...sc.tasks.filter(t => t.parent && !top.includes(t))];
+}
+function planCel(sc, placed, N, wd) {
+  const T = k => placed[k] ? sc.tasks.find(t => t.id === placed[k].id) : null, pos = new Map();
+  const put = (k, start, len, prevK) => {
+    const t = T(k); if (!t) return null;
+    start = Math.max(0, Math.min(N - 1, Math.round(start))); len = Math.max(1, Math.round(len));
+    const p = prevK && T(prevK), pp = p && pos.get(p.id);
+    if (pp) { t.mode = "after"; t.after = p.id; t.lag = start - (pp[0] + pp[1]); } else { t.mode = "start"; t.after = null; t.lag = start; }
+    t.date = null; t.days = len; pos.set(t.id, [start, len]); return [start, len];
+  };
+  const endOf = k => { const t = T(k), v = t && pos.get(t.id); return v ? v[0] + v[1] : null; };
+  let s0 = 0; if (T("script")) { put("script", 0, Math.max(2, N * .1)); s0 = endOf("script"); }
+  put("concept", s0, N * .1, T("script") ? "script" : null);
+  put("story", s0, N * .12, T("script") ? "script" : null);
+  put("animatic2d", endOf("story") ?? s0 + 3, N * .1, "story");
+  put("chardesign", s0 + N * .06, N * .14); put("envdesign", s0 + N * .08, N * .14);
+  const designs = Math.max(endOf("chardesign") ?? 0, endOf("envdesign") ?? 0, endOf("animatic2d") ?? 0);
+  put("layout2d", designs, N * .1, T("animatic2d") ? "animatic2d" : null);
+  const lay = endOf("layout2d") ?? designs;
+  put("keyposes", lay, N * .16, "layout2d");
+  const keys = endOf("keyposes") ?? lay + 3, finish = Math.max(keys + 8, N - 4);
+  put("inbetween", keys, Math.max(3, (finish - keys) * .55), "keyposes");
+  const ib = T("inbetween") && pos.get(T("inbetween").id);
+  if (ib) put("clean", ib[0] + ib[1] * .4, Math.max(2, finish - 2 - (ib[0] + ib[1] * .4)), "inbetween");
+  put("bgbreak", lay, Math.max(3, (finish - lay) * .5), "layout2d");
+  const cs = ib ? Math.round(ib[0] + ib[1] * .6) : keys + 3; put("comp", cs, Math.max(2, finish - cs), T("inbetween") ? "inbetween" : null);
+  put("grade", finish, 2, "comp"); put("online", finish + 2, Math.max(1, N - finish - 2), "grade");
+  // sign-offs: the designs, and the key poses
+  const so = sc.reviewPills.find(p => p.name === "Sign-off");
+  [designs, keys].forEach(i => { if (wd[Math.min(N - 1, i)]) sc.reviews.push({ id: uid("r"), date: wd[Math.min(N - 1, i)], type: so ? so.name : "Sign-off", color: so ? so.color : 4, note: "" }); });
+}
+/* Voiceover and music, on every job, after the rest is laid out: guide VO and guide music with the storyboard / animatic; the voices
+   recorded before the animation starts (lip sync) on an animation job, or mid-job otherwise; final music towards the end; the mix
+   just before online. */
+function placeSound(sc, placed, N, wd) {
+  const T = k => placed[k] ? sc.tasks.find(t => t.id === placed[k].id) : null;
+  if (!["voguide", "vorec", "musicguide", "music", "sound", "foley"].some(k => T(k))) return;
+  R = resolve();
+  const idx = d => { const i = wd.indexOf(d); return i < 0 ? null : i; }, startOf = k => { const t = T(k); return t && R.get(t.id) ? idx(R.get(t.id).start) : null; };
+  const set = (k, start, len) => { const t = T(k); if (!t) return; t.mode = "start"; t.after = null; t.date = null; t.lag = Math.max(0, Math.min(N - 1, Math.round(start))); t.days = Math.max(1, Math.round(len)); };
+  const early = startOf("animatic2d") ?? startOf("animatic") ?? startOf("story") ?? Math.round(N * .1);
+  set("voguide", early, 2); set("musicguide", early, 2);
+  const anim = ["keyposes", "anim", "anim2d", "rig2d", "stopshoot"].map(startOf).filter(v => v != null).sort((a, b) => a - b)[0];
+  if (anim != null) set("vorec", Math.max(early + 2, anim - 3), 2); else set("vorec", Math.round(N * .5), 2);
+  if (!sc.__keepSound) set("music", Math.round(N * .7), Math.max(2, N - 4 - Math.round(N * .7)));
+  if (!sc.__keepSound) set("foley", Math.round(N * .72), Math.max(2, N - 4 - Math.round(N * .72)));
+  if (!sc.__keepSound) set("sound", N - 4, 2);
+}
+function planMograph(sc, placed, N, withAI) {
+  const T = k => placed[k] ? sc.tasks.find(t => t.id === placed[k].id) : null, pos = new Map();
+  const put = (k, start, len, prevK) => {
+    const t = T(k); if (!t) return null;
+    start = Math.max(0, Math.min(N - 1, Math.round(start))); len = Math.max(1, Math.round(len));
+    const p = prevK && T(prevK), pp = p && pos.get(p.id);
+    if (pp) { t.mode = "after"; t.after = p.id; t.lag = start - (pp[0] + pp[1]); } else { t.mode = "start"; t.after = null; t.lag = start; }
+    t.date = null; t.days = len; pos.set(t.id, [start, len]); return [start, len];
+  };
+  const endOf = k => { const t = T(k), v = t && pos.get(t.id); return v ? v[0] + v[1] : null; };
+  let s0 = 0; if (T("script")) { put("script", 0, Math.max(2, N * .12)); s0 = endOf("script"); }
+  put("concept", s0, Math.max(2, N * .12), T("script") ? "script" : null);
+  put("styleframes", s0 + Math.max(1, N * .06), Math.max(2, N * .12), T("concept") ? "concept" : null);
+  const sf = endOf("styleframes") ?? endOf("concept") ?? s0 + 3;
+  put("blockin", sf, Math.max(2, N * .14), T("styleframes") ? "styleframes" : "concept");
+  const bi = endOf("blockin") ?? sf + 3, finish = Math.max(bi + 3, N - 2);
+  if (T("aigen")) T("aigen").name = "AI generation";
+  ["motion", "aigen", "comp", "anim2d"].forEach(k => put(k, bi, finish - bi, "blockin"));
+  put("grade", finish - 1, 1, "comp"); put("online", finish, Math.max(1, N - finish), T("comp") ? "comp" : "motion");
+  // rows in the order the work happens: the block-in above what builds on it
+  const order = ["script", "concept", "styleframes", "blockin", "aigen", "motion", "anim2d", "comp", "grade", "online"], rank = new Map();
+  order.forEach((k, i) => { const t = T(k); if (t) rank.set(t.id, i); });
+  const idx = new Map(sc.tasks.map((t, i) => [t.id, i]));
+  sc.tasks.sort((a, b) => (rank.has(a.id) && rank.has(b.id)) ? rank.get(a.id) - rank.get(b.id) : idx.get(a.id) - idx.get(b.id));
+}
+function planAroundPlates(sc, placed, N, wd, aiPart) {
+  const T = k => placed[k] ? sc.tasks.find(t => t.id === placed[k].id) : null, pos = new Map();
+  const at = k => { const t = T(k); return t && pos.get(t.id); };
+  const put = (k, start, len, prevK) => {
+    const t = T(k); if (!t) return null;
+    start = Math.max(0, Math.min(N - 1, Math.round(start))); len = Math.max(1, Math.round(len));
+    const p = prevK && T(prevK), pp = p && pos.get(p.id);
+    if (pp) { t.mode = "after"; t.after = p.id; t.lag = start - (pp[0] + pp[1]); } else { t.mode = "start"; t.after = null; t.lag = start; }
+    t.date = null; t.days = len; pos.set(t.id, [start, len]); return [start, len];
+  };
+  const endOf = k => { const v = at(k); return v ? v[0] + v[1] : null; };
+  const word = aiPart === "chars" ? "Character" : aiPart === "all" ? "" : "Background";
+  if (T("aibgframes")) T("aibgframes").name = (word ? word + " frames" : "AI frames");
+  if (T("aiplates")) T("aiplates").name = (word ? word + " plates" : "AI plates") + " (camera moves)";
+  const L = Math.max(6, Math.round(N * .45));   // the AI plates are locked by about here
+  put("concept", 0, L * .25); put("ailook", 0, L * .25);
+  put("aichar", L * .1, L * .25, T("ailook") ? "ailook" : null);
+  put("aibgframes", L * .25, L * .3, T("ailook") ? "ailook" : null);
+  const fe = endOf("aibgframes") ?? Math.round(L * .55);
+  put("aiguides", fe - Math.round(L * .15), L * .2, "aibgframes");
+  put("aiplates", fe, Math.max(2, L - fe - 2), "aibgframes");
+  const pe = endOf("aiplates") ?? L - 2;
+  put("aiclean", pe, 2, "aiplates");
+  // the 3D side alongside the AI work
+  put("chardesign", 0, L * .3); put("charmodel", L * .25, L * .5, T("chardesign") ? "chardesign" : null);
+  put("model", L * .25, L * .5); put("envmodel", L * .25, L * .55); put("propmodel", L * .3, L * .4);
+  const mk = T("charmodel") ? "charmodel" : "model", m = at(mk);
+  if (m) { put("rig", m[0] + m[1] * .5, L * .35, mk); put("texture", m[0] + m[1] * .5, L * .4, mk); }
+  put("story", L * .05, L * .25); const se = endOf("story"); if (se != null) put("animatic", se, L * .3, "story");
+  // plates locked: tracking, animation, lighting, comp
+  const lock = endOf("aiclean") ?? pe, finish = Math.max(lock + 6, N - 4);
+  put("track", lock, Math.max(3, (N - lock) * .25), T("aiclean") ? "aiclean" : "aiplates");
+  const aS = lock + 2, aLen = Math.max(4, finish - aS - Math.round((N - lock) * .1));
+  put("anim", aS, aLen, T("track") ? "track" : null);
+  const toFinish = (k, from) => { const st = Math.round(from); put(k, st, Math.max(1, finish - st), "anim"); };
+  toFinish("fx", aS + aLen * .4); toFinish("light", aS + aLen * .45); toFinish("comp", aS + aLen * .5);
+  put("grade", finish, 2, "comp"); put("online", finish + 2, Math.max(1, N - finish - 2), "grade");
+  // the two sign-offs
+  const so = sc.reviewPills.find(p => p.name === "Sign-off");
+  [endOf("aibgframes"), lock].forEach(i => { if (i != null && wd[Math.min(N - 1, i)]) sc.reviews.push({ id: uid("r"), date: wd[Math.min(N - 1, Math.max(0, i))], type: so ? so.name : "Sign-off", color: so ? so.color : 4, note: "" }); });
 }
 function blank(o) {
   return {
@@ -1080,6 +1512,8 @@ function generate(o) {
     (o.customRoles || []).forEach(r => { if (!r.label || !(r.count > 0)) return; groupsFor(r.count, r.dur).forEach(g => customRows.push({ id: uid("t"), name: r.label.trim(), color: 9, people: g.n, days: g.days || N, notes: "", mode: "start", after: null, lag: 0, date: null })); });
     let shootIdx = -1;
     if (sc.shoot && validDate(sc.shoot.date)) { const sd = snapF(sc.shoot.date); shootIdx = wd.indexOf(sd); if (shootIdx < 0) shootIdx = sd < wd[0] ? 0 : N - 1; }
+    // live action with no shoot date yet: the shoot goes a little before the middle, so the 3D prep fits before it
+    if (shootIdx < 0 && ts.includes("live")) { shootIdx = Math.min(N - 1, Math.round(N * (ts.includes("stop") ? .22 : ts.includes("ai") && !ts.includes("3d") ? .28 : .42))); sc.shoot = { date: wd[shootIdx], days: Math.max(1, parseInt(o.shootDays, 10) || 2) }; }
     const placed = {};
     items.forEach(x => {
       const cnt = o.team[x.role] | 0, n = Math.max(1, cnt);
@@ -1106,7 +1540,18 @@ function generate(o) {
       // people working a different length get a row of their own, starting together with the first
       groups.slice(1).forEach(g => sc.tasks.push({ ...t, id: uid("t"), people: g.n, days: g.days || Math.max(1, Math.round(x.l * N)), ...(g.full ? { mode: "start", after: null, lag: 0, date: null } : {}) }));
     });
+    const physMode = ts.includes("mini") ? (ts.includes("3d") ? "plates" : "mini") : ts.includes("stop") ? (ts.includes("live") ? "onlive" : ts.includes("3d") ? (((o.opt || {}).smPart || "chars") === "bg" ? "plates" : "chars3d") : "stop") : null;
+    if (physMode) planPhysical(sc, placed, N, wd, physMode, shootIdx, Math.max(1, (sc.shoot && sc.shoot.days) | 0 || 2));
+    else if (ts.includes("2d") && ((o.opt || {}).style2d || "cel") === "cel" && !ts.some(x => ["3d", "live", "ai"].includes(x))) planCel(sc, placed, N, wd);
+    else if (ts.includes("2d") && (o.opt || {}).style2d === "mograph" && !ts.includes("3d") && !ts.includes("live")) planMograph(sc, placed, N, ts.includes("ai"));
+    else if (ts.includes("ai") && ts.includes("3d") && !ts.includes("live")) planAroundPlates(sc, placed, N, wd, (o.opt || {}).aiPart || "bg");
+    else if (shootIdx >= 0 && ts.includes("live") && CG.some(x => ts.includes(x))) planAroundShoot(sc, placed, N, shootIdx, Math.max(1, sc.shoot.days | 0), Math.max(1, parseInt((o.opt || {}).charCount, 10) || 2));
+    if (shootIdx >= 0 && ts.includes("live") && !CG.some(x => ts.includes(x))) planLivePost(sc, placed, N, wd, shootIdx, Math.max(1, sc.shoot.days | 0), ["short", "feature", "series"].includes((o.opt || {}).format));
+    if (shootIdx >= 0 && ts.includes("live")) planLivePrep(sc, placed, N, wd, shootIdx);
+    placeSound(sc, placed, N, wd); delete sc.__keepSound;
     sc.tasks.push(...customRows);
+    sc.format = (o.opt || {}).format || "ad";
+    if (["short", "feature", "series"].includes(sc.format) || N >= 65) groupPhases(sc, wd, N);   // long jobs: rows grouped into phases
     (o.ownStages || []).forEach(st => { const nm = String(st || "").trim(); if (nm) sc.tasks.push({ id: uid("t"), name: nm, color: 9, people: 0, days: Math.max(1, Math.round(N * .2)), notes: "", mode: "start", after: null, lag: 0, date: null }); });
     const rc = name => sc.reviewPills.find(r => r.name === name).color;
     wd.forEach((d, i) => {
@@ -1522,6 +1967,8 @@ const head = (title, extra = "") => `<div style="display:flex;align-items:center
    people × working days, added up over every row for that role — in days or weeks. A stage row counts toward its role
    (Texturing & lookdev → Texture artists); a row named after a role counts as that role. */
 let CREW_UNIT = "weeks";
+// above the line: the creative leads and talent (writers, director, producers, cast, voices); everyone else is below the line
+const ATL_ROLES = new Set(["Producer", "Director", "Writers", "Voice talent", "Cast"]);
 function crewRoles() {
   const roleOf = t => { const l = LIB.find(x => x.name === t.name); return l ? l.role : t.name; };
   const m = new Map();
@@ -1540,7 +1987,7 @@ function renderDetails() {
   el.innerHTML = `<div class="sec"><div style="display:flex;align-items:center;gap:8px"><h3 style="flex:1">Crew</h3>
       <div class="seg"><button data-unit="days" class="${CREW_UNIT === "days" ? "on" : ""}">Days</button><button data-unit="weeks" class="${CREW_UNIT === "weeks" ? "on" : ""}">Weeks</button></div></div>
     ${rows.length ? `<table class="crewtab"><thead><tr><th>Role</th><th style="text-align:right">People</th><th style="text-align:right">Total</th></tr></thead><tbody>
-      ${rows.map((r, i) => `<tr><td>${esc(r.role)}</td><td class="n"><span class="step"><button data-crew="${i}" data-d="-1" aria-label="Fewer ${esc(r.role)}">−</button><span>${r.people}</span><button data-crew="${i}" data-d="1" aria-label="More ${esc(r.role)}">+</button></span></td><td class="n" title="${r.pdays} person-days">${amt(r.pdays)}</td></tr>`).join("")}</tbody>
+      ${[["Above the line", true], ["Below the line", false]].map(([h, atl]) => { const list = rows.map((r, i) => [r, i]).filter(([r]) => ATL_ROLES.has(r.role) === atl); return list.length ? `<tr class="crewh"><td colspan="3">${h}</td></tr>` + list.map(([r, i]) => `<tr><td>${esc(r.role)}</td><td class="n"><span class="step"><button data-crew="${i}" data-d="-1" aria-label="Fewer ${esc(r.role)}">−</button><span>${r.people}</span><button data-crew="${i}" data-d="1" aria-label="More ${esc(r.role)}">+</button></span></td><td class="n" title="${r.pdays} person-days">${amt(r.pdays)}</td></tr>`).join("") : ""; }).join("")}</tbody>
       <tfoot><tr><td>All crew</td><td class="n">${peak}</td><td class="n">${amt(tot)}</td></tr></tfoot></table>
       <p class="hint">Total is people × working days on every row for that role. Changing the people sets it on all of that role's rows.</p>`
       : `<p class="hint">No rows yet. Drag people or stages in from the tray.</p>`}</div>`;
@@ -2457,7 +2904,7 @@ $("dataImport").onclick = () => {
 const STEPS = ["type", "stages", "who", "when", "outputs", "team", "reviews"];
 let W = null;
 function openWiz() {
-  W = { step: 0, types: [], name: "", client: "", agency: "", start: nextMonday(), weeks: 6, days: 0, skip: true, hol: "", shootDate: "", shootDays: 2,
+  W = { step: 0, types: [], name: (KS.host && KS.host.project) || "" /* in Kontroll: the open project */, client: "", agency: "", start: nextMonday(), weeks: 6, days: 0, skip: true, hol: "", shootDate: "", shootDays: 2,
     outputs: [], deliveryDate: "", team: {}, teamTouched: false, custom: [], moreRoles: false, clientDays: [5], internalDays: [2], agencyDays: [],
     country: (S && S.country) || defaultCountry(), pub: [], holOff: [], opt: { ...SCOPE_DEF }, stages: [], ownStages: [], moreStages: false };
   W.stages = [...suggestStages(W.types, W.opt)];
@@ -2535,13 +2982,22 @@ function drawWiz() {
   if (step === "type") {
     h = `<h2>What kind of project is it?</h2><p class="lead">Pick one or more. A mix like 3D animation plus live action is fine.</p>
       <div class="types">${TYPES.map(t => `<button type="button" class="type ${W.types.includes(t.key) ? "on" : ""}" data-type="${t.key}"><b>${t.name}</b><small>${t.desc}</small></button>`).join("")}</div>
-      ${W.types.includes("3d") || !W.types.length ? `<div class="sec"><h3>3D: what's in it?</h3>${optRow("chars", "Characters", [["none", "None"], ["simple", "Simple"], ["complex", "Complex"]])}${optRow("envs", "Environments", [["none", "None"], ["simple", "Simple"], ["large", "Large / complex"]])}</div>` : ""}
+      <div class="sec"><h3>Format</h3>${optRow("format", "It's a", [["ad", "Commercial / online"], ["short", "Short film"], ["feature", "Feature film"], ["series", "Series"], ["other", "Other"]])}<small class="muted" style="font-size:11.5px">Short films, features and series are grouped into phases: development, pre-production, production, post, delivery.</small></div>
+      ${W.types.includes("3d") || !W.types.length ? `<div class="sec"><h3>3D: what's in it?</h3>${optRow("chars", "Characters", [["none", "None"], ["simple", "Simple"], ["complex", "Complex"]])}${W.opt.chars !== "none" ? `<div class="optrow"><span>How many</span><input class="in" type="number" min="1" max="60" id="wChars" value="${W.opt.charCount}" style="width:70px"><small class="muted" style="font-size:11.5px">count reusable ones once: 3 that dress up as many is 3</small></div>` : ""}${optRow("envs", "Environments", [["none", "None"], ["simple", "Simple"], ["large", "Large / complex"]])}</div>` : ""}
+      ${W.types.includes("live") ? `<div class="sec"><h3>Live action</h3>${optRow("shootDays", "Shoot days", [["1", "1"], ["2", "2"], ["3", "3"], ["4", "4"], ["5", "5"], ["8", "8+"]])}${W.types.some(t => CG.includes(t)) ? optRow("greenscreen", "Green screen", [["no", "No"], ["yes", "Yes, actors keyed"]]) : ""}<small class="muted" style="font-size:11.5px">Ads usually shoot 1 to 3 days; the offline edit grows with a longer shoot.</small></div>` : ""}
+      ${W.types.includes("ai") && (W.types.includes("3d") || W.types.includes("live")) ? `<div class="sec"><h3>AI with ${W.types.includes("3d") ? "3D" : "live action"}: which part is AI?</h3>${optRow("aiPart", "AI makes", [["bg", W.types.includes("3d") ? "Backgrounds (3D characters)" : "Backgrounds (live actors)"], ["chars", "Characters"], ["all", "Both"]])}<small class="muted" style="font-size:11.5px">The AI plates are generated and signed off first; the ${W.types.includes("3d") ? "3D" : "live action"} goes on top of them.</small></div>`
+        : W.types.includes("ai") ? `<div class="sec"><h3>AI: how is it animated?</h3>${optRow("aiguides", "3D animation guides", [["no", "No"], ["yes", "Yes, playblasts"]])}</div>` : ""}
       ${W.types.includes("2d") ? `<div class="sec"><h3>2D: what kind?</h3>${optRow("style2d", "Style", [["cel", "Character / cel"], ["mograph", "Motion graphics"], ["cutout", "Cut-out / rigged"]])}</div>` : ""}
+      ${W.types.includes("stop") && W.types.includes("3d") ? `<div class="sec"><h3>Stop motion with 3D: which part is stop motion?</h3>${optRow("smPart", "Stop motion is", [["chars", "Characters (3D backgrounds)"], ["bg", "Backgrounds (3D characters)"]])}</div>` : ""}
+      ${W.types.includes("stop") && W.types.includes("live") ? `<div class="sec"><h3>Stop motion with live action</h3><small class="muted" style="font-size:11.5px">The live plates are filmed first; the puppets are animated on green screen matching the camera moves, then keyed and composited.</small></div>` : ""}
+      ${W.types.includes("stop") && !W.types.includes("mini") && !(W.types.includes("3d") && W.opt.smPart === "bg") ? `<div class="sec"><h3>Stop motion</h3>${optRow("print3d", "3D printing", [["no", "No"], ["yes", "Yes, printed puppets / parts"]])}</div>` : ""}
+      ${W.types.includes("mini") || (W.types.includes("stop") && W.types.includes("3d") && W.opt.smPart === "bg") ? `<div class="sec"><h3>Miniature / set backgrounds</h3>${optRow("photo", "Photogrammetry", [["no", "No"], ["yes", "Yes, scan the model"]])}${optRow("print3d", "3D printing", [["no", "No"], ["yes", "Yes, printed parts"]])}<small class="muted" style="font-size:11.5px">A 3D capture of the model, used to catch shadows from the 3D characters.</small></div>` : ""}
+      <div class="sec"><h3>Sound</h3>${optRow("vo", "Voiceover", [["none", "None"], ["yes", "Guide, then recorded"]])}${optRow("foley", "Foley & SFX", [["no", "No"], ["yes", "Yes"]])}${optRow("music", "Music", [["none", "None"], ["guide", "Guide track, then final"], ["final", "Final only"]])}<small class="muted" style="font-size:11.5px">With character animation the voices are recorded before animating, for lip sync.</small></div>
       <div class="preset">${presetText()}</div>`;
   } else if (step === "stages") {
     const sug = suggestStages(W.types, W.opt), on = new Set(W.stages), isStage = x => ALWAYS_ROLES[x.role] !== x.key;
     const shown = LIB.filter(x => isStage(x) && (sug.has(x.key) || on.has(x.key))), more = LIB.filter(x => isStage(x) && !shown.includes(x));
-    const chip = x => `<button type="button" class="stchip ${on.has(x.key) ? "on" : ""}" data-stage="${x.key}" aria-pressed="${on.has(x.key)}" style="--c:var(--c${x.color})"><i></i><span>${esc(x.name)}</span><small>${esc(x.role)}</small></button>`;
+    const chip = x => `<button type="button" class="stchip ${on.has(x.key) ? "on" : ""}" data-stage="${x.key}" aria-pressed="${on.has(x.key)}" style="--c:var(--c${x.color})"><i></i><span>${esc(x.key === "aigen" && W.types.includes("2d") && W.opt.style2d === "mograph" ? "AI generation" : x.name)}</span><small>${esc(x.role)}</small></button>`;
     h = `<h2>Which stages will it have?</h2><p class="lead">Suggested for the kind of project you picked. Click one to take it out or put it back. The team step then only offers the people these stages need.</p>
       <div class="stgrid">${shown.map(chip).join("")}</div>
       <button type="button" class="morebtn" id="wMoreStages">${W.moreStages ? "▾" : "▸"} More stages (${more.length})</button>
@@ -2615,6 +3071,7 @@ function wizRead() {
     o[k] = k === "count" ? Math.max(1, parseInt(el.value, 10) || 1) : k === "date" ? (el.value === lastD ? "" : el.value) : el.value; });
   $("wzBody").querySelectorAll("[data-ci]").forEach(el => { const c = W.custom[+el.dataset.ci]; if (c) c.label = el.value; });
   $("wzBody").querySelectorAll("[data-osi]").forEach(el => { W.ownStages[+el.dataset.osi] = el.value; });
+  if ($("wChars")) W.opt.charCount = Math.max(1, parseInt($("wChars").value, 10) || 1);
   W.dur = W.dur || {};
   $("wzBody").querySelectorAll("[data-dur]").forEach(el => { const k = el.dataset.dur; (W.dur[k] = W.dur[k] || [])[+el.dataset.pi] = el.value; });
   $("wzBody").querySelectorAll("[data-full]").forEach(el => { if (!el.checked) return; const k = el.dataset.fk, i = +el.dataset.pi; if (el.dataset.full === "data-dur") (W.dur[k] = W.dur[k] || [])[i] = "full"; else { const c = W.custom[+k]; if (c) (c.dur = c.dur || [])[i] = "full"; } });
@@ -2639,7 +3096,7 @@ $("wiz").addEventListener("click", e => {
   const go = t.closest("[data-go]"); if (go) return wizGo(+go.dataset.go);
   const ty = t.closest("[data-type]");
   if (ty) { const k = ty.dataset.type, i = W.types.indexOf(k); i >= 0 ? W.types.splice(i, 1) : W.types.push(k); wizStagesChanged(true); return drawWiz(); }
-  const op = t.closest("[data-opt]"); if (op) { W.opt[op.dataset.opt] = op.dataset.v; wizStagesChanged(true); return drawWiz(); }
+  const op = t.closest("[data-opt]"); if (op) { W.opt[op.dataset.opt] = op.dataset.v; if (op.dataset.opt === "shootDays") W.shootDays = +op.dataset.v; else wizStagesChanged(true); return drawWiz(); }
   const sg = t.closest("[data-stage]");
   if (sg) { const k = sg.dataset.stage, i = W.stages.indexOf(k); i >= 0 ? W.stages.splice(i, 1) : W.stages.push(k); wizStagesChanged(false); return drawWiz(); }
   if (t.closest("#wMoreStages")) { W.moreStages = !W.moreStages; return drawWiz(); }
@@ -2666,7 +3123,7 @@ $("wzGo").onclick = () => {
   const sc = generate({
     name: W.name.trim() || "Untitled schedule", client: W.client.trim(), agency: W.agency.trim(), types, start: W.start, weeks: W.weeks, days: W.days, skipWeekends: W.skip,
     holidays: [...wizPubOn().map(h => ({ ...h, auto: true })), ...wizHolidays()], country: W.country, shootDate: hasShoot() && validDate(W.shootDate) ? W.shootDate : null, shootDays: W.shootDays,
-    outputs: W.outputs, deliveryDate: W.deliveryDate, team: { ...W.team }, dur: W.dur || {}, customRoles: W.custom, stages: W.stages.slice(), ownStages: W.ownStages.slice(),
+    outputs: W.outputs, deliveryDate: W.deliveryDate, team: { ...W.team }, dur: W.dur || {}, customRoles: W.custom, stages: W.stages.slice(), ownStages: W.ownStages.slice(), opt: { ...W.opt },
     clientDays: W.clientDays, internalDays: W.internalDays, agencyDays: W.agencyDays, theme: S ? S.theme : "studio"
   });
   sc.holidayOff = W.holOff.slice();
@@ -2696,7 +3153,7 @@ Operations. Use exact ids from the schedule. Dates are YYYY-MM-DD.
 - {"op":"set_holiday","date":"<date>","name":"...","on":true}. A holiday is a day nobody works. Use on:false to remove one.
 - {"op":"set_workday","date":"<date>","on":true}. This makes a skipped weekend day a working day. Use on:false to undo it.
 - {"op":"set_project", plus any of "name","client","agency","start","weeks","days","skipWeekends"}. "days" is extra working days on top of the weeks.
-- {"op":"build","name":"...","client":"...","agency":"...","start":"<date>","weeks":6,"days":0,"types":["3d"],"chars":"none|simple|complex","envs":"none|simple|large","style2d":"cel|mograph|cutout","stages":["<stage key>",...],"people":{"<role>":2},"lengths":{"<role>":[3,"full"]},"outputs":[{"name":"30s film","count":1,"date":"<date or empty for the last day>"}],"clientWipDays":[5],"agencyWipDays":[],"internalWipDays":[2],"skipWeekends":true}
+- {"op":"build","name":"...","client":"...","agency":"...","start":"<date>","weeks":6,"days":0,"types":["3d"],"chars":"none|simple|complex","envs":"none|simple|large","style2d":"cel|mograph|cutout","format":"ad|short|feature|series|other","characters":3,"shootDate":"<date>","shootDays":2,"aiGuides":false,"aiPart":"bg|chars|all","stages":["<stage key>",...],"people":{"<role>":2},"lengths":{"<role>":[3,"full"]},"outputs":[{"name":"30s film","count":1,"date":"<date or empty for the last day>"}],"clientWipDays":[5],"agencyWipDays":[],"internalWipDays":[2],"skipWeekends":true}
   Makes a NEW schedule from scratch and switches to it; later ops in the same list change the new one. Use it when the producer asks to build, make or start a schedule. "types" are 3d, 2d, live, stop, mini, ai. Leave "stages" out to get the ones suggested for the types and answers; otherwise use STAGE KEYS. "people" uses ROLES (count per role); Producer, Director and Generalist are 0 unless asked. "lengths" gives each person's weeks (or "full" for the whole project), in the same order as the count. WIP days are weekdays 1 (Mon) to 5 (Fri). Anything not said: leave it out.
 
 How the schedule works: lengths are in working days. Skipped weekends and holidays are not counted. A linked task moves by itself when the task it follows moves or gets longer, so to push a chain, change only the first task. Reviews are single days. A delivery day holds one or more outputs.
@@ -2791,7 +3248,7 @@ function applyOps(ops) {
         case "set_workday": { const d = need(op.date); S.workdays = S.workdays.filter(x => x !== d); if (op.on !== false) { S.workdays.push(d); note("Made a weekend day a working day"); } else note("Weekend day off again"); break; }
         case "build": {
           const types = (Array.isArray(op.types) && op.types.length ? op.types : ["3d"]).filter(t => TYPES.some(x => x.key === t));
-          const opt = { chars: op.chars || SCOPE_DEF.chars, envs: op.envs || SCOPE_DEF.envs, style2d: op.style2d || SCOPE_DEF.style2d };
+          const opt = { ...SCOPE_DEF, chars: op.chars || SCOPE_DEF.chars, envs: op.envs || SCOPE_DEF.envs, style2d: op.style2d || SCOPE_DEF.style2d, aiguides: op.aiGuides ? "yes" : "no", aiPart: op.aiPart || "bg", format: op.format || "ad", charCount: Math.max(1, parseInt(op.characters, 10) || 2) };
           const stages = Array.isArray(op.stages) && op.stages.length ? op.stages.filter(k => LIB.some(x => x.key === k)) : [...suggestStages(types, opt)];
           const team = {}; rolesForStages(stages).main.forEach(ro => team[ro] = ALWAYS_ROLES[ro] ? 0 : (ROLE_DEF[ro] || 1));
           if (op.people && typeof op.people === "object") Object.entries(op.people).forEach(([ro, n]) => { team[ro] = Math.max(0, parseInt(n, 10) || 0); });
@@ -2799,7 +3256,7 @@ function applyOps(ops) {
           const days = arr => Array.isArray(arr) ? arr.map(n => parseInt(n, 10)).filter(n => n >= 1 && n <= 5) : null;
           const sc = generate({ name: String(op.name || "New schedule"), client: String(op.client || ""), agency: String(op.agency || ""), types,
             start: validDate(op.start) ? op.start : nextMonday(), weeks: Math.max(1, parseInt(op.weeks, 10) || 6), days: Math.max(0, parseInt(op.days, 10) || 0),
-            skipWeekends: op.skipWeekends !== false, holidays: [], team, dur: op.lengths && typeof op.lengths === "object" ? op.lengths : {}, stages, outputs: outs,
+            skipWeekends: op.skipWeekends !== false, holidays: [], team, opt, shootDate: validDate(op.shootDate) ? op.shootDate : null, shootDays: Math.max(1, parseInt(op.shootDays, 10) || 2), dur: op.lengths && typeof op.lengths === "object" ? op.lengths : {}, stages, outputs: outs,
             clientDays: days(op.clientWipDays) || [5], internalDays: days(op.internalWipDays) || [2], agencyDays: days(op.agencyWipDays) || [], theme: S.theme, country: S.country });
           sc.updatedAt = Date.now(); STORE.list[sc.id] = sc; STORE.current = sc.id; S = sc; queueDrive(sc.id);
           note(`Built ${sc.name}: ${sc.tasks.length} rows from ${fmt(sc.start)}`); break;
@@ -2821,14 +3278,13 @@ function chat() { return CHATS[S.id] || (CHATS[S.id] = []); }
 function renderChat() {
   const m = $("msgs"), c = chat();
   let h = !AI ? `<div class="msg sys">The assistant runs in Kontroll's Schedule tab (Tabs › Open Schedule), on Kontroll's assistant models. Everything else works here without it.</div>`
-    : `<div class="msg sys">Ask in plain words. The assistant can add, move, resize and link tasks, and add WIPs, deliveries and holidays. Every change can be undone.</div>`;
+    : `<div class="msg sys">Ask in plain words. The assistant can build a whole schedule from scratch, or add, move, resize and link tasks, and add WIPs, deliveries and holidays. Every change can be undone.</div>${c.length < 2 ? `<div class="sugg">${SUGG.map(x => `<button type="button" data-sugg>${esc(x)}</button>`).join("")}</div>` : ""}`;
   c.forEach((x, i) => {
     if (x.help) { h += `<div class="msg help"><b>What the assistant can do</b><ul><li><b>Build a schedule from scratch</b>: "Build me a 6-week 3D job starting 1 December, complex characters, two animators, a director for 3 weeks, client WIPs on Fridays, a 30s film and print stills."</li><li><b>Change this one</b>: add, move, lengthen, link or delete blocks; add WIPs, deliveries, holidays.</li><li><b>Patterns</b>: "a client WIP every second Friday during animation".</li></ul><p style="margin:6px 0 0">The 🎤 dictates (Kontroll's mic); the menu above the box picks which assistant answers (Kontroll › Settings › Assign roles › Schedule assistant sets the default). Every change can be undone.</p></div>`; return; }
     if (x.role === "user") h += `<div class="msg u">${esc(x.text)}</div>`;
     else h += `<div class="msg a">${esc(x.text)}${x.log && x.log.length ? `<ul>${x.log.map(l => `<li>${esc(l)}</li>`).join("")}</ul>` : ""}${x.skipped && x.skipped.length ? `<ul style="color:var(--danger)">${x.skipped.map(l => `<li>Skipped ${esc(l)}</li>`).join("")}</ul>` : ""}${x.snap && !x.undone ? `<div class="acts"><button class="btn sm" data-undo="${i}">Undo these changes</button></div>` : ""}</div>`;
   });
   m.innerHTML = h; m.scrollTop = m.scrollHeight;
-  $("sugg").innerHTML = AI && c.length < 2 ? SUGG.map(s => `<button type="button">${esc(s)}</button>`).join("") : "";
   $("aiSend").disabled = !AI;
 }
 $("msgs").addEventListener("click", e => {
@@ -2836,7 +3292,7 @@ $("msgs").addEventListener("click", e => {
   const x = chat()[+b.dataset.undo]; if (!x || !x.snap) return;
   UNDO.push(JSON.stringify(S)); REDO = []; S = JSON.parse(x.snap); STORE.list[S.id] = S; x.undone = true; fixSel(); save(); render(); renderChat(); toast("Changes undone.");
 });
-$("sugg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; $("aiIn").value = b.textContent; $("aiIn").focus(); });
+$("msgs").addEventListener("click", e => { const b = e.target.closest("[data-sugg]"); if (!b) return; $("aiIn").value = b.textContent; $("aiIn").focus(); });
 $("aiIn").addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("aiForm").requestSubmit(); } });
 $("aiStop").onclick = () => aiCtl && aiCtl.abort();
 $("aiForm").addEventListener("submit", async e => {
@@ -2844,7 +3300,7 @@ $("aiForm").addEventListener("submit", async e => {
   const text = $("aiIn").value.trim(); if (!text || !AI || aiCtl) return;
   const c = chat(); c.push({ role: "user", text }); $("aiIn").value = ""; renderChat();
   const history = c.filter(x => !x.help).slice(-9, -1).map(x => ({ role: x.role, content: x.role === "user" ? x.text : (x.text + (x.log && x.log.length ? "\n(Applied: " + x.log.join("; ") + ")" : "")) }));
-  const input = [{ role: "user", content: RULES }, ...history, { role: "user", content: `CURRENT SCHEDULE\n${scheduleContext()}\n\nREQUEST: ${text}` }];
+  const input = [{ role: "user", content: RULES + (KNOW ? "\n\nPRODUCTION KNOWLEDGE — how jobs run; use it when building or changing a schedule:\n" + KNOW : "") }, ...history, { role: "user", content: `CURRENT SCHEDULE\n${scheduleContext()}\n\nREQUEST: ${text}` }];
   aiCtl = new AbortController();
   $("aiStatus").textContent = "Thinking…"; $("aiStop").hidden = false; $("aiSend").disabled = true;
   const sid = S.id;
@@ -2872,6 +3328,9 @@ $("aiForm").addEventListener("submit", async e => {
     aiCtl = null; $("aiStatus").textContent = ""; $("aiStop").hidden = true; renderChat();
   }
 });
+/* How productions run (knowledge.md): fetched once, given to the assistant with every request. */
+let KNOW = "";
+fetch("knowledge.md", { cache: "no-cache" }).then(r => r.ok ? r.text() : "").then(t => { KNOW = String(t || "").slice(0, 40000); }).catch(() => {});
 async function initAI() {
   if (AI) return renderChat();   // Kontroll got here first
   try { AI = window.claude && window.claude.use ? await window.claude.use("sample") : null; } catch (e) { AI = null; }
@@ -2916,7 +3375,7 @@ $("aiMic").onclick = () => {
   MIC_ON = !MIC_ON; $("aiMic").classList.toggle("live", MIC_ON);
   KS.send("mic", { on: MIC_ON, text: $("aiIn").value });
 };
-$("aiHelp").onclick = () => {
+if ($("aiHelp")) $("aiHelp").onclick = () => {
   const c = chat();
   if (c.some(x => x.help)) { CHATS[S.id] = c.filter(x => !x.help); return renderChat(); }
   c.push({ role: "assistant", help: true, text: "" }); renderChat();
