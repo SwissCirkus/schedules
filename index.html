@@ -3391,6 +3391,18 @@ const KS = window.__kSched = {
     return { ok: true, id: sc.id, name: sc.name, start: sc.start, weeks: sc.weeks };
   },
   current() { return S ? { id: S.id, name: S.name, start: S.start, weeks: S.weeks, tasks: S.tasks.length } : null; },
+  /* Kontroll's Set Up Project can start from a schedule you already have (Christian 2026-11-13: "quite often when we start a project, we
+     actually start with a schedule … allow me to use an existing schedule as an input"): the list, and one schedule summed up —
+     its client, project types, dates, the stages it has (by their library keys) and its people. */
+  list() { return Object.values(STORE.list).filter(x => x && x.id).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)).map(x => ({ id: x.id, name: x.name || "Untitled schedule", client: x.client || "", start: x.start, weeks: x.weeks, rows: (x.tasks || []).length, updatedAt: x.updatedAt || 0 })); },
+  summary(id) {
+    const x = id && STORE.list[id]; if (!x) return null;
+    const keyOf = new Map(LIB.map(l => [l.name, l.key])), roleOf = new Map(LIB.map(l => [l.name, l.role]));
+    const stages = [], rows = [];
+    (x.tasks || []).forEach(t => { const k = keyOf.get(t.name); if (k && !stages.includes(k)) stages.push(k); rows.push({ name: t.name, key: k || null, role: roleOf.get(t.name) || null, people: t.people | 0, days: t.days | 0, notes: String(t.notes || "").slice(0, 200) }); });
+    return { id: x.id, name: x.name || "", client: x.client || "", agency: x.agency || "", types: (x.types || []).slice(), start: x.start, weeks: x.weeks, days: x.days || 0,
+      shoot: x.shoot || null, stages, rows: rows.slice(0, 120), team: (x.team || []).map(m => ({ label: m.label, count: m.count | 0 })), outputs: (x.outputs || []).map(o => o && (o.name || o.label)).filter(Boolean).slice(0, 20), notes: String(x.notes || "").slice(0, 2000) };
+  },
   /* …and builds it straight away: a default schedule from the brief (name, client, project types, format), the stages picked there
      and the people per role (names go into each row's notes). The same build as the assistant's "create" — then it's yours to change. */
   build(seed) {
