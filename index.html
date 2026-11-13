@@ -3406,8 +3406,10 @@ const KS = window.__kSched = {
       theme: S ? S.theme : "studio", country: (S && S.country) || defaultCountry() });
     // who: the names picked in Kontroll, on the rows of their role
     const people = s.people && typeof s.people === "object" ? s.people : {};
-    const roleOf = new Map(LIB.map(x => [x.name, x.role]));
-    sc.tasks.forEach(t => { const ro = roleOf.get(t.name) || t.name, names = Array.isArray(people[ro]) ? people[ro].map(n => String(n).slice(0, 60)).filter(Boolean) : [];
+    const roleOf = new Map(LIB.map(x => [x.name, x.role])), keyOf = new Map(LIB.map(x => [x.name, x.key]));
+    // who was given which stage in Kontroll's Team step (stagePeople: {stageKey: [names]}) — those names on exactly those rows; else by role
+    const byStage = s.stagePeople && typeof s.stagePeople === "object" ? s.stagePeople : null;
+    sc.tasks.forEach(t => { const ro = roleOf.get(t.name) || t.name, k = keyOf.get(t.name), src = byStage && k && Array.isArray(byStage[k]) ? byStage[k] : byStage ? [] : people[ro], names = Array.isArray(src) ? src.map(n => String(n).slice(0, 60)).filter(Boolean) : [];
       if (names.length) t.notes = (t.notes ? t.notes + " · " : "") + names.join(", "); });
     if (typeof s.notes === "string" && s.notes.trim()) sc.notes = s.notes.trim().slice(0, 4000);
     // the project's blank schedule it replaces (made when its Schedule tab first opened, nothing added since) goes, so it isn't left behind
