@@ -3370,10 +3370,27 @@ const KS = window.__kSched = {
     const s = seed && typeof seed === "object" ? seed : {};
     const types = (Array.isArray(s.types) ? s.types : []).filter(k => TYPES.some(t => t.key === k)), ts = types.length ? types : ["3d"];
     const opt = { ...SCOPE_DEF, ...(s.opt && typeof s.opt === "object" ? s.opt : {}) };
-    const sug = suggestStages(ts, opt), isStage = x => ALWAYS_ROLES[x.role] !== x.key;
-    const stages = LIB.filter(x => isStage(x) && (x.when(ts) || sug.has(x.key))).map(x => ({ key: x.key, name: x.name, role: x.role, suggested: sug.has(x.key) }));
+    const sug = suggestStages(ts, opt), isStage = x => ALWAYS_ROLES[x.role] !== x.key, extra = new Set(Array.isArray(s.extra) ? s.extra : []);
+    const stages = LIB.filter(x => isStage(x) && (x.when(ts) || sug.has(x.key) || extra.has(x.key))).map(x => ({ key: x.key, name: x.name, role: x.role, suggested: sug.has(x.key) || extra.has(x.key) }));
     return { v: 1, stages, roles: [...new Set(LIB.map(x => x.role))], always: Object.keys(ALWAYS_ROLES), roleDefaults: { ...ROLE_DEF } };
   },
+  /* Each Kontroll project has its own schedule (Christian 2026-11-13: "a blank schedule with nothing on it … an 8-week blank timeline
+     with the start date set to … the day this tab was opened … and then it doesn't change"). Kontroll keeps the schedule's id on its
+     Schedule tab: open(id) shows it; blank(seed) makes the empty one the first time. */
+  open(id) {
+    const sc = id && STORE.list[id];
+    if (!sc) return { ok: false, missing: true };
+    if (!S || S.id !== sc.id) { closeWiz(); useSchedule(sc); }
+    return { ok: true, id: sc.id, name: sc.name, start: sc.start, weeks: sc.weeks };
+  },
+  blank(seed) {
+    const s = seed && typeof seed === "object" ? seed : {};
+    const sc = blank({ name: String(s.name || "Untitled schedule").slice(0, 80), client: String(s.client || "").slice(0, 120), types: [], start: validDate(s.start) ? s.start : todayIso(),
+      weeks: Math.max(1, Math.min(104, parseInt(s.weeks, 10) || 8)), skipWeekends: true, theme: S ? S.theme : "studio", country: (S && S.country) || defaultCountry() });
+    sc.updatedAt = Date.now(); closeWiz(); VIEW = "timeline"; useSchedule(sc); queueDrive(sc.id);
+    return { ok: true, id: sc.id, name: sc.name, start: sc.start, weeks: sc.weeks };
+  },
+  current() { return S ? { id: S.id, name: S.name, start: S.start, weeks: S.weeks, tasks: S.tasks.length } : null; },
   /* …and builds it straight away: a default schedule from the brief (name, client, project types, format), the stages picked there
      and the people per role (names go into each row's notes). The same build as the assistant's "create" — then it's yours to change. */
   build(seed) {
@@ -3393,6 +3410,9 @@ const KS = window.__kSched = {
     sc.tasks.forEach(t => { const ro = roleOf.get(t.name) || t.name, names = Array.isArray(people[ro]) ? people[ro].map(n => String(n).slice(0, 60)).filter(Boolean) : [];
       if (names.length) t.notes = (t.notes ? t.notes + " · " : "") + names.join(", "); });
     if (typeof s.notes === "string" && s.notes.trim()) sc.notes = s.notes.trim().slice(0, 4000);
+    // the project's blank schedule it replaces (made when its Schedule tab first opened, nothing added since) goes, so it isn't left behind
+    const old = s.replace && STORE.list[s.replace];
+    if (old && old.id !== sc.id && !(old.tasks || []).length && !(old.reviews || []).length && !(old.deliveries || []).length) { delete STORE.list[old.id]; trashOnDrive(old); }
     sc.updatedAt = Date.now(); closeWiz(); VIEW = "timeline"; useSchedule(sc); queueDrive(sc.id);
     toast(`Built ${sc.name} from Kontroll: ${sc.tasks.length} rows from ${fmt(sc.start)}`);
     return { ok: true, id: sc.id, name: sc.name, rows: sc.tasks.length, start: sc.start, end: projEnd() };
