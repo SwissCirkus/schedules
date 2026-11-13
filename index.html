@@ -3349,6 +3349,54 @@ const KS = window.__kSched = {
   hello(info) { this.host = info || {}; onKontroll(this.host); },
   dictated(text) { const t = $("aiIn"); if (t) { t.value = String(text || ""); t.scrollTop = t.scrollHeight; } },
   micState(on) { MIC_ON = !!on; const b = $("aiMic"); if (b) b.classList.toggle("live", MIC_ON); },
+  /* Kontroll's Set Up Project › Build project with "Schedule" ticked (2026-11-13): the new-schedule wizard opens already filled in
+     from the brief — the job's name and client, its production method (these project types) and format. Nothing is made until
+     the wizard's own last step, so the dates and stages are still checked here. */
+  newFrom(seed) {
+    const s = seed && typeof seed === "object" ? seed : {};
+    openWiz();
+    if (typeof s.name === "string" && s.name.trim()) W.name = s.name.trim().slice(0, 80);
+    if (typeof s.client === "string") W.client = s.client.trim().slice(0, 120);
+    if (Array.isArray(s.types)) W.types = [...new Set(s.types.filter(k => TYPES.some(t => t.key === k)))];
+    const o = s.opt && typeof s.opt === "object" ? s.opt : {};
+    for (const k of ["format", "chars", "aiPart", "smPart", "aiguides", "style2d", "greenscreen"]) if (typeof o[k] === "string" && k in W.opt) W.opt[k] = o[k];
+    if (Number.isFinite(+o.charCount) && +o.charCount > 0) W.opt.charCount = Math.min(60, Math.round(+o.charCount));
+    W.stages = [...suggestStages(W.types, W.opt)]; resetTeam(); drawWiz();
+    return true;
+  },
+  /* Kontroll's Set Up Project › Schedule & team (2026-11-13): the stages this kind of project has (the suggested ones marked) and the
+     people each needs — asked before anything is built, so Kontroll can show the stage choice in its own window. */
+  planFor(seed) {
+    const s = seed && typeof seed === "object" ? seed : {};
+    const types = (Array.isArray(s.types) ? s.types : []).filter(k => TYPES.some(t => t.key === k)), ts = types.length ? types : ["3d"];
+    const opt = { ...SCOPE_DEF, ...(s.opt && typeof s.opt === "object" ? s.opt : {}) };
+    const sug = suggestStages(ts, opt), isStage = x => ALWAYS_ROLES[x.role] !== x.key;
+    const stages = LIB.filter(x => isStage(x) && (x.when(ts) || sug.has(x.key))).map(x => ({ key: x.key, name: x.name, role: x.role, suggested: sug.has(x.key) }));
+    return { v: 1, stages, roles: [...new Set(LIB.map(x => x.role))], always: Object.keys(ALWAYS_ROLES), roleDefaults: { ...ROLE_DEF } };
+  },
+  /* …and builds it straight away: a default schedule from the brief (name, client, project types, format), the stages picked there
+     and the people per role (names go into each row's notes). The same build as the assistant's "create" — then it's yours to change. */
+  build(seed) {
+    const s = seed && typeof seed === "object" ? seed : {};
+    const types = (Array.isArray(s.types) ? s.types : []).filter(k => TYPES.some(t => t.key === k)), ts = types.length ? types : ["3d"];
+    const opt = { ...SCOPE_DEF, ...(s.opt && typeof s.opt === "object" ? s.opt : {}) };
+    const stages = Array.isArray(s.stages) && s.stages.length ? s.stages.filter(k => LIB.some(x => x.key === k)) : [...suggestStages(ts, opt)];
+    const team = {}; rolesForStages(stages).main.forEach(ro => team[ro] = ALWAYS_ROLES[ro] ? 0 : (ROLE_DEF[ro] || 1));
+    if (s.team && typeof s.team === "object") Object.entries(s.team).forEach(([ro, n]) => { team[ro] = Math.max(0, Math.min(60, parseInt(n, 10) || 0)); });
+    const sc = generate({ name: String(s.name || "New schedule").slice(0, 80), client: String(s.client || "").slice(0, 120), agency: String(s.agency || "").slice(0, 120), types: ts,
+      start: validDate(s.start) ? s.start : nextMonday(), weeks: Math.max(1, Math.min(104, parseInt(s.weeks, 10) || 6)), days: 0, skipWeekends: s.skipWeekends !== false, holidays: [], team, opt,
+      shootDate: validDate(s.shootDate) ? s.shootDate : null, shootDays: Math.max(1, parseInt(s.shootDays, 10) || 2), dur: {}, stages, outputs: [], clientDays: [5], internalDays: [2], agencyDays: [],
+      theme: S ? S.theme : "studio", country: (S && S.country) || defaultCountry() });
+    // who: the names picked in Kontroll, on the rows of their role
+    const people = s.people && typeof s.people === "object" ? s.people : {};
+    const roleOf = new Map(LIB.map(x => [x.name, x.role]));
+    sc.tasks.forEach(t => { const ro = roleOf.get(t.name) || t.name, names = Array.isArray(people[ro]) ? people[ro].map(n => String(n).slice(0, 60)).filter(Boolean) : [];
+      if (names.length) t.notes = (t.notes ? t.notes + " · " : "") + names.join(", "); });
+    if (typeof s.notes === "string" && s.notes.trim()) sc.notes = s.notes.trim().slice(0, 4000);
+    sc.updatedAt = Date.now(); closeWiz(); VIEW = "timeline"; useSchedule(sc); queueDrive(sc.id);
+    toast(`Built ${sc.name} from Kontroll: ${sc.tasks.length} rows from ${fmt(sc.start)}`);
+    return { ok: true, id: sc.id, name: sc.name, rows: sc.tasks.length, start: sc.start, end: projEnd() };
+  },
 };
 const kontrollAI = {
   async json(input, { signal } = {}) {
