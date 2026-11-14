@@ -629,6 +629,7 @@ body.viewonly .bar,body.viewonly .mk,body.viewonly .cbar,body.viewonly .cev,body
   <button class="btn ghost" id="undoBtn" title="Undo (Ctrl+Z)">Undo</button>
   <button class="btn ghost" id="redoBtn" title="Redo (Ctrl+Shift+Z)">Redo</button>
   <button class="btn ghost" id="drive" title="Every schedule is kept in a Schedules folder in your Google Drive">Connect Google Drive</button>
+  <button class="btn ghost" id="browserBtn" hidden title="Open this page in your web browser" aria-label="Open in web browser">&#127760;</button>
   <button class="btn" id="shareBtn" title="Make a link to send: whoever opens it sees this schedule, read-only">Share</button>
   <button class="btn" id="pdfBtn" title="Print on A4 landscape — choose Save as PDF in the print window to make a PDF to send">Print / PDF</button>
   <span class="vo-note" id="voNote" hidden>Shared schedule · view only</span>
@@ -982,6 +983,13 @@ function wdSteps(a, b) {
   return -n;
 }
 const projStart = () => snapF(S.start);
+/* Moving the start moves everything: the stages follow on their own (they count from the start); the WIPs / reviews and the delivery
+   dates are real dates, so they are pushed by the same number of working days (Christian 2026-11-14: "the WIPs don't move at all"). */
+function moveStart(v) {
+  const d = wdSteps(projStart(), snapF(v));
+  S.start = v;
+  if (d) { (S.reviews || []).forEach(r => { if (validDate(r.date)) r.date = addWD(r.date, d); }); (S.deliveries || []).forEach(x => { if (validDate(x.date)) x.date = addWD(x.date, d); }); }
+}
 // Length is weeks plus extra working days. Days run 0..5 (0..7 with weekends worked); one more rolls over to the next week at 0.
 function normLen(w, d, skip) {
   const per = skip === false ? 7 : 5; w = Math.max(1, parseInt(w, 10) || 1); d = parseInt(d, 10) || 0;
@@ -2717,7 +2725,7 @@ ph.addEventListener("change", e => {
 ph.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("input")) e.target.blur(); });
 ph.addEventListener("click", e => {
   const pk = e.target.closest("[data-pick]");
-  if (pk) pickDate(pk, S.start, v => change(() => { S.start = v; }));
+  if (pk) pickDate(pk, S.start, v => change(() => { moveStart(v); }));
 });
 // the deliverables box edits the same way
 const dv = $("deliv");
@@ -3263,7 +3271,7 @@ function applyOps(ops) {
         }
         case "set_project": {
           if (op.name) S.name = String(op.name); if (op.client != null) S.client = String(op.client); if (op.agency != null) S.agency = String(op.agency);
-          if (op.start) S.start = need(op.start); if (op.weeks != null || op.days != null) setLen(op.weeks ?? S.weeks, op.days ?? S.days);
+          if (op.start) moveStart(need(op.start)); if (op.weeks != null || op.days != null) setLen(op.weeks ?? S.weeks, op.days ?? S.days);
           if (op.skipWeekends != null) S.skipWeekends = !!op.skipWeekends; delete S.example; note("Changed project settings"); break;
         }
         default: throw new Error(`unknown operation "${op && op.op}"`);
@@ -3414,7 +3422,7 @@ const KS = window.__kSched = {
     if (s.team && typeof s.team === "object") Object.entries(s.team).forEach(([ro, n]) => { team[ro] = Math.max(0, Math.min(60, parseInt(n, 10) || 0)); });
     const sc = generate({ name: String(s.name || "New schedule").slice(0, 80), client: String(s.client || "").slice(0, 120), agency: String(s.agency || "").slice(0, 120), types: ts,
       start: validDate(s.start) ? s.start : nextMonday(), weeks: Math.max(1, Math.min(104, parseInt(s.weeks, 10) || 6)), days: 0, skipWeekends: s.skipWeekends !== false, holidays: [], team, opt,
-      shootDate: validDate(s.shootDate) ? s.shootDate : null, shootDays: Math.max(1, parseInt(s.shootDays, 10) || 2), dur: {}, stages, outputs: [], clientDays: [5], internalDays: [2], agencyDays: [],
+      shootDate: validDate(s.shootDate) ? s.shootDate : null, shootDays: Math.max(1, parseInt(s.shootDays, 10) || 2), deliveryDate: validDate(s.deliveryDate) ? s.deliveryDate : "", dur: {}, stages, outputs: (Array.isArray(s.outputs) ? s.outputs : []).filter(o => o && String(o.name || "").trim()).slice(0, 20).map(o => ({ name: String(o.name).trim().slice(0, 60), count: Math.max(1, Math.min(200, o.count | 0 || 1)) })), clientDays: [5], internalDays: [2], agencyDays: [],
       theme: S ? S.theme : "studio", country: (S && S.country) || defaultCountry() });
     // who: the names picked in Kontroll, on the rows of their role
     const people = s.people && typeof s.people === "object" ? s.people : {};
@@ -3446,6 +3454,7 @@ const kontrollAI = {
 };
 function onKontroll(info) {
   AI = kontrollAI;
+  { const g = $("browserBtn"); if (g) { g.hidden = false; g.onclick = () => KS.send("browser", { url: location.href }); } } // Kontroll hides its own web bar here (2026-11-14)
   const sel = $("aiModel"), list = Array.isArray(info.engines) ? info.engines : [], fb = list.find(e => e.id === info.fallback);
   sel.innerHTML = `<option value="">Schedule assistant (Kontroll's default${fb ? ": " + esc(fb.label) : ""})</option>` + list.map(e => `<option value="${esc(e.id)}"${e.id === info.engine ? " selected" : ""}>${esc(e.label)}</option>`).join("");
   $("aiModelRow").hidden = false;
@@ -3469,6 +3478,20 @@ if ($("aiHelp")) $("aiHelp").onclick = () => {
 const GOOGLE_CLIENT_ID = "137075271992-st7deo4q3m0pptfo02ep31638bj07tor.apps.googleusercontent.com"; // the same client as the invoice app
 const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.file", FOLDER_NAME = "Schedules", APP_KEY = "kontrollSchedule";
 let tokenClient = null, accessToken = null, tokenExp = 0, folderId = null, driveState = "ready";
+/* Stay connected (Christian 2026-11-14: "connect to Google Drive should automatically happen … it keeps asking me"): the access token
+   is kept for its lifetime (about an hour), so a reload doesn't forget it; someone who connected before is reconnected quietly at
+   start when it has run out (consent was given — Google doesn't ask again); and it is renewed a minute before it runs out. Still the
+   browser-only token flow — no refresh token is stored. */
+const TOKEN_KEY = "schedules:driveToken", CONNECTED_KEY = "schedules:driveConnected";
+let renewTimer = null;
+try { const t = JSON.parse(localStorage.getItem(TOKEN_KEY) || "null"); if (t && t.token && +t.exp > Date.now()) { accessToken = t.token; tokenExp = +t.exp; } } catch (e) { /* none kept */ }
+function keepToken() {
+  try { localStorage.setItem(TOKEN_KEY, JSON.stringify({ token: accessToken, exp: tokenExp })); localStorage.setItem(CONNECTED_KEY, "1"); } catch (e) { /* private window */ }
+  clearTimeout(renewTimer);
+  const wait = tokenExp - Date.now() - 60000;
+  if (wait > 0) renewTimer = setTimeout(() => { if (tokenClient) tokenClient.requestAccessToken({ prompt: "" }); }, wait);
+}
+const connectedBefore = () => { try { return localStorage.getItem(CONNECTED_KEY) === "1"; } catch (e) { return false; } };
 const REMOTE_AT = {}, DIRTY = new Set();
 function setDrive(state, msg = "") {
   driveState = state; const b = $("drive"); if (!b) return;
@@ -3487,12 +3510,15 @@ window.initGoogle = function initGoogle() {
     client_id: GOOGLE_CLIENT_ID, scope: DRIVE_SCOPE,
     callback: async res => {
       if (res.error) { setDrive("ready"); return; }
-      accessToken = res.access_token; tokenExp = Date.now() + (res.expires_in - 60) * 1000;
+      accessToken = res.access_token; tokenExp = Date.now() + (res.expires_in - 60) * 1000; keepToken();
       try { await syncAll(); } catch (e) { setDrive("error", String(e.message || e)); }
     },
     error_callback: () => setDrive("ready"),
   });
   setDrive("ready");
+  // connected before: the kept token straight away, or a quiet reconnect
+  if (accessToken && Date.now() < tokenExp) { keepToken(); syncAll().catch(e => setDrive("error", String(e.message || e))); }
+  else if (connectedBefore()) { setDrive("connecting"); tokenClient.requestAccessToken({ prompt: "" }); }
 };
 async function driveReq(url, opts = {}) {
   if (!accessToken || Date.now() > tokenExp) { accessToken = null; setDrive("expired"); throw new Error("Sign in to Drive again"); }
